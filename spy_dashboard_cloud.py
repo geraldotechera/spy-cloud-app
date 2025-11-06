@@ -28,11 +28,6 @@ BOT_TOKEN = st.secrets.get("BOT_TOKEN", _cfg.get("BOT_TOKEN", ""))
 CHAT_ID  = st.secrets.get("CHAT_ID",  _cfg.get("CHAT_ID", ""))
 TICKER   = st.secrets.get("TICKER",   _cfg.get("TICKER", "SPY")).upper()
 
-# --- DEBUG SECRETS (temporal). Cuando funcione, borralo. ---
-st.write("DEBUG - keys en st.secrets:", list(st.secrets.keys()))
-st.write("DEBUG - tiene gcp_service_account?:", "gcp_service_account" in st.secrets)
-st.write("DEBUG - SHEET_ID presente?:", bool(SHEET_ID))
-
 if not GCP_SA or not SHEET_ID:
     st.error("Faltan secrets: gcp_service_account y/o SHEET_ID. Configuralos en Streamlit Cloud.")
     st.stop()
@@ -198,4 +193,5 @@ with st.form("add_txn"):
 
 st.divider()
 st.caption("Tip: en SELL el monto es el total en USD que vendés; la app calcula la cantidad con el precio y descuenta costo promedio.")
+
 
