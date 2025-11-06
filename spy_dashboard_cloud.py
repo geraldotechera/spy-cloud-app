@@ -4,35 +4,44 @@
 # - Calcula cash, unidades, costo promedio, P/L realizada y no realizada
 # - Formulario para agregar depósitos/retiros y compras/ventas desde el celular
 # - Notificación opcional a Telegram
+# - Lee secrets desde raíz o sección [app_config] (para compatibilidad)
 
-import os
 import time
+import os
 import pandas as pd
 import streamlit as st
 import requests
 import yfinance as yf
-from google.oauth2.service_account import Credentials
 import gspread
+from google.oauth2.service_account import Credentials
 
 st.set_page_config(page_title="SPY Cloud App", page_icon="📈", layout="centered")
 st.title("📈 SPY Cloud App")
 st.caption("Monitoreo 24/7 en la nube con Google Sheets como base de datos")
+
+# ---- Cargar Secrets (compat: raíz y [app_config]) ----
+GCP_SA = st.secrets.get("gcp_service_account", None)
+_cfg = st.secrets.get("app_config", {})
+
+SHEET_ID = st.secrets.get("SHEET_ID", _cfg.get("SHEET_ID", ""))
+BOT_TOKEN = st.secrets.get("BOT_TOKEN", _cfg.get("BOT_TOKEN", ""))
+CHAT_ID  = st.secrets.get("CHAT_ID",  _cfg.get("CHAT_ID", ""))
+TICKER   = st.secrets.get("TICKER",   _cfg.get("TICKER", "SPY")).upper()
+
+# --- DEBUG SECRETS (temporal). Cuando funcione, borralo. ---
 st.write("DEBUG - keys en st.secrets:", list(st.secrets.keys()))
 st.write("DEBUG - tiene gcp_service_account?:", "gcp_service_account" in st.secrets)
-st.write("DEBUG - SHEET_ID presente?:", bool(st.secrets.get("SHEET_ID", "")))
-# ---- Cargar Secrets ----
-GCP_SA = st.secrets.get("gcp_service_account", None)
-SHEET_ID = st.secrets.get("SHEET_ID", "")
-BOT_TOKEN = st.secrets.get("BOT_TOKEN", "")
-CHAT_ID = st.secrets.get("CHAT_ID", "")
-TICKER = st.secrets.get("TICKER", "SPY").upper()
+st.write("DEBUG - SHEET_ID presente?:", bool(SHEET_ID))
 
 if not GCP_SA or not SHEET_ID:
     st.error("Faltan secrets: gcp_service_account y/o SHEET_ID. Configuralos en Streamlit Cloud.")
     st.stop()
 
-# --- Conexión a Google Sheets ---
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+# --- Conexión Google Sheets ---
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive",
+]
 creds = Credentials.from_service_account_info(GCP_SA, scopes=SCOPES)
 client = gspread.authorize(creds)
 
@@ -45,8 +54,10 @@ LEDGER_SHEET = "ledger"
 @st.cache_data(ttl=60)
 def get_price(ticker: str) -> float:
     t = yf.Ticker(ticker)
+    # Intento rápido para precio casi en tiempo real
     df = t.history(period="1d", interval="1m")
     if df.empty:
+        # fallback diario
         df = t.history(period="5d", interval="1d")
     return float(df["Close"].iloc[-1])
 
@@ -69,8 +80,14 @@ def load_ledger() -> pd.DataFrame:
 def append_ledger(row: dict):
     sh = open_sheet(SHEET_ID)
     ws = sh.worksheet(LEDGER_SHEET)
-    ws.append_row([row.get("date",""), row.get("type",""), row.get("amount_usd",0), row.get("price",0), row.get("note","")])
-    st.cache_data.clear()
+    ws.append_row([
+        row.get("date",""),
+        row.get("type",""),
+        row.get("amount_usd",0),
+        row.get("price",0),
+        row.get("note","")
+    ])
+    st.cache_data.clear()  # refrescar cachés
 
 def compute_portfolio(df: pd.DataFrame):
     cash = 0.0
@@ -103,14 +120,19 @@ def compute_portfolio(df: pd.DataFrame):
     avg_cost = (cost_basis / units) if units > 0 else 0.0
     return cash, units, cost_basis, avg_cost, realized_pl
 
-# --- UI ---
+# --- Encabezado con ticker y precio ---
 colA, colB = st.columns(2)
 with colA:
     st.metric("Ticker", TICKER)
 with colB:
-    price = get_price(TICKER)
-    st.metric("Precio actual", f"{price:.2f} USD")
+    try:
+        price = get_price(TICKER)
+        st.metric("Precio actual", f"{price:.2f} USD")
+    except Exception as e:
+        price = 0.0
+        st.warning(f"No se pudo leer el precio de {TICKER}: {e}")
 
+# --- Cálculo de portfolio ---
 ledger = load_ledger()
 cash, units, cost_basis, avg_cost, realized_pl = compute_portfolio(ledger)
 current_value = units * price
@@ -133,6 +155,7 @@ st.divider()
 st.subheader("🧾 Ledger de transacciones")
 st.dataframe(ledger, use_container_width=True)
 
+# --- Form para registrar movimientos ---
 st.subheader("➕ Registrar movimiento")
 with st.form("add_txn"):
     c1, c2 = st.columns(2)
@@ -150,13 +173,23 @@ with st.form("add_txn"):
             if tx_type in ("BUY","SELL") and price_in <= 0:
                 st.error("Precio válido requerido para BUY/SELL.")
             else:
-                append_ledger({"date": date, "type": tx_type, "amount_usd": amount, "price": price_in if tx_type in ("BUY","SELL") else 0, "note": note})
+                append_ledger({
+                    "date": date,
+                    "type": tx_type,
+                    "amount_usd": amount,
+                    "price": price_in if tx_type in ("BUY","SELL") else 0,
+                    "note": note
+                })
                 st.success("Movimiento guardado.")
+                # Telegram opcional
                 if BOT_TOKEN and CHAT_ID:
                     try:
-                        requests.post(f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
-                                      json={"chat_id": CHAT_ID, "text": f"{tx_type}: ${amount:.2f} @ {price_in if tx_type in ('BUY','SELL') else ''} {TICKER}"},
-                                      timeout=10)
+                        requests.post(
+                            f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+                            json={"chat_id": CHAT_ID,
+                                  "text": f"{tx_type}: ${amount:.2f} @ {price_in if tx_type in ('BUY','SELL') else ''} {TICKER}"},
+                            timeout=10
+                        )
                     except Exception:
                         pass
                 st.rerun()
@@ -164,5 +197,5 @@ with st.form("add_txn"):
             st.error(f"Error: {e}")
 
 st.divider()
-st.caption("Consejo: en SELL el monto es el total en USD que vendés; la app calcula la cantidad con el precio indicado y descuenta costo promedio.")
+st.caption("Tip: en SELL el monto es el total en USD que vendés; la app calcula la cantidad con el precio y descuenta costo promedio.")
 
