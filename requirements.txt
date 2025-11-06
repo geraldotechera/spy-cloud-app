@@ -1,1 +1,8 @@
-
+streamlit
+yfinance
+pandas
+python-dotenv
+requests
+schedule
+gspread
+google-auth
