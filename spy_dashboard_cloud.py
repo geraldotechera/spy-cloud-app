@@ -1,10 +1,8 @@
-# spy_dashboard_cloud.py — v2
-# - Dashboard en Streamlit Cloud
+# spy_dashboard_cloud.py — v3 (limpio + robusto)
 # - Google Sheets como BD
-# - Lectura de secrets desde raíz o [app_config]
-# - Form para registrar DEPOSIT / WITHDRAWAL / BUY / SELL
-# - Botón "Vender 25%" automático
-# - Gráfico de evolución (valor de cartera + cash) reconstruido con datos diarios
+# - Normaliza coma/punto y prices mal escalados
+# - Botón SELL 25%
+# - Gráfico de evolución
 
 import time
 import pandas as pd
@@ -18,7 +16,7 @@ st.set_page_config(page_title="SPY Cloud App", page_icon="📈", layout="centere
 st.title("📈 SPY Cloud App")
 st.caption("Monitoreo 24/7 en la nube con Google Sheets como base de datos")
 
-# ---- Secrets (compat: raíz y [app_config]) ----
+# ---- Secrets (compat raíz y [app_config]) ----
 GCP_SA = st.secrets.get("gcp_service_account", None)
 _cfg = st.secrets.get("app_config", {})
 
@@ -28,7 +26,7 @@ CHAT_ID  = st.secrets.get("CHAT_ID",  _cfg.get("CHAT_ID", ""))
 TICKER   = st.secrets.get("TICKER",   _cfg.get("TICKER", "SPY")).upper()
 
 if not GCP_SA or not SHEET_ID:
-    st.error("Faltan secrets: gcp_service_account y/o SHEET_ID. Configuralos en Streamlit Cloud.")
+    st.error("Faltan secrets: gcp_service_account y/o SHEET_ID.")
     st.stop()
 
 # --- Google Sheets client ---
@@ -43,6 +41,25 @@ def open_sheet(sheet_id: str):
     return client.open_by_key(sheet_id)
 
 LEDGER_SHEET = "ledger"
+
+# ---------- Helpers ----------
+def _to_float(x, default=0.0):
+    """Convierte strings con coma o punto a float. Maneja None."""
+    if x is None:
+        return float(default)
+    s = str(x).strip().replace(" ", "")
+    if s == "":
+        return float(default)
+    # cambiar coma por punto
+    s = s.replace(",", ".")
+    try:
+        v = float(s)
+    except:
+        return float(default)
+    # arreglar precios desescalados (ej: 67259 -> 672.59)
+    if v > 10000:  # heurística segura para SPY u otros ETFs
+        v = v / 100.0
+    return float(v)
 
 @st.cache_data(ttl=60)
 def get_price(ticker: str) -> float:
@@ -64,9 +81,9 @@ def load_ledger() -> pd.DataFrame:
     df = pd.DataFrame(rows)
     if df.empty:
         df = pd.DataFrame(columns=["date","type","amount_usd","price","note"])
-    df["amount_usd"] = pd.to_numeric(df["amount_usd"], errors="coerce").fillna(0.0)
-    df["price"] = pd.to_numeric(df["price"], errors="coerce").fillna(0.0)
-    # normalizar fecha
+    # normalizar
+    df["amount_usd"] = df["amount_usd"].map(_to_float)
+    df["price"] = df["price"].map(_to_float)
     if "date" in df.columns:
         df["date"] = pd.to_datetime(df["date"], errors="coerce").dt.date
     return df
@@ -77,18 +94,18 @@ def append_ledger(row: dict):
     ws.append_row([
         row.get("date",""),
         row.get("type",""),
-        row.get("amount_usd",0),
-        row.get("price",0),
+        _to_float(row.get("amount_usd", 0)),
+        _to_float(row.get("price", 0)),
         row.get("note","")
     ])
-    st.cache_data.clear()
+    st.cache_data.clear()  # refrescar caches
 
 def compute_portfolio(df: pd.DataFrame):
     cash = units = cost_basis = realized_pl = 0.0
     for _, r in df.sort_values("date").iterrows():
         t = (r.get("type") or "").upper()
-        amt = float(r.get("amount_usd", 0))
-        price = float(r.get("price", 0))
+        amt = _to_float(r.get("amount_usd", 0))
+        price = _to_float(r.get("price", 0))
         if t == "DEPOSIT":
             cash += amt
         elif t == "WITHDRAWAL":
@@ -112,37 +129,33 @@ def compute_portfolio(df: pd.DataFrame):
 
 @st.cache_data(ttl=300)
 def build_timeseries(df: pd.DataFrame, ticker: str):
-    """Reconstruye series diarias: cash, unidades, valor, valor_total."""
     if df.empty:
         return pd.DataFrame()
-
-    # Rango de fechas
     start = pd.to_datetime(df["date"].min())
     end   = pd.to_datetime(pd.Timestamp.utcnow().date())
     days = pd.date_range(start, end, freq="D")
 
-    # Precios diarios
-    hist = yf.Ticker(ticker).history(start=start.strftime("%Y-%m-%d"),
-                                     end=(end + pd.Timedelta(days=1)).strftime("%Y-%m-%d"),
-                                     interval="1d")
+    hist = yf.Ticker(ticker).history(
+        start=start.strftime("%Y-%m-%d"),
+        end=(end + pd.Timedelta(days=1)).strftime("%Y-%m-%d"),
+        interval="1d"
+    )
     if hist.empty:
         return pd.DataFrame()
     prices = hist["Close"].copy()
     prices.index = prices.index.tz_localize(None).date
 
-    # Estado día a día
     df2 = df.sort_values("date").copy()
     cash = units = cost_basis = 0.0
     out = []
     tx_by_day = df2.groupby("date")
     for d in days:
         ddate = d.date()
-        # aplicar transacciones del día
         if ddate in tx_by_day.groups:
             for _, r in tx_by_day.get_group(ddate).iterrows():
                 t = (r["type"] or "").upper()
-                amt = float(r["amount_usd"] or 0)
-                p   = float(r["price"] or 0)
+                amt = _to_float(r["amount_usd"])
+                p   = _to_float(r["price"])
                 if t == "DEPOSIT":
                     cash += amt
                 elif t == "WITHDRAWAL":
@@ -164,9 +177,7 @@ def build_timeseries(df: pd.DataFrame, ticker: str):
         total = cash + value
         out.append({"date": ddate, "cash": cash, "units": units, "price": px,
                     "position_value": value, "total_value": total})
-
-    ts = pd.DataFrame(out)
-    return ts
+    return pd.DataFrame(out)
 
 # ----- Header -----
 c1, c2 = st.columns(2)
@@ -200,13 +211,14 @@ st.metric("P/L total", f"{pnl_total:.2f} USD",
 
 st.divider()
 
-# ----- Botón Vender 25% -----
+# ----- Acciones rápidas -----
 st.subheader("⚡ Acciones rápidas")
 colv1, colv2 = st.columns(2)
 with colv1:
-    if st.button("Vender 25% de la posición", use_container_width=True, disabled=(units<=0 or price<=0)):
+    disabled = (units <= 0 or price <= 0)
+    if st.button("Vender 25% de la posición", use_container_width=True, disabled=disabled):
         qty = units * 0.25
-        amount = qty * price  # monto en USD que venderemos
+        amount = qty * price
         append_ledger({
             "date": time.strftime("%Y-%m-%d"),
             "type": "SELL",
@@ -227,19 +239,20 @@ with colv1:
         st.success("Venta 25% registrada.")
         st.rerun()
 with colv2:
-    st.caption("El monto se calcula con el precio actual. Podés editar luego en el ledger si querés ajustar.")
+    st.caption("El monto se calcula con el precio actual. Podés ajustar luego en el ledger.")
 
 st.divider()
 
-# ----- Gráfico de evolución -----
+# ----- Gráfico -----
 st.subheader("📊 Evolución de cartera")
 ts = build_timeseries(ledger, TICKER)
 if ts.empty:
     st.info("Cargá movimientos en el ledger para ver la evolución.")
 else:
-    # Mostrar total_value y cash
-    show = ts.set_index("date")[["total_value", "position_value", "cash"]]
-    st.line_chart(show, height=320, use_container_width=True)
+    st.line_chart(
+        ts.set_index("date")[["total_value", "position_value", "cash"]],
+        height=320, use_container_width=True
+    )
 
 st.divider()
 
@@ -254,31 +267,34 @@ with st.form("add_txn"):
     with c1:
         date = st.text_input("Fecha (AAAA-MM-DD)", value=time.strftime("%Y-%m-%d"))
         tx_type = st.selectbox("Tipo", ["DEPOSIT","WITHDRAWAL","BUY","SELL"], index=0)
-        amount = st.number_input("Monto USD", min_value=0.0, value=50.0, step=1.0, format="%.2f")
+        amount_in = st.text_input("Monto USD (usa punto para decimales)", value="50.00")
     with c2:
-        price_in = st.number_input("Precio SPY (solo BUY/SELL)", min_value=0.0, value=price, step=0.01, format="%.2f")
+        price_in = st.text_input("Precio SPY (solo BUY/SELL)", value=f"{price:.2f}")
         note = st.text_input("Nota", value="")
     submitted = st.form_submit_button("Guardar", use_container_width=True)
 
     if submitted:
         try:
-            if tx_type in ("BUY","SELL") and price_in <= 0:
+            amount = _to_float(amount_in)
+            p_in = _to_float(price_in)
+            if tx_type in ("BUY","SELL") and p_in <= 0:
                 st.error("Precio válido requerido para BUY/SELL.")
             else:
                 append_ledger({
                     "date": date,
                     "type": tx_type,
                     "amount_usd": round(amount, 2),
-                    "price": round(price_in, 2) if tx_type in ("BUY","SELL") else 0,
+                    "price": round(p_in, 2) if tx_type in ("BUY","SELL") else 0,
                     "note": note
                 })
                 st.success("Movimiento guardado.")
                 if BOT_TOKEN and CHAT_ID:
                     try:
+                        px_txt = f" @ {p_in:.2f}" if tx_type in ("BUY","SELL") else ""
                         requests.post(
                             f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
                             json={"chat_id": CHAT_ID,
-                                  "text": f"{tx_type}: ${amount:.2f} @ {price_in if tx_type in ('BUY','SELL') else ''} {TICKER}"},
+                                  "text": f"{tx_type}: ${amount:.2f}{px_txt} {TICKER}"},
                             timeout=10
                         )
                     except Exception:
@@ -288,7 +304,8 @@ with st.form("add_txn"):
             st.error(f"Error: {e}")
 
 st.divider()
-st.caption("Nota: en SELL, el 'Monto USD' es el total que querés vender; la app calcula la cantidad con el precio.")
+st.caption("Tip: si tenías una inversión previa, cargála como BUY con el monto total y el precio pagado. La app corrige comas y precios mal escalados.")
+
 
 
 
