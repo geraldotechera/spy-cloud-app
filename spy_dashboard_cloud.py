@@ -17,7 +17,9 @@ import gspread
 st.set_page_config(page_title="SPY Cloud App", page_icon="📈", layout="centered")
 st.title("📈 SPY Cloud App")
 st.caption("Monitoreo 24/7 en la nube con Google Sheets como base de datos")
-
+st.write("DEBUG - keys en st.secrets:", list(st.secrets.keys()))
+st.write("DEBUG - tiene gcp_service_account?:", "gcp_service_account" in st.secrets)
+st.write("DEBUG - SHEET_ID presente?:", bool(st.secrets.get("SHEET_ID", "")))
 # ---- Cargar Secrets ----
 GCP_SA = st.secrets.get("gcp_service_account", None)
 SHEET_ID = st.secrets.get("SHEET_ID", "")
@@ -163,3 +165,4 @@ with st.form("add_txn"):
 
 st.divider()
 st.caption("Consejo: en SELL el monto es el total en USD que vendés; la app calcula la cantidad con el precio indicado y descuenta costo promedio.")
+
