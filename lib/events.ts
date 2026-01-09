@@ -3432,3 +3432,5 @@ const budget = {
   totalNights: 26, // Aumentado de 25 a 26 noches
   totalDays: 24, // Aumentado de 23 a 24 días de comida
 }
+
+export { budget }
