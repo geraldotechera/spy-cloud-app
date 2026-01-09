@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "nombre": "Europa Mágica 2026",
+    "fechas": "3 al 25 de octubre de 2026",
+    "participantes": 6,
+    "parejas": 3,
+    "version": "1.0",
+    "fecha_backup": "2025-01-11"
+  },
+  "parejas": [
+    { "id": 1, "nombre": "CASTRO", "color": "#3B82F6" },
+    { "id": 2, "nombre": "PEREZ", "color": "#10B981" },
+    { "id": 3, "nombre": "TECHERA", "color": "#F59E0B" }
+  ],
+  "alojamientos": [
+    {
+      "id": 1,
+      "ciudad": "Madrid",
+      "nombre": "Hotel Madrid Centro",
+      "ubicacion": "Plaza Mayor, Madrid, España",
+      "fechas": "2026-10-03 - 2026-10-07",
+      "precio": 120,
+      "noches": 4,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 2,
+      "ciudad": "Barcelona",
+      "nombre": "Hotel Barcelona Eixample",
+      "ubicacion": "Eixample, Barcelona, España",
+      "fechas": "2026-10-07 - 2026-10-09",
+      "precio": 130,
+      "noches": 2,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 3,
+      "ciudad": "París",
+      "nombre": "Hotel París Barrio Latino",
+      "ubicacion": "Barrio Latino, París, Francia",
+      "fechas": "2026-10-09 - 2026-10-12",
+      "precio": 150,
+      "noches": 3,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 4,
+      "ciudad": "Zúrich",
+      "nombre": "Hotel Zúrich Centro",
+      "ubicacion": "Cerca del lago, Zúrich, Suiza",
+      "fechas": "2026-10-12 - 2026-10-13",
+      "precio": 180,
+      "noches": 1,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 5,
+      "ciudad": "Milán",
+      "nombre": "Hotel Milán Duomo",
+      "ubicacion": "Cerca del Duomo, Milán, Italia",
+      "fechas": "2026-10-13 - 2026-10-15",
+      "precio": 110,
+      "noches": 2,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 6,
+      "ciudad": "Florencia",
+      "nombre": "Hotel Florencia Centro",
+      "ubicacion": "Cerca del Duomo, Florencia, Italia",
+      "fechas": "2026-10-15 - 2026-10-18",
+      "precio": 100,
+      "noches": 3,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 7,
+      "ciudad": "Roma",
+      "nombre": "Hotel Roma Monti",
+      "ubicacion": "Monti, Roma, Italia",
+      "fechas": "2026-10-18 - 2026-10-21",
+      "precio": 120,
+      "noches": 3,
+      "url": "",
+      "notas": ""
+    },
+    {
+      "id": 8,
+      "ciudad": "Nápoles",
+      "nombre": "Hotel Nápoles Centro",
+      "ubicacion": "Spaccanapoli, Nápoles, Italia",
+      "fechas": "2026-10-21 - 2026-10-24",
+      "precio": 90,
+      "noches": 3,
+      "url": "",
+      "notas": ""
+    }
+  ],
+  "notas_importantes": [
+    "Reservar La Última Cena (Milán) con 2-3 meses de anticipación",
+    "Reservar asientos panorámicos del Bernina Express",
+    "Comprar entradas de museos online con horario",
+    "Reservar Moulin Rouge con anticipación",
+    "Reservar crucero por el Sena con anticipación",
+    "Galería Borghese (Roma) requiere reserva obligatoria",
+    "Considerar Eurail Pass para trenes",
+    "Llevar adaptador de enchufe europeo tipo C/F",
+    "Seguro de viaje obligatorio",
+    "Pasaporte vigente mínimo 6 meses"
+  ]
+}

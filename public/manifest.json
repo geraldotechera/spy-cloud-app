@@ -1,0 +1,21 @@
+{
+  "name": "Europa Mágica 2026",
+  "short_name": "Europa 2026",
+  "description": "Viaje a Europa 2026 - Itinerario, presupuesto y más",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "/icon-europa.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-europa-512.jpg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
