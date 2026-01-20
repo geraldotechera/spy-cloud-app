@@ -4,6 +4,16 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import type { Photo, User } from "@/types"
 
+// Lista de usuarios para compartir
+const ALL_USERS: User[] = [
+  { id: 1, name: "Geraldo", couple: "TECHERA", role: "admin", color: "bg-blue-500" },
+  { id: 2, name: "Laura", couple: "TECHERA", role: "user", color: "bg-blue-400" },
+  { id: 3, name: "Rodrigo C", couple: "CASTRO", role: "user", color: "bg-green-500" },
+  { id: 4, name: "Patricia", couple: "CASTRO", role: "user", color: "bg-green-400" },
+  { id: 5, name: "Rodrigo P", couple: "PEREZ", role: "user", color: "bg-orange-500" },
+  { id: 6, name: "Monica", couple: "PEREZ", role: "user", color: "bg-orange-400" },
+]
+
 interface PhotoGalleryProps {
   currentUser: User | null
   photos: Photo[]
@@ -16,7 +26,12 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
   const [selectionMode, setSelectionMode] = useState(false)
   const [selectedPhotos, setSelectedPhotos] = useState<Set<number>>(new Set())
-  const [storageInfo, setStorageInfo] = useState({ used: 0, limit: 5242880, percentage: 0 }) // 5MB límite
+  const [storageInfo, setStorageInfo] = useState({ used: 0, limit: 5242880, percentage: 0 })
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [pendingPhoto, setPendingPhoto] = useState<Photo | null>(null)
+  const [selectedUsersToShare, setSelectedUsersToShare] = useState<Set<number>>(new Set())
+  const [saveToMyGallery, setSaveToMyGallery] = useState(true)
+  const [viewMode, setViewMode] = useState<"my" | "shared" | "all">("all")
   const fileInputRef = useRef<HTMLInputElement>(null)
   const longPressTimer = useRef<NodeJS.Timeout | null>(null)
 
@@ -87,7 +102,7 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
     if (file) {
       try {
         if (storageInfo.percentage > 90) {
-          alert("Espacio casi lleno. Por favor elimina algunas fotos antes de agregar más.")
+          alert("Espacio casi lleno. Por favor elimina algunas fotos antes de agregar mas.")
           return
         }
 
@@ -99,11 +114,18 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
           date: new Date().toLocaleString("es-UY"),
           location: "",
           notes: "",
-          uploadedBy: currentUser?.couple,
+          uploadedBy: currentUser?.name,
+          uploadedById: currentUser?.id,
           timestamp: Date.now(),
+          ownerId: currentUser?.id,
+          sharedWith: [],
         }
 
-        onUpdatePhotos([newPhoto, ...photos])
+        // Mostrar modal para decidir si guardar o compartir
+        setPendingPhoto(newPhoto)
+        setShowShareModal(true)
+        setSelectedUsersToShare(new Set())
+        setSaveToMyGallery(true)
       } catch (error) {
         console.error("[v0] Error al comprimir la imagen:", error)
         alert("Error al guardar la foto. Por favor intenta de nuevo.")
@@ -114,6 +136,76 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
       e.target.value = ""
     }
   }
+
+  const handleConfirmShare = () => {
+    if (!pendingPhoto) return
+
+    const photoToSave: Photo = {
+      ...pendingPhoto,
+      sharedWith: Array.from(selectedUsersToShare),
+      savedToDevice: saveToMyGallery,
+    }
+
+    // Solo guardar si el usuario eligio guardarlo en su galeria o compartirlo
+    if (saveToMyGallery || selectedUsersToShare.size > 0) {
+      onUpdatePhotos([photoToSave, ...photos])
+      
+      // Si eligio guardar en el dispositivo, descargar automaticamente
+      if (saveToMyGallery) {
+        const link = document.createElement("a")
+        link.href = pendingPhoto.url
+        link.download = `europa-2026-${pendingPhoto.id}.jpg`
+        link.click()
+      }
+    }
+
+    setShowShareModal(false)
+    setPendingPhoto(null)
+    setSelectedUsersToShare(new Set())
+    setSaveToMyGallery(true)
+  }
+
+  const handleCancelShare = () => {
+    setShowShareModal(false)
+    setPendingPhoto(null)
+    setSelectedUsersToShare(new Set())
+    setSaveToMyGallery(true)
+  }
+
+  const toggleUserShare = (userId: number) => {
+    const newSelected = new Set(selectedUsersToShare)
+    if (newSelected.has(userId)) {
+      newSelected.delete(userId)
+    } else {
+      newSelected.add(userId)
+    }
+    setSelectedUsersToShare(newSelected)
+  }
+
+  const getOtherUsers = () => {
+    return ALL_USERS.filter(u => u.id !== currentUser?.id)
+  }
+
+  const getFilteredPhotos = () => {
+    if (!currentUser) return photos
+    
+    switch (viewMode) {
+      case "my":
+        return photos.filter(p => p.ownerId === currentUser.id || p.uploadedById === currentUser.id)
+      case "shared":
+        return photos.filter(p => p.sharedWith?.includes(currentUser.id) || p.ownerId !== currentUser.id)
+      case "all":
+      default:
+        return photos.filter(p => 
+          p.ownerId === currentUser.id || 
+          p.uploadedById === currentUser.id ||
+          p.sharedWith?.includes(currentUser.id) ||
+          !p.ownerId // Fotos antiguas sin owner
+        )
+    }
+  }
+
+  const filteredPhotos = getFilteredPhotos()
 
   const handleDeletePhoto = (id: number) => {
     if (confirm("¿Eliminar esta foto?")) {
@@ -254,15 +346,43 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
           className="hidden"
         />
 
-        {photos.length === 0 ? (
+        {/* Filtros de vista */}
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={() => setViewMode("all")}
+            className={`flex-1 px-3 py-2 rounded-lg text-sm transition-colors ${
+              viewMode === "all" ? "bg-blue-500" : "bg-white/10 hover:bg-white/20"
+            }`}
+          >
+            Todas
+          </button>
+          <button
+            onClick={() => setViewMode("my")}
+            className={`flex-1 px-3 py-2 rounded-lg text-sm transition-colors ${
+              viewMode === "my" ? "bg-blue-500" : "bg-white/10 hover:bg-white/20"
+            }`}
+          >
+            Mis fotos
+          </button>
+          <button
+            onClick={() => setViewMode("shared")}
+            className={`flex-1 px-3 py-2 rounded-lg text-sm transition-colors ${
+              viewMode === "shared" ? "bg-blue-500" : "bg-white/10 hover:bg-white/20"
+            }`}
+          >
+            Compartidas
+          </button>
+        </div>
+
+        {filteredPhotos.length === 0 ? (
           <div className="text-center py-12 opacity-70">
-            <p className="text-lg mb-2">No hay fotos todavía</p>
-            <p className="text-sm">Toca el botón "Tomar Foto" para empezar</p>
-            <p className="text-xs mt-2 opacity-50">Mantén presionada una foto para seleccionar múltiples</p>
+            <p className="text-lg mb-2">No hay fotos todavia</p>
+            <p className="text-sm">Toca el boton "Tomar Foto" para empezar</p>
+            <p className="text-xs mt-2 opacity-50">Manten presionada una foto para seleccionar multiples</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {photos.map((photo) => (
+            {filteredPhotos.map((photo) => (
               <div
                 key={photo.id}
                 onClick={() => handlePhotoClick(photo)}
@@ -292,7 +412,14 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-2">
                   <p className="text-xs">{photo.date}</p>
-                  {photo.uploadedBy && <p className="text-xs opacity-60">📤 {photo.uploadedBy}</p>}
+                  <div className="flex items-center justify-between">
+                    {photo.uploadedBy && <p className="text-xs opacity-60">{photo.uploadedBy}</p>}
+                    {photo.sharedWith && photo.sharedWith.length > 0 && (
+                      <span className="text-xs bg-green-500/50 px-1 rounded">
+                        Compartida ({photo.sharedWith.length})
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -329,13 +456,124 @@ export function PhotoGallery({ currentUser, photos, onBack, onUpdatePhotos, onGo
                 onClick={() => handleDownloadPhoto(selectedPhoto)}
                 className="flex-1 bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition-colors"
               >
-                💾 Descargar al Móvil
+                Descargar al Movil
               </button>
               <button
                 onClick={() => handleDeletePhoto(selectedPhoto.id)}
                 className="flex-1 bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition-colors"
               >
-                🗑️ Eliminar
+                Eliminar
+              </button>
+            </div>
+
+            {/* Info de compartidos */}
+            {selectedPhoto.sharedWith && selectedPhoto.sharedWith.length > 0 && (
+              <div className="mt-4 p-3 bg-green-500/20 rounded-lg border border-green-500/50">
+                <p className="text-sm font-semibold mb-2">Compartida con:</p>
+                <div className="flex flex-wrap gap-2">
+                  {selectedPhoto.sharedWith.map(userId => {
+                    const user = ALL_USERS.find(u => u.id === userId)
+                    return user ? (
+                      <span key={userId} className={`${user.color} px-2 py-1 rounded text-xs`}>
+                        {user.name}
+                      </span>
+                    ) : null
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Modal para compartir foto */}
+      {showShareModal && pendingPhoto && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-900 rounded-2xl p-6 max-w-md w-full border border-white/30">
+            <h3 className="text-xl font-bold mb-4 text-center">Nueva Foto</h3>
+            
+            <img
+              src={pendingPhoto.url || "/placeholder.svg"}
+              alt="Nueva foto"
+              className="w-full rounded-lg mb-4 max-h-48 object-cover"
+            />
+
+            {/* Opcion guardar en mi galeria */}
+            <div className="mb-4 p-3 bg-white/10 rounded-lg">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={saveToMyGallery}
+                  onChange={(e) => setSaveToMyGallery(e.target.checked)}
+                  className="w-5 h-5 rounded"
+                />
+                <div>
+                  <p className="font-semibold">Guardar en mi galeria</p>
+                  <p className="text-xs opacity-70">Se descargara tambien a tu movil</p>
+                </div>
+              </label>
+            </div>
+
+            {/* Seleccionar usuarios para compartir */}
+            <div className="mb-4">
+              <p className="font-semibold mb-2">Compartir con:</p>
+              <div className="grid grid-cols-2 gap-2">
+                {getOtherUsers().map(user => (
+                  <button
+                    key={user.id}
+                    onClick={() => toggleUserShare(user.id)}
+                    className={`p-3 rounded-lg border-2 transition-all text-left ${
+                      selectedUsersToShare.has(user.id)
+                        ? `${user.color} border-white`
+                        : "bg-white/10 border-transparent hover:border-white/50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full ${user.color}`} />
+                      <span className="text-sm font-medium">{user.name}</span>
+                    </div>
+                    <p className="text-xs opacity-60 mt-1">{user.couple}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Resumen */}
+            <div className="mb-4 p-3 bg-blue-500/20 rounded-lg border border-blue-500/50">
+              <p className="text-sm">
+                {saveToMyGallery && selectedUsersToShare.size > 0 && (
+                  <>Se guardara en tu galeria y se compartira con {selectedUsersToShare.size} persona(s)</>
+                )}
+                {saveToMyGallery && selectedUsersToShare.size === 0 && (
+                  <>Se guardara solo en tu galeria</>
+                )}
+                {!saveToMyGallery && selectedUsersToShare.size > 0 && (
+                  <>Se compartira con {selectedUsersToShare.size} persona(s) sin guardar en tu galeria</>
+                )}
+                {!saveToMyGallery && selectedUsersToShare.size === 0 && (
+                  <>Selecciona al menos una opcion</>
+                )}
+              </p>
+            </div>
+
+            {/* Botones */}
+            <div className="flex gap-2">
+              <button
+                onClick={handleCancelShare}
+                className="flex-1 bg-gray-500 hover:bg-gray-600 px-4 py-3 rounded-lg transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleConfirmShare}
+                disabled={!saveToMyGallery && selectedUsersToShare.size === 0}
+                className={`flex-1 px-4 py-3 rounded-lg transition-colors ${
+                  saveToMyGallery || selectedUsersToShare.size > 0
+                    ? "bg-green-500 hover:bg-green-600"
+                    : "bg-gray-600 cursor-not-allowed"
+                }`}
+              >
+                Confirmar
               </button>
             </div>
           </div>

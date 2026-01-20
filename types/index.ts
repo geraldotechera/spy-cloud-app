@@ -62,8 +62,12 @@ export interface Photo {
   date: string
   location?: string
   notes?: string
-  uploadedBy?: string // Quién subió la foto
-  timestamp?: number // Para sincronización
+  uploadedBy?: string // Nombre de quien subio la foto
+  uploadedById?: number // ID de quien subio la foto
+  timestamp?: number // Para sincronizacion
+  ownerId?: number // ID del propietario de la foto
+  sharedWith?: number[] // IDs de usuarios con quienes se compartio
+  savedToDevice?: boolean // Si se guardo en el dispositivo
 }
 
 export interface User {
