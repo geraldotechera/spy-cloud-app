@@ -34,7 +34,7 @@ export function PDFExport({ appData, onClose }: PDFExportProps) {
       pdf.text("3 Parejas - 6 Viajeros", 105, yPosition, { align: "center" })
 
       yPosition += 10
-      pdf.text("3 - 25 Octubre 2026", 105, yPosition, { align: "center" })
+      pdf.text("5 - 27 Septiembre 2026", 105, yPosition, { align: "center" })
 
       // Nueva página para itinerario
       pdf.addPage()

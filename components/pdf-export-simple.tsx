@@ -85,9 +85,9 @@ export function PDFExportSimple({ appData, section }: PDFExportSimpleProps) {
         </style>
       </head>
       <body>
-        <h1>🧳 Europa Mágica 2026</h1>
+        <h1>Europa Magica 2026</h1>
         <p><strong>3 Parejas - 6 Viajeros</strong></p>
-        <p>3 - 25 Octubre 2026</p>
+        <p>5 - 27 Septiembre 2026</p>
         <hr>
     `
 

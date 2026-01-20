@@ -111,8 +111,8 @@ export function PrintItinerary({ appData, onClose }: PrintItineraryProps) {
               )}
             </div>
 
-            {/* Pie de página con número de día */}
-            <div className="page-footer">Europa Mágica 2026 - Día {dayNumber} de 24</div>
+            {/* Pie de pagina con numero de dia */}
+            <div className="page-footer">Europa Magica 2026 - Dia {dayNumber} de 23 (5-27 Septiembre)</div>
           </div>
         )
       })}
