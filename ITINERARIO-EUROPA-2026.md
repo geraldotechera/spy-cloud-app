@@ -1,57 +1,74 @@
 # 🌍 ITINERARIO EUROPA MÁGICA 2026
-## Viaje de 3 parejas: 3 al 25 de octubre de 2026
+## Viaje de 3 parejas: 5 al 28 de septiembre de 2026
 
 ---
 
-## 📅 DÍA 1 - Sábado 3 de octubre
-### MONTEVIDEO → MADRID
+## 📅 DÍA 1 - Viernes 5 de septiembre
+### MONTEVIDEO → MADRID (En vuelo)
 
-**20:00** - Vuelo Montevideo - Madrid  
+**17:00** - Vuelo Montevideo - Madrid  
 📍 Aeropuerto de Carrasco, Montevideo  
-💰 $1,200 por pareja
+💰 $1,200 por pareja  
+Salida hacia Europa
 
 ---
 
-## 📅 DÍA 2 - Domingo 4 de octubre
-### MADRID - Museos y Flamenco
+## 📅 DÍA 2 - Sábado 6 de septiembre
+### MADRID - Llegada y paseo tranquilo
 
-**07:00** - Desayuno y paseo por Plaza Mayor  
-📍 Plaza Mayor, Madrid - Mercado de San Miguel para tapas
+**14:00** - Llegada a Madrid Barajas  
+📍 Aeropuerto Adolfo Suárez Madrid-Barajas, Terminal 4
 
-**09:30** - Museo del Prado  
+**16:00** - Check-in hotel zona céntrica  
+Descanso después del vuelo largo
+
+**17:30** - Paseo tranquilo de reconocimiento  
+📍 Plaza Mayor - Mercado de San Miguel  
+📍 Puerta del Sol  
+Paseo relajado para conocer el centro sin apuros
+
+**19:30** - Atardecer en Templo de Debod  
+📍 Calle Ferraz, 1  
+🆓 Gratis - Templo egipcio con mejores vistas del atardecer
+
+**21:00** - Cena tradicional española  
+📍 Zona La Latina o Plaza Mayor  
+Cocido madrileño o tapas - Reservar con anticipación
+
+---
+
+## 📅 DÍA 3 - Domingo 7 de septiembre
+### MADRID - Museos y cultura
+
+**07:00** - Desayuno en Plaza de Oriente  
+Café con vistas al Palacio Real
+
+**09:00** - Museo del Prado  
 📍 Paseo del Prado, s/n  
 💰 €15 | 🎫 [museodelprado.es](https://www.museodelprado.es)  
 ⏱️ 2h - Obras clave: Velázquez, Goya, El Greco
 
-**11:45** - Museo Thyssen-Bornemisza  
-📍 Paseo del Prado, 8  
-💰 €13 | 🎫 [museothyssen.org](https://www.museothyssen.org)  
-⏱️ 1h 30min - Colección desde el Renacimiento hasta el siglo XX
+**12:00** - Almuerzo ligero  
+Bocadillo de calamares o menú del día cerca del Retiro
 
-**13:30** - Almuerzo ligero  
-Bocadillo de calamares o menú del día
-
-**15:00** - Parque del Retiro  
+**13:00** - Parque del Retiro  
 📍 Plaza de la Independencia, 7  
 Estanque, Palacio de Cristal, paseo relajado
 
-**17:00** - Museo Reina Sofía  
+**14:30** - Museo Reina Sofía  
 📍 Calle de Santa Isabel, 52  
 💰 €12 | 🎫 [museoreinasofia.es](https://www.museoreinasofia.es)  
-⏱️ 1h 30min - Guernica de Picasso y arte contemporáneo
+⏱️ 1h 30min - Guernica de Picasso
 
-**19:00** - Templo de Debod  
-📍 Calle Ferraz, 1  
-🆓 Gratis - Templo egipcio con mejores vistas del atardecer
+**16:30** - Barrio de Las Letras y Thyssen  
+📍 Barrio de Las Letras, Madrid
 
-**21:00** - 🎭 Cena con espectáculo de flamenco  
-📍 Corral de la Morería, Calle de la Morería, 17  
-💰 €60 | 🎫 [corraldelamoreria.com](https://www.corraldelamoreria.com)  
-Uno de los mejores tablaos de flamenco del mundo
+**20:00** - Cena tradicional española  
+Menú del día
 
 ---
 
-## 📅 DÍA 3 - Lunes 5 de octubre
+## 📅 DÍA 4 - Lunes 8 de septiembre
 ### MADRID - Palacio Real y La Latina
 
 **07:00** - Desayuno en Plaza de Oriente  
@@ -62,11 +79,7 @@ Café con vistas al Palacio Real
 💰 €12 | 🎫 [patrimonionacional.es](https://www.patrimonionacional.es)  
 ⏱️ 1h 30min - 2h
 
-**10:45** - Jardines de Sabatini  
-📍 Calle de Bailén, 2  
-🆓 Gratis - Jardines franceses con vista al Palacio
-
-**11:15** - Catedral de la Almudena  
+**11:00** - Catedral de la Almudena  
 📍 Calle de Bailén, 10  
 ⏱️ 30-45 min
 
@@ -76,16 +89,12 @@ Menú del día en restaurante tradicional
 **13:30** - Paseo por La Latina → Barrio de los Austrias  
 Calles históricas y plazas con encanto
 
-**17:00** - Mercado de San Miguel  
-📍 Plaza de San Miguel, s/n  
-Mercado gourmet con tapas y vinos españoles
-
 **20:00** - Cena de tapas por Cava Baja  
 Ruta de tapas por la calle más famosa de Madrid
 
 ---
 
-## 📅 DÍA 4 - Martes 6 de octubre
+## 📅 DÍA 5 - Martes 9 de septiembre
 ### EXCURSIÓN A TOLEDO (día completo)
 
 **07:00** - Salida de Madrid (Atocha)  
