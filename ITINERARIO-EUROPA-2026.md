@@ -174,73 +174,68 @@ Tapas catalanas y música española en vivo
 
 ---
 
-## 📅 DÍA 6 - Jueves 8 de octubre
-### BARCELONA - Gaudí y Montjuïc
+## 📅 DÍA 7 - Jueves 11 de septiembre
+### BARCELONA (Día 2) - Gaudí y cultura
 
-**08:00** - Desayuno
+**07:00** - Desayuno
 
 **09:00** - Park Güell  
 📍 Carrer d'Olot, s/n  
 💰 €10 | 🎫 [parkguell.barcelona](https://parkguell.barcelona)  
-Reservar entrada con horario
+Mosaicos de Gaudí con vistas panorámicas
 
-**11:30** - Museo Picasso  
+**10:00** - Museo Picasso  
 📍 Carrer de Montcada, 15-23  
 💰 €12 | 🎫 [museupicasso.bcn.cat](https://www.museupicasso.bcn.cat)
 
-**13:30** - Almuerzo en El Born  
+**12:00** - Almuerzo en El Born  
 Tapas de mar y vermut
 
-**15:00** - Barrio Gótico y Catedral  
+**14:00** - Barrio Gótico y Catedral  
 Calles medievales, Catedral de Barcelona
 
-**16:30** - La Rambla  
-Paseo hasta el puerto
+**16:00** - Montjuïc  
+Teleférico, Castillo, vistas panorámicas  
+💰 €13
 
-**17:30** - Montjuïc - Teleférico y Castillo  
-💰 €13 | 🎫 [telefericodebarcelona.com](https://www.telefericodebarcelona.com)
-
-**19:00** - Bunkers del Carmel (opcional)  
-🆓 Gratis - Mejores vistas panorámicas al atardecer
-
-**21:00** - Fuente Mágica de Montjuïc  
-Espectáculo de agua, luz y música
-
-**22:00** - Cena tardía  
-Arroz negro o fideuà en restaurante del puerto
+**20:00** - Cena catalana  
+Arroz negro
 
 ---
 
-## 📅 DÍA 7 - Viernes 9 de octubre
-### BARCELONA → PARÍS
+## 📅 DÍA 8 - Viernes 12 de septiembre
+### BARCELONA → PARÍS (Tren)
 
-**07:00** - Vuelo Barcelona - París  
-💰 €150 | 🎫 [vueling.com](https://www.vueling.com)
+**08:30** - Tren de alta velocidad Barcelona - París  
+📍 Estación Barcelona Sants  
+TGV/Renfe directo  
+⏱️ Duración: 6h 30min  
+💰 €180 por persona | 🎫 [renfe-sncf.com](https://www.renfe-sncf.com)
 
-**10:00** - Llegada y check-in en París
+**15:00** - Llegada a París Gare de Lyon
 
-**12:00** - Almuerzo en Barrio Latino  
-Croque-monsieur en bistró tradicional
+**15:30** - Check-in hotel zona Torre Eiffel  
+📍 7º arrondissement, cerca de Torre Eiffel  
+Descanso y acomodación
 
-**14:00** - Notre-Dame (exterior) y Sainte-Chapelle  
-📍 Île de la Cité  
-💰 €11 | 🎫 [sainte-chapelle.fr](https://www.sainte-chapelle.fr)  
-Vitrales impresionantes
+**17:00** - Paseo tranquilo hacia Torre Eiffel  
+📍 Champ de Mars, París  
+Fotos desde el exterior, vista del atardecer
 
-**16:30** - Paseo por las orillas del Sena  
-Bouquinistes (libreros), vistas de Notre-Dame
+**18:30** - Jardines del Trocadero  
+📍 Place du Trocadéro  
+Mejores vistas fotográficas de la Torre Eiffel  
+Ver el espectáculo de luces de la Torre (cada hora al anochecer)
 
-**18:00** - Tiempo libre / descanso
-
-**20:30** - 🚢 Crucero con cena por el Sena  
-📍 Port de la Bourdonnais (cerca Torre Eiffel)  
-💰 €85 | 🎫 [bateauxparisiens.com](https://www.bateauxparisiens.com)  
-⏱️ 2h 30min - Cena gourmet viendo monumentos iluminados
+**20:30** - Cena tradicional francesa  
+📍 Rue Cler o zona 7º arrondissement  
+Boeuf bourguignon o steak frites  
+Reservar con anticipación
 
 ---
 
-## 📅 DÍA 8 - Sábado 10 de octubre
-### PARÍS - Louvre, Torre Eiffel y Moulin Rouge
+## 📅 DÍA 9 - Sábado 13 de septiembre
+### PARÍS (Día 2) - Louvre y cultura
 
 **08:00** - Desayuno parisino  
 Croissant y café au lait
