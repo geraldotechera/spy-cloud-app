@@ -22,6 +22,17 @@ interface MetroStation {
   coordinates?: { lat: number; lng: number }
 }
 
+interface TouristPlace {
+  id: string
+  name: string
+  category: string
+  nearestStation: string
+  stationName: string
+  walkingTime: string
+  address: string
+  description: string
+}
+
 const METRO_LINES: MetroLine[] = [
   { id: "L1", name: "Línea 1", color: "#38B6E6" },
   { id: "L2", name: "Línea 2", color: "#E8292B" },
@@ -82,7 +93,112 @@ const METRO_STATIONS: MetroStation[] = [
   
   // Línea 10
   { id: "hospital-infanta-sofia", name: "Hospital Infanta Sofía", lines: ["L10"], zone: 2 },
+  { id: "santiago-bernabeu", name: "Santiago Bernabéu", lines: ["L10"], zone: 1 },
   { id: "plaza-espana", name: "Plaza de España", lines: ["L3", "L10"], zone: 1 },
+]
+
+// Lugares turísticos populares de Madrid
+const TOURIST_PLACES: TouristPlace[] = [
+  {
+    id: "palacio-real",
+    name: "Palacio Real",
+    category: "Monumentos",
+    nearestStation: "opera",
+    stationName: "Ópera",
+    walkingTime: "5 minutos",
+    address: "Calle de Bailén, s/n, 28071 Madrid",
+    description: "Residencia oficial de la Familia Real Española",
+  },
+  {
+    id: "museo-prado",
+    name: "Museo del Prado",
+    category: "Museos",
+    nearestStation: "banco-espana",
+    stationName: "Banco de España",
+    walkingTime: "8 minutos",
+    address: "Paseo del Prado, s/n, 28014 Madrid",
+    description: "Uno de los museos de arte más importantes del mundo",
+  },
+  {
+    id: "parque-retiro",
+    name: "Parque del Retiro",
+    category: "Parques",
+    nearestStation: "retiro",
+    stationName: "Retiro",
+    walkingTime: "2 minutos",
+    address: "Plaza de la Independencia, 7, 28001 Madrid",
+    description: "Parque histórico y jardines del Buen Retiro",
+  },
+  {
+    id: "puerta-sol",
+    name: "Puerta del Sol",
+    category: "Plazas",
+    nearestStation: "sol",
+    stationName: "Sol",
+    walkingTime: "1 minuto",
+    address: "Puerta del Sol, 28013 Madrid",
+    description: "Centro neurálgico de Madrid y kilómetro cero",
+  },
+  {
+    id: "plaza-mayor",
+    name: "Plaza Mayor",
+    category: "Plazas",
+    nearestStation: "sol",
+    stationName: "Sol",
+    walkingTime: "5 minutos",
+    address: "Plaza Mayor, 28012 Madrid",
+    description: "Plaza porticada del Madrid de los Austrias",
+  },
+  {
+    id: "templo-debod",
+    name: "Templo de Debod",
+    category: "Monumentos",
+    nearestStation: "plaza-espana",
+    stationName: "Plaza de España",
+    walkingTime: "8 minutos",
+    address: "Calle Ferraz, 1, 28008 Madrid",
+    description: "Templo egipcio del siglo II a.C.",
+  },
+  {
+    id: "estadio-santiago-bernabeu",
+    name: "Estadio Santiago Bernabéu",
+    category: "Deportes",
+    nearestStation: "santiago-bernabeu",
+    stationName: "Santiago Bernabéu",
+    walkingTime: "2 minutos",
+    address: "Av. de Concha Espina, 1, 28036 Madrid",
+    description: "Estadio del Real Madrid",
+  },
+  {
+    id: "gran-via",
+    name: "Gran Vía",
+    category: "Calles",
+    nearestStation: "gran-via",
+    stationName: "Gran Vía",
+    walkingTime: "1 minuto",
+    address: "Gran Vía, Madrid",
+    description: "Principal calle comercial y de espectáculos",
+  },
+  {
+    id: "museo-reina-sofia",
+    name: "Museo Reina Sofía",
+    category: "Museos",
+    nearestStation: "atocha",
+    stationName: "Atocha",
+    walkingTime: "5 minutos",
+    address: "Calle de Santa Isabel, 52, 28012 Madrid",
+    description: "Museo de arte moderno y contemporáneo",
+  },
+  {
+    id: "mercado-san-miguel",
+    name: "Mercado de San Miguel",
+    category: "Gastronomía",
+    nearestStation: "sol",
+    stationName: "Sol",
+    walkingTime: "7 minutos",
+    address: "Plaza de San Miguel, s/n, 28005 Madrid",
+    description: "Mercado gourmet en estructura de hierro",
+  },
 ]
 
 export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
@@ -144,19 +260,27 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
   }
 
   const calculateMetroRoute = () => {
-    // Detectar si origen o destino son alojamientos
+    // Detectar si origen o destino son alojamientos o lugares turísticos
     const isFromAccommodation = fromStation.startsWith("accommodation-")
     const isToAccommodation = toStation.startsWith("accommodation-")
+    const isFromPlace = fromStation.startsWith("place-")
+    const isToPlace = toStation.startsWith("place-")
 
     let fromStationData
     let toStationData
     let fromAccommodationInfo = null
     let toAccommodationInfo = null
+    let fromPlaceInfo = null
+    let toPlaceInfo = null
 
     if (isFromAccommodation) {
       const accId = fromStation.replace("accommodation-", "")
       fromAccommodationInfo = getAccommodationMetroInfo(accId)
       fromStationData = METRO_STATIONS.find((s) => s.id === fromAccommodationInfo?.nearestStation)
+    } else if (isFromPlace) {
+      const placeId = fromStation.replace("place-", "")
+      fromPlaceInfo = TOURIST_PLACES.find((p) => p.id === placeId)
+      fromStationData = METRO_STATIONS.find((s) => s.id === fromPlaceInfo?.nearestStation)
     } else {
       fromStationData = METRO_STATIONS.find((s) => s.id === fromStation)
     }
@@ -165,6 +289,10 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
       const accId = toStation.replace("accommodation-", "")
       toAccommodationInfo = getAccommodationMetroInfo(accId)
       toStationData = METRO_STATIONS.find((s) => s.id === toAccommodationInfo?.nearestStation)
+    } else if (isToPlace) {
+      const placeId = toStation.replace("place-", "")
+      toPlaceInfo = TOURIST_PLACES.find((p) => p.id === placeId)
+      toStationData = METRO_STATIONS.find((s) => s.id === toPlaceInfo?.nearestStation)
     } else {
       toStationData = METRO_STATIONS.find((s) => s.id === toStation)
     }
@@ -190,6 +318,8 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
         color: METRO_LINES.find((l) => l.id === commonLines[0])?.color,
         fromAccommodationInfo,
         toAccommodationInfo,
+        fromPlaceInfo,
+        toPlaceInfo,
         fromStationData,
         toStationData,
       }
@@ -217,6 +347,8 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
         color2: METRO_LINES.find((l) => l.id === line2)?.color,
         fromAccommodationInfo,
         toAccommodationInfo,
+        fromPlaceInfo,
+        toPlaceInfo,
         fromStationData,
         toStationData,
       }
@@ -227,6 +359,8 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
       message: "Ruta compleja - consulta el mapa o usa Google Maps",
       fromAccommodationInfo,
       toAccommodationInfo,
+      fromPlaceInfo,
+      toPlaceInfo,
       fromStationData,
       toStationData,
     }
@@ -371,7 +505,7 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
               onChange={(e) => setToStation(e.target.value)}
               className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm"
             >
-              <option value="">Selecciona estación de destino</option>
+              <option value="">Selecciona destino</option>
               {accommodations.filter((acc) => acc.city === "Madrid").length > 0 && (
                 <optgroup label="🏨 Mis Alojamientos">
                   {accommodations
@@ -383,6 +517,13 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
                     ))}
                 </optgroup>
               )}
+              <optgroup label="📍 Lugares Turísticos">
+                {TOURIST_PLACES.map((place) => (
+                  <option key={place.id} value={`place-${place.id}`}>
+                    {place.name} - {place.category}
+                  </option>
+                ))}
+              </optgroup>
               <optgroup label="🚇 Estaciones de Metro">
                 {filteredStations.map((station) => (
                   <option key={station.id} value={station.id}>
@@ -487,6 +628,20 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
                     <p className="text-xs mt-1 text-white/80">{routeInfo.toAccommodationInfo.directions}</p>
                   </div>
                 </div>
+              ) : routeInfo.toPlaceInfo ? (
+                <div className="bg-purple-500/20 rounded-lg p-3 border border-purple-400/50">
+                  <p className="font-bold text-purple-300 mb-2">📍 HASTA: {routeInfo.toPlaceInfo.name}</p>
+                  <p className="text-xs text-white/70 mb-2">{routeInfo.toPlaceInfo.description}</p>
+                  <p className="text-xs text-white/60 mb-2">📍 {routeInfo.toPlaceInfo.address}</p>
+                  <div className="mt-2 p-2 bg-white/10 rounded">
+                    <p className="text-xs font-semibold mb-1">
+                      Metro más cercano: {routeInfo.toPlaceInfo.stationName}
+                    </p>
+                    <p className="text-xs">
+                      <strong>🚶 Camina {routeInfo.toPlaceInfo.walkingTime}</strong> desde la estación
+                    </p>
+                  </div>
+                </div>
               ) : (
                 <p>
                   <strong>Destino:</strong> {routeInfo.toStationData?.name || getStationName(toStation)}
@@ -540,6 +695,8 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
                     routeInfo.fromAccommodationInfo.accommodation.address ||
                       routeInfo.fromAccommodationInfo.accommodation.name,
                   )
+                } else if (routeInfo.fromPlaceInfo) {
+                  originParam = encodeURIComponent(routeInfo.fromPlaceInfo.address)
                 } else {
                   const from = routeInfo.fromStationData?.name || getStationName(fromStation)
                   originParam = encodeURIComponent(`Metro ${from}, Madrid`)
@@ -550,6 +707,8 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
                     routeInfo.toAccommodationInfo.accommodation.address ||
                       routeInfo.toAccommodationInfo.accommodation.name,
                   )
+                } else if (routeInfo.toPlaceInfo) {
+                  destinationParam = encodeURIComponent(routeInfo.toPlaceInfo.address)
                 } else {
                   const to = routeInfo.toStationData?.name || getStationName(toStation)
                   destinationParam = encodeURIComponent(`Metro ${to}, Madrid`)
