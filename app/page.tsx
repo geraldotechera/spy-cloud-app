@@ -11,6 +11,7 @@ import { CurrencyConverter } from "@/components/currency-converter"
 import { PhotoGallery } from "@/components/photo-gallery"
 import { BikesSection } from "@/components/bikes-section"
 import { WebLinksSection } from "@/components/web-links-section"
+import { MadridMetro } from "@/components/madrid-metro"
 import { UserSelector } from "@/components/user-selector"
 import { UserSettings } from "@/components/user-settings"
 import { PDFExportSimple } from "@/components/pdf-export-simple"
@@ -56,6 +57,7 @@ export default function Home() {
     | "fotos"
     | "bicicletas"
     | "web"
+    | "metro"
     | "configuracion"
   >("main")
   const [selectedDate, setSelectedDate] = useState("2026-09-06")
@@ -401,6 +403,10 @@ export default function Home() {
         {currentSection === "bicicletas" && <BikesSection onBack={() => setCurrentSection("main")} />}
 
         {currentSection === "web" && <WebLinksSection onBack={() => setCurrentSection("main")} />}
+
+        {currentSection === "metro" && (
+          <MadridMetro accommodations={appData.accommodations} onBack={() => setCurrentSection("main")} />
+        )}
 
         {currentSection === "configuracion" && currentUser.role === "admin" && (
           <UserSettings currentUser={currentUser} onBack={() => setCurrentSection("main")} />
