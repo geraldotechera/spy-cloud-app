@@ -542,7 +542,23 @@ export function getInitialData(): AppData {
   console.log("[v0] - TOTAL POR PAREJA:", totalPerCouple, "€")
   console.log("[v0] - TOTAL GENERAL (3 parejas):", totalGeneral, "€")
 
-  const accommodations: any[] = []
+  const accommodations: any[] = [
+    {
+      id: 1,
+      city: "Madrid",
+      name: "Apartamento Centro Madrid",
+      address: "Calle del Barquillo 41, 28004 Madrid, España",
+      checkIn: "2026-09-06",
+      checkOut: "2026-09-09",
+      nights: 3,
+      pricePerNight: 85,
+      totalPrice: 255,
+      coordinates: { lat: 40.4238, lng: -3.6947 },
+      notes: "Cerca de Alonso Martínez y Chueca. Metro: Alonso Martínez (L4, L5, L10)",
+      amenities: ["WiFi", "Cocina", "Lavadora", "Aire acondicionado"],
+      contact: "",
+    },
+  ]
 
   const eventsByDate: Record<string, Event[]> = {
     "2026-09-05": [
