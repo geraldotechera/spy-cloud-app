@@ -39,13 +39,8 @@ function validateAppData(data: any): data is AppData {
 }
 
 export default function Home() {
-  const [showSplash, setShowSplash] = useState(() => {
-    if (typeof window !== "undefined") {
-      const splashShown = sessionStorage.getItem("splashShown")
-      return splashShown !== "true"
-    }
-    return true
-  })
+  const [showSplash, setShowSplash] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
   const [currentSection, setCurrentSection] = useState<
     | "main"
@@ -70,7 +65,15 @@ export default function Home() {
   const [showCountryMap, setShowCountryMap] = useState<"spain" | "france" | "italy" | "switzerland" | null>(null)
 
   useEffect(() => {
-    if (showSplash) {
+    setMounted(true)
+    const splashShown = sessionStorage.getItem("splashShown")
+    if (splashShown === "true") {
+      setShowSplash(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (mounted && showSplash) {
       const timer = setTimeout(() => {
         setShowSplash(false)
         sessionStorage.setItem("splashShown", "true")
@@ -78,7 +81,7 @@ export default function Home() {
 
       return () => clearTimeout(timer)
     }
-  }, [showSplash])
+  }, [showSplash, mounted])
 
   useEffect(() => {
     const loadData = () => {
