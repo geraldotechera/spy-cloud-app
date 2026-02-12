@@ -86,11 +86,6 @@ const METRO_STATIONS: MetroStation[] = [
 ]
 
 export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
-  console.log("[v0] MadridMetro - Total alojamientos recibidos:", accommodations.length)
-  console.log("[v0] MadridMetro - Alojamientos:", accommodations)
-  const madridAccommodations = accommodations.filter((acc) => acc.city === "Madrid")
-  console.log("[v0] MadridMetro - Alojamientos en Madrid:", madridAccommodations.length, madridAccommodations)
-
   const [selectedLine, setSelectedLine] = useState<string | null>(null)
   const [fromStation, setFromStation] = useState<string>("")
   const [toStation, setToStation] = useState<string>("")
@@ -130,13 +125,11 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
   }
 
   const handleRouteFromAccommodation = (accommodation: Accommodation) => {
-    console.log("[v0] Abriendo ruta desde alojamiento:", accommodation)
     setSelectedAccommodation(accommodation)
     // Abrir Google Maps con ruta desde el alojamiento a la estación más cercana (Alonso Martínez)
     const origin = encodeURIComponent(accommodation.address || accommodation.name)
     const destination = encodeURIComponent("Metro Alonso Martínez, Madrid")
     const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`
-    console.log("[v0] URL de Google Maps:", url)
     window.open(url, "_blank")
   }
 

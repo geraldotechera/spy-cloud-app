@@ -546,7 +546,7 @@ export function getInitialData(): AppData {
     {
       id: 1,
       city: "Madrid",
-      name: "Apartamento Centro Madrid",
+      name: "Alojamiento Calle del Barquillo 41",
       address: "Calle del Barquillo 41, 28004 Madrid, España",
       checkIn: "2026-09-06",
       checkOut: "2026-09-09",
