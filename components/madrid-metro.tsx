@@ -22,6 +22,17 @@ interface MetroStation {
   coordinates?: { lat: number; lng: number }
 }
 
+interface TouristPlace {
+  id: string
+  name: string
+  category: string
+  nearestStation: string
+  stationName: string
+  walkingTime: string
+  address: string
+  description: string
+}
+
 const METRO_LINES: MetroLine[] = [
   { id: "L1", name: "Línea 1", color: "#38B6E6" },
   { id: "L2", name: "Línea 2", color: "#E8292B" },
@@ -82,7 +93,112 @@ const METRO_STATIONS: MetroStation[] = [
   
   // Línea 10
   { id: "hospital-infanta-sofia", name: "Hospital Infanta Sofía", lines: ["L10"], zone: 2 },
+  { id: "santiago-bernabeu", name: "Santiago Bernabéu", lines: ["L10"], zone: 1 },
   { id: "plaza-espana", name: "Plaza de España", lines: ["L3", "L10"], zone: 1 },
+]
+
+// Lugares turísticos populares de Madrid
+const TOURIST_PLACES: TouristPlace[] = [
+  {
+    id: "palacio-real",
+    name: "Palacio Real",
+    category: "Monumentos",
+    nearestStation: "opera",
+    stationName: "Ópera",
+    walkingTime: "5 minutos",
+    address: "Calle de Bailén, s/n, 28071 Madrid",
+    description: "Residencia oficial de la Familia Real Española",
+  },
+  {
+    id: "museo-prado",
+    name: "Museo del Prado",
+    category: "Museos",
+    nearestStation: "banco-espana",
+    stationName: "Banco de España",
+    walkingTime: "8 minutos",
+    address: "Paseo del Prado, s/n, 28014 Madrid",
+    description: "Uno de los museos de arte más importantes del mundo",
+  },
+  {
+    id: "parque-retiro",
+    name: "Parque del Retiro",
+    category: "Parques",
+    nearestStation: "retiro",
+    stationName: "Retiro",
+    walkingTime: "2 minutos",
+    address: "Plaza de la Independencia, 7, 28001 Madrid",
+    description: "Parque histórico y jardines del Buen Retiro",
+  },
+  {
+    id: "puerta-sol",
+    name: "Puerta del Sol",
+    category: "Plazas",
+    nearestStation: "sol",
+    stationName: "Sol",
+    walkingTime: "1 minuto",
+    address: "Puerta del Sol, 28013 Madrid",
+    description: "Centro neurálgico de Madrid y kilómetro cero",
+  },
+  {
+    id: "plaza-mayor",
+    name: "Plaza Mayor",
+    category: "Plazas",
+    nearestStation: "sol",
+    stationName: "Sol",
+    walkingTime: "5 minutos",
+    address: "Plaza Mayor, 28012 Madrid",
+    description: "Plaza porticada del Madrid de los Austrias",
+  },
+  {
+    id: "templo-debod",
+    name: "Templo de Debod",
+    category: "Monumentos",
+    nearestStation: "plaza-espana",
+    stationName: "Plaza de España",
+    walkingTime: "8 minutos",
+    address: "Calle Ferraz, 1, 28008 Madrid",
+    description: "Templo egipcio del siglo II a.C.",
+  },
+  {
+    id: "estadio-santiago-bernabeu",
+    name: "Estadio Santiago Bernabéu",
+    category: "Deportes",
+    nearestStation: "santiago-bernabeu",
+    stationName: "Santiago Bernabéu",
+    walkingTime: "2 minutos",
+    address: "Av. de Concha Espina, 1, 28036 Madrid",
+    description: "Estadio del Real Madrid",
+  },
+  {
+    id: "gran-via",
+    name: "Gran Vía",
+    category: "Calles",
+    nearestStation: "gran-via",
+    stationName: "Gran Vía",
+    walkingTime: "1 minuto",
+    address: "Gran Vía, Madrid",
+    description: "Principal calle comercial y de espectáculos",
+  },
+  {
+    id: "museo-reina-sofia",
+    name: "Museo Reina Sofía",
+    category: "Museos",
+    nearestStation: "atocha",
+    stationName: "Atocha",
+    walkingTime: "5 minutos",
+    address: "Calle de Santa Isabel, 52, 28012 Madrid",
+    description: "Museo de arte moderno y contemporáneo",
+  },
+  {
+    id: "mercado-san-miguel",
+    name: "Mercado de San Miguel",
+    category: "Gastronomía",
+    nearestStation: "sol",
+    stationName: "Sol",
+    walkingTime: "7 minutos",
+    address: "Plaza de San Miguel, s/n, 28005 Madrid",
+    description: "Mercado gourmet en estructura de hierro",
+  },
 ]
 
 export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
@@ -101,14 +217,34 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
       alert("Por favor selecciona estación de origen y destino")
       return
     }
+    if (fromStation === toStation) {
+      alert("Por favor selecciona estaciones diferentes")
+      return
+    }
     setShowRoute(true)
+  }
+
+  const getAccommodationMetroInfo = (accId: string) => {
+    const acc = accommodations.find((a) => a.id.toString() === accId)
+    if (!acc) return null
+
+    // Estación más cercana según las coordenadas del alojamiento
+    // Para Calle del Barquillo 41, la estación más cercana es Alonso Martínez
+    return {
+      accommodation: acc,
+      nearestStation: "alonso-martinez",
+      stationName: "Alonso Martínez",
+      lines: ["L4", "L5", "L10"],
+      walkingTime: "3-5 minutos caminando",
+      directions: "Sal del alojamiento hacia la derecha en Calle del Barquillo. Camina hacia el norte hasta llegar a la intersección con Calle Santa Bárbara. La estación Alonso Martínez está en la esquina.",
+    }
   }
 
   const handleRouteFromAccommodation = (accommodation: Accommodation) => {
     setSelectedAccommodation(accommodation)
-    // Abrir Google Maps con ruta desde el alojamiento
-    const origin = encodeURIComponent(accommodation.location || accommodation.name)
-    const destination = encodeURIComponent("Metro Madrid")
+    // Abrir Google Maps con ruta desde el alojamiento a la estación más cercana (Alonso Martínez)
+    const origin = encodeURIComponent(accommodation.address || accommodation.name)
+    const destination = encodeURIComponent("Metro Alonso Martínez, Madrid")
     const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`
     window.open(url, "_blank")
   }
@@ -124,10 +260,52 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
   }
 
   const calculateMetroRoute = () => {
-    const fromStationData = METRO_STATIONS.find((s) => s.id === fromStation)
-    const toStationData = METRO_STATIONS.find((s) => s.id === toStation)
+    // Detectar si origen o destino son alojamientos o lugares turísticos
+    const isFromAccommodation = fromStation.startsWith("accommodation-")
+    const isToAccommodation = toStation.startsWith("accommodation-")
+    const isFromPlace = fromStation.startsWith("place-")
+    const isToPlace = toStation.startsWith("place-")
+
+    let fromStationData
+    let toStationData
+    let fromAccommodationInfo = null
+    let toAccommodationInfo = null
+    let fromPlaceInfo = null
+    let toPlaceInfo = null
+
+    if (isFromAccommodation) {
+      const accId = fromStation.replace("accommodation-", "")
+      fromAccommodationInfo = getAccommodationMetroInfo(accId)
+      fromStationData = METRO_STATIONS.find((s) => s.id === fromAccommodationInfo?.nearestStation)
+    } else if (isFromPlace) {
+      const placeId = fromStation.replace("place-", "")
+      fromPlaceInfo = TOURIST_PLACES.find((p) => p.id === placeId)
+      fromStationData = METRO_STATIONS.find((s) => s.id === fromPlaceInfo?.nearestStation)
+    } else {
+      fromStationData = METRO_STATIONS.find((s) => s.id === fromStation)
+    }
+
+    if (isToAccommodation) {
+      const accId = toStation.replace("accommodation-", "")
+      toAccommodationInfo = getAccommodationMetroInfo(accId)
+      toStationData = METRO_STATIONS.find((s) => s.id === toAccommodationInfo?.nearestStation)
+    } else if (isToPlace) {
+      const placeId = toStation.replace("place-", "")
+      toPlaceInfo = TOURIST_PLACES.find((p) => p.id === placeId)
+      toStationData = METRO_STATIONS.find((s) => s.id === toPlaceInfo?.nearestStation)
+    } else {
+      toStationData = METRO_STATIONS.find((s) => s.id === toStation)
+    }
 
     if (!fromStationData || !toStationData) return null
+
+    // Si origen y destino son el mismo alojamiento
+    if (isFromAccommodation && isToAccommodation && fromStation === toStation) {
+      return {
+        type: "same-accommodation",
+        message: "Origen y destino son el mismo alojamiento",
+      }
+    }
 
     // Encontrar líneas en común
     const commonLines = fromStationData.lines.filter((line) => toStationData.lines.includes(line))
@@ -138,6 +316,12 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
         line: commonLines[0],
         message: `Ruta directa en ${METRO_LINES.find((l) => l.id === commonLines[0])?.name}`,
         color: METRO_LINES.find((l) => l.id === commonLines[0])?.color,
+        fromAccommodationInfo,
+        toAccommodationInfo,
+        fromPlaceInfo,
+        toPlaceInfo,
+        fromStationData,
+        toStationData,
       }
     }
 
@@ -161,12 +345,24 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
         message: `Transbordo en ${transfer.name}`,
         color1: METRO_LINES.find((l) => l.id === line1)?.color,
         color2: METRO_LINES.find((l) => l.id === line2)?.color,
+        fromAccommodationInfo,
+        toAccommodationInfo,
+        fromPlaceInfo,
+        toPlaceInfo,
+        fromStationData,
+        toStationData,
       }
     }
 
     return {
       type: "complex",
       message: "Ruta compleja - consulta el mapa o usa Google Maps",
+      fromAccommodationInfo,
+      toAccommodationInfo,
+      fromPlaceInfo,
+      toPlaceInfo,
+      fromStationData,
+      toStationData,
     }
   }
 
@@ -223,15 +419,15 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
             {accommodations
               .filter((acc) => acc.city === "Madrid")
               .map((acc) => (
-                <button
-                  key={acc.id}
-                  onClick={() => handleRouteFromAccommodation(acc)}
-                  className="w-full bg-white/10 hover:bg-white/20 rounded-lg p-3 text-left transition-colors"
-                >
-                  <h4 className="font-semibold text-sm">{acc.name}</h4>
-                  <p className="text-xs text-white/60">{acc.location || "Madrid"}</p>
-                  <span className="text-xs text-blue-400">→ Ver estación más cercana en Maps</span>
-                </button>
+                  <button
+                    key={acc.id}
+                    onClick={() => handleRouteFromAccommodation(acc)}
+                    className="w-full bg-white/10 hover:bg-white/20 rounded-lg p-3 text-left transition-colors"
+                  >
+                    <h4 className="font-semibold text-sm">{acc.name}</h4>
+                    <p className="text-xs text-white/60">{acc.address || "Madrid"}</p>
+                    <span className="text-xs text-blue-400">→ Ver estación más cercana en Maps</span>
+                  </button>
               ))}
           </div>
         </div>
@@ -280,11 +476,24 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
               className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm"
             >
               <option value="">Selecciona estación de origen</option>
-              {filteredStations.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name} ({station.lines.join(", ")}) - Zona {station.zone}
-                </option>
-              ))}
+              {accommodations.filter((acc) => acc.city === "Madrid").length > 0 && (
+                <optgroup label="🏨 Mis Alojamientos">
+                  {accommodations
+                    .filter((acc) => acc.city === "Madrid")
+                    .map((acc) => (
+                      <option key={`acc-${acc.id}`} value={`accommodation-${acc.id}`}>
+                        🏨 {acc.name} → Metro más cercano
+                      </option>
+                    ))}
+                </optgroup>
+              )}
+              <optgroup label="🚇 Estaciones de Metro">
+                {filteredStations.map((station) => (
+                  <option key={station.id} value={station.id}>
+                    {station.name} ({station.lines.join(", ")}) - Zona {station.zone}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </div>
 
@@ -296,12 +505,32 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
               onChange={(e) => setToStation(e.target.value)}
               className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm"
             >
-              <option value="">Selecciona estación de destino</option>
-              {filteredStations.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name} ({station.lines.join(", ")}) - Zona {station.zone}
-                </option>
-              ))}
+              <option value="">Selecciona destino</option>
+              {accommodations.filter((acc) => acc.city === "Madrid").length > 0 && (
+                <optgroup label="🏨 Mis Alojamientos">
+                  {accommodations
+                    .filter((acc) => acc.city === "Madrid")
+                    .map((acc) => (
+                      <option key={`acc-${acc.id}`} value={`accommodation-${acc.id}`}>
+                        🏨 {acc.name} → Metro más cercano
+                      </option>
+                    ))}
+                </optgroup>
+              )}
+              <optgroup label="📍 Lugares Turísticos">
+                {TOURIST_PLACES.map((place) => (
+                  <option key={place.id} value={`place-${place.id}`}>
+                    {place.name} - {place.category}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="🚇 Estaciones de Metro">
+                {filteredStations.map((station) => (
+                  <option key={station.id} value={station.id}>
+                    {station.name} ({station.lines.join(", ")}) - Zona {station.zone}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </div>
 
@@ -321,19 +550,116 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
               ✅ Ruta Calculada
             </h4>
             <div className="text-sm space-y-2">
-              <p>
-                <strong>Origen:</strong> {getStationName(fromStation)}
-              </p>
-              <p>
-                <strong>Destino:</strong> {getStationName(toStation)}
-              </p>
+              {/* Información del Origen */}
+              {routeInfo.fromAccommodationInfo ? (
+                <div className="bg-blue-500/20 rounded-lg p-3 border border-blue-400/50">
+                  <p className="font-bold text-blue-300 mb-2">🏨 DESDE TU ALOJAMIENTO:</p>
+                  <p className="font-semibold">{routeInfo.fromAccommodationInfo.accommodation.name}</p>
+                  <p className="text-xs text-white/70 mt-1">
+                    📍 {routeInfo.fromAccommodationInfo.accommodation.address}
+                  </p>
+                  <div className="mt-2 p-2 bg-white/10 rounded">
+                    <p className="text-xs">
+                      <strong>🚶 Camina {routeInfo.fromAccommodationInfo.walkingTime}</strong>
+                    </p>
+                    <p className="text-xs mt-1 text-white/80">{routeInfo.fromAccommodationInfo.directions}</p>
+                  </div>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="text-xs font-semibold">Metro más cercano:</span>
+                    <span className="font-bold">{routeInfo.fromAccommodationInfo.stationName}</span>
+                    <div className="flex gap-1">
+                      {routeInfo.fromAccommodationInfo.lines.map((lineId) => {
+                        const line = METRO_LINES.find((l) => l.id === lineId)
+                        return (
+                          <span
+                            key={lineId}
+                            className="text-xs px-2 py-0.5 rounded-full font-semibold"
+                            style={{
+                              backgroundColor: line?.color,
+                              color: ["L3", "L5"].includes(lineId) ? "#000" : "#fff",
+                            }}
+                          >
+                            {lineId}
+                          </span>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p>
+                  <strong>Origen:</strong> {routeInfo.fromStationData?.name || getStationName(fromStation)}
+                </p>
+              )}
+
+              {/* Información del Destino */}
+              {routeInfo.toAccommodationInfo ? (
+                <div className="bg-green-500/20 rounded-lg p-3 border border-green-400/50">
+                  <p className="font-bold text-green-300 mb-2">🏨 HASTA TU ALOJAMIENTO:</p>
+                  <p className="font-semibold">{routeInfo.toAccommodationInfo.accommodation.name}</p>
+                  <p className="text-xs text-white/70 mt-1">
+                    📍 {routeInfo.toAccommodationInfo.accommodation.address}
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="text-xs font-semibold">Metro más cercano:</span>
+                    <span className="font-bold">{routeInfo.toAccommodationInfo.stationName}</span>
+                    <div className="flex gap-1">
+                      {routeInfo.toAccommodationInfo.lines.map((lineId) => {
+                        const line = METRO_LINES.find((l) => l.id === lineId)
+                        return (
+                          <span
+                            key={lineId}
+                            className="text-xs px-2 py-0.5 rounded-full font-semibold"
+                            style={{
+                              backgroundColor: line?.color,
+                              color: ["L3", "L5"].includes(lineId) ? "#000" : "#fff",
+                            }}
+                          >
+                            {lineId}
+                          </span>
+                        )
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-2 p-2 bg-white/10 rounded">
+                    <p className="text-xs">
+                      <strong>🚶 Camina {routeInfo.toAccommodationInfo.walkingTime}</strong>
+                    </p>
+                    <p className="text-xs mt-1 text-white/80">{routeInfo.toAccommodationInfo.directions}</p>
+                  </div>
+                </div>
+              ) : routeInfo.toPlaceInfo ? (
+                <div className="bg-purple-500/20 rounded-lg p-3 border border-purple-400/50">
+                  <p className="font-bold text-purple-300 mb-2">📍 HASTA: {routeInfo.toPlaceInfo.name}</p>
+                  <p className="text-xs text-white/70 mb-2">{routeInfo.toPlaceInfo.description}</p>
+                  <p className="text-xs text-white/60 mb-2">📍 {routeInfo.toPlaceInfo.address}</p>
+                  <div className="mt-2 p-2 bg-white/10 rounded">
+                    <p className="text-xs font-semibold mb-1">
+                      Metro más cercano: {routeInfo.toPlaceInfo.stationName}
+                    </p>
+                    <p className="text-xs">
+                      <strong>🚶 Camina {routeInfo.toPlaceInfo.walkingTime}</strong> desde la estación
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <p>
+                  <strong>Destino:</strong> {routeInfo.toStationData?.name || getStationName(toStation)}
+                </p>
+              )}
+
+              {routeInfo.type === "same-accommodation" && (
+                <div className="mt-3 p-3 rounded-lg bg-yellow-500/20 border border-yellow-400">
+                  <p className="text-yellow-200 text-sm">{routeInfo.message}</p>
+                </div>
+              )}
 
               {routeInfo.type === "direct" && (
                 <div className="mt-3 p-3 rounded-lg" style={{ backgroundColor: routeInfo.color + "40" }}>
                   <p className="font-semibold" style={{ color: routeInfo.color }}>
-                    {routeInfo.message}
+                    🚇 {routeInfo.message}
                   </p>
-                  <p className="text-xs text-white/70 mt-1">No requiere transbordo</p>
+                  <p className="text-xs text-white/70 mt-1">✓ No requiere transbordo</p>
                 </div>
               )}
 
@@ -362,9 +688,33 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
 
             <button
               onClick={() => {
-                const from = getStationName(fromStation)
-                const to = getStationName(toStation)
-                const url = `https://www.google.com/maps/dir/?api=1&origin=Metro+${encodeURIComponent(from)},Madrid&destination=Metro+${encodeURIComponent(to)},Madrid&travelmode=transit`
+                let originParam, destinationParam
+
+                if (routeInfo.fromAccommodationInfo) {
+                  originParam = encodeURIComponent(
+                    routeInfo.fromAccommodationInfo.accommodation.address ||
+                      routeInfo.fromAccommodationInfo.accommodation.name,
+                  )
+                } else if (routeInfo.fromPlaceInfo) {
+                  originParam = encodeURIComponent(routeInfo.fromPlaceInfo.address)
+                } else {
+                  const from = routeInfo.fromStationData?.name || getStationName(fromStation)
+                  originParam = encodeURIComponent(`Metro ${from}, Madrid`)
+                }
+
+                if (routeInfo.toAccommodationInfo) {
+                  destinationParam = encodeURIComponent(
+                    routeInfo.toAccommodationInfo.accommodation.address ||
+                      routeInfo.toAccommodationInfo.accommodation.name,
+                  )
+                } else if (routeInfo.toPlaceInfo) {
+                  destinationParam = encodeURIComponent(routeInfo.toPlaceInfo.address)
+                } else {
+                  const to = routeInfo.toStationData?.name || getStationName(toStation)
+                  destinationParam = encodeURIComponent(`Metro ${to}, Madrid`)
+                }
+
+                const url = `https://www.google.com/maps/dir/?api=1&origin=${originParam}&destination=${destinationParam}&travelmode=transit`
                 window.open(url, "_blank")
               }}
               className="mt-3 w-full bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-sm"
