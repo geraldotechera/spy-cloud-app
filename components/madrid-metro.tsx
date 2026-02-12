@@ -86,6 +86,11 @@ const METRO_STATIONS: MetroStation[] = [
 ]
 
 export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
+  console.log("[v0] MadridMetro - Total alojamientos recibidos:", accommodations.length)
+  console.log("[v0] MadridMetro - Alojamientos:", accommodations)
+  const madridAccommodations = accommodations.filter((acc) => acc.city === "Madrid")
+  console.log("[v0] MadridMetro - Alojamientos en Madrid:", madridAccommodations.length, madridAccommodations)
+
   const [selectedLine, setSelectedLine] = useState<string | null>(null)
   const [fromStation, setFromStation] = useState<string>("")
   const [toStation, setToStation] = useState<string>("")
@@ -125,11 +130,13 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
   }
 
   const handleRouteFromAccommodation = (accommodation: Accommodation) => {
+    console.log("[v0] Abriendo ruta desde alojamiento:", accommodation)
     setSelectedAccommodation(accommodation)
-    // Abrir Google Maps con ruta desde el alojamiento
-    const origin = encodeURIComponent(accommodation.location || accommodation.name)
-    const destination = encodeURIComponent("Metro Madrid")
+    // Abrir Google Maps con ruta desde el alojamiento a la estación más cercana (Alonso Martínez)
+    const origin = encodeURIComponent(accommodation.address || accommodation.name)
+    const destination = encodeURIComponent("Metro Alonso Martínez, Madrid")
     const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`
+    console.log("[v0] URL de Google Maps:", url)
     window.open(url, "_blank")
   }
 
@@ -285,15 +292,15 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
             {accommodations
               .filter((acc) => acc.city === "Madrid")
               .map((acc) => (
-                <button
-                  key={acc.id}
-                  onClick={() => handleRouteFromAccommodation(acc)}
-                  className="w-full bg-white/10 hover:bg-white/20 rounded-lg p-3 text-left transition-colors"
-                >
-                  <h4 className="font-semibold text-sm">{acc.name}</h4>
-                  <p className="text-xs text-white/60">{acc.location || "Madrid"}</p>
-                  <span className="text-xs text-blue-400">→ Ver estación más cercana en Maps</span>
-                </button>
+                  <button
+                    key={acc.id}
+                    onClick={() => handleRouteFromAccommodation(acc)}
+                    className="w-full bg-white/10 hover:bg-white/20 rounded-lg p-3 text-left transition-colors"
+                  >
+                    <h4 className="font-semibold text-sm">{acc.name}</h4>
+                    <p className="text-xs text-white/60">{acc.address || "Madrid"}</p>
+                    <span className="text-xs text-blue-400">→ Ver estación más cercana en Maps</span>
+                  </button>
               ))}
           </div>
         </div>
