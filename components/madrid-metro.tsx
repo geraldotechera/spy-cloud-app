@@ -415,7 +415,7 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
                   <p className="font-bold text-blue-300 mb-2">🏨 DESDE TU ALOJAMIENTO:</p>
                   <p className="font-semibold">{routeInfo.fromAccommodationInfo.accommodation.name}</p>
                   <p className="text-xs text-white/70 mt-1">
-                    📍 {routeInfo.fromAccommodationInfo.accommodation.location}
+                    📍 {routeInfo.fromAccommodationInfo.accommodation.address}
                   </p>
                   <div className="mt-2 p-2 bg-white/10 rounded">
                     <p className="text-xs">
@@ -457,7 +457,7 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
                   <p className="font-bold text-green-300 mb-2">🏨 HASTA TU ALOJAMIENTO:</p>
                   <p className="font-semibold">{routeInfo.toAccommodationInfo.accommodation.name}</p>
                   <p className="text-xs text-white/70 mt-1">
-                    📍 {routeInfo.toAccommodationInfo.accommodation.location}
+                    📍 {routeInfo.toAccommodationInfo.accommodation.address}
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="text-xs font-semibold">Metro más cercano:</span>
@@ -537,7 +537,7 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
 
                 if (routeInfo.fromAccommodationInfo) {
                   originParam = encodeURIComponent(
-                    routeInfo.fromAccommodationInfo.accommodation.location ||
+                    routeInfo.fromAccommodationInfo.accommodation.address ||
                       routeInfo.fromAccommodationInfo.accommodation.name,
                   )
                 } else {
@@ -547,7 +547,7 @@ export function MadridMetro({ accommodations, onBack }: MadridMetroProps) {
 
                 if (routeInfo.toAccommodationInfo) {
                   destinationParam = encodeURIComponent(
-                    routeInfo.toAccommodationInfo.accommodation.location ||
+                    routeInfo.toAccommodationInfo.accommodation.address ||
                       routeInfo.toAccommodationInfo.accommodation.name,
                   )
                 } else {
