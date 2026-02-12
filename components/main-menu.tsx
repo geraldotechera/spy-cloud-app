@@ -1,12 +1,12 @@
 "use client"
 
 import type { User } from "@/types"
-import { Calendar, Ticket, DollarSign, Camera, Home, Wallet, Bike, Globe, RefreshCw, Printer } from "lucide-react"
+import { Calendar, Ticket, DollarSign, Camera, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train } from "lucide-react"
 
 interface MainMenuProps {
   currentUser: User
   onSelectSection: (
-    section: "agenda" | "tickets" | "alojamiento" | "presupuesto" | "conversion" | "fotos" | "bicicletas" | "web",
+    section: "agenda" | "tickets" | "alojamiento" | "presupuesto" | "conversion" | "fotos" | "bicicletas" | "web" | "metro",
   ) => void
   onRefresh: () => void
   onPrintItinerary?: () => void
@@ -16,6 +16,7 @@ export function MainMenu({ currentUser, onSelectSection, onRefresh, onPrintItine
   const menuItems = [
     { id: "agenda" as const, icon: Calendar, title: "Agenda", color: "from-blue-500 to-blue-600" },
     { id: "alojamiento" as const, icon: Home, title: "Alojamiento", color: "from-green-500 to-green-600" },
+    { id: "metro" as const, icon: Train, title: "Metro Madrid", color: "from-blue-600 to-blue-800" },
     { id: "tickets" as const, icon: Ticket, title: "Tickets", color: "from-purple-500 to-purple-600" },
     { id: "presupuesto" as const, icon: Wallet, title: "Presupuesto", color: "from-yellow-500 to-yellow-600" },
     { id: "conversion" as const, icon: DollarSign, title: "Conversión", color: "from-emerald-500 to-emerald-600" },
