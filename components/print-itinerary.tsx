@@ -81,8 +81,8 @@ export function PrintItinerary({ appData, onClose }: PrintItineraryProps) {
                 <div className="no-events">No hay eventos programados para este día</div>
               ) : (
                 <div className="events-list">
-                  {events.map((event) => (
-                    <div key={event.id} className="event-item">
+                  {events.map((event, eventIndex) => (
+                    <div key={`${date}-${event.id}-${eventIndex}`} className="event-item">
                       <div className="event-time">{event.time}</div>
                       <div className="event-content">
                         <div className="event-title">{event.title}</div>
