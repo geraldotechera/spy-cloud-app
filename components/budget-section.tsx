@@ -29,7 +29,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
 
   console.log("[v0] Presupuesto - Total por pareja:", budget.totalPerCouple)
   console.log("[v0] Presupuesto - Total general:", budget.totalGeneral)
-  console.log("[v0] Presupuesto - Verificación (8010 x 3):", budget.totalPerCouple * 3)
+  console.log("[v0] Presupuesto - Verificación (x 2 parejas):", budget.totalPerCouple * 2)
 
   const gastosExpenses = budget.dailyExpenses.filter(
     (e) => e.category === "alojamiento" || e.category === "alimentacion" || e.category === "otros",
@@ -71,7 +71,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
       category: formData.category,
       description: formData.description,
       amountPerCouple: formData.amountPerCouple,
-      totalAmount: formData.amountPerCouple * 3,
+      totalAmount: formData.amountPerCouple * 2,
       notes: formData.notes,
       paidBy: formData.paidBy,
       addedBy: currentUser?.couple,
@@ -80,7 +80,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
 
     const newExpenses = [...budget.dailyExpenses, newExpense]
     const newTotalPerCouple = newExpenses.reduce((sum, e) => sum + e.amountPerCouple, 0)
-    const newTotalGeneral = newTotalPerCouple * 3
+    const newTotalGeneral = newTotalPerCouple * 2
 
     console.log("[v0] Nuevo gasto - Total por pareja:", newTotalPerCouple)
     console.log("[v0] Nuevo gasto - Total general:", newTotalGeneral)
@@ -98,7 +98,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
       description: "",
       amountPerCouple: 0,
       notes: "",
-      paidBy: currentUser?.couple || "CASTRO",
+      paidBy: currentUser?.couple || "TECHERA",
     })
   }
 
@@ -111,7 +111,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
       category: formData.category,
       description: formData.description,
       amountPerCouple: formData.amountPerCouple,
-      totalAmount: formData.amountPerCouple * 3,
+      totalAmount: formData.amountPerCouple * 2,
       notes: formData.notes,
       paidBy: formData.paidBy,
       timestamp: Date.now(),
@@ -119,7 +119,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
 
     const newExpenses = budget.dailyExpenses.map((e) => (e.id === editingExpense.id ? updatedExpense : e))
     const newTotalPerCouple = newExpenses.reduce((sum, e) => sum + e.amountPerCouple, 0)
-    const newTotalGeneral = newTotalPerCouple * 3
+    const newTotalGeneral = newTotalPerCouple * 2
 
     onUpdateBudget({
       dailyExpenses: newExpenses,
@@ -134,7 +134,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
       description: "",
       amountPerCouple: 0,
       notes: "",
-      paidBy: currentUser?.couple || "CASTRO",
+      paidBy: currentUser?.couple || "TECHERA",
     })
   }
 
@@ -142,7 +142,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     if (confirm("¿Estás seguro de que quieres eliminar este gasto?")) {
       const newExpenses = budget.dailyExpenses.filter((e) => e.id !== id)
       const newTotalPerCouple = newExpenses.reduce((sum, e) => sum + e.amountPerCouple, 0)
-      const newTotalGeneral = newTotalPerCouple * 3
+      const newTotalGeneral = newTotalPerCouple * 2
 
       onUpdateBudget({
         dailyExpenses: newExpenses,
@@ -165,7 +165,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
   }
 
   const calculateSharedExpenses = () => {
-    const couples = ["CASTRO", "PEREZ", "TECHERA"]
+    const couples = ["PEREZ", "TECHERA"]
     const paidByCouple: Record<string, number> = {}
     const owedByCouple: Record<string, number> = {}
 
@@ -402,7 +402,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             </div>
             <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 text-center">
               <h3 className="text-sm mb-2">Total General</h3>
-              <div className="text-xs text-white/70 mb-1">(3 parejas)</div>
+              <div className="text-xs text-white/70 mb-1">(2 parejas)</div>
               <div className="text-2xl font-bold">€{budget.totalGeneral.toLocaleString()}</div>
             </div>
           </div>
@@ -486,10 +486,9 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
                   onChange={(e) => setFormData({ ...formData, paidBy: e.target.value })}
                   className="w-full bg-white/20 rounded-lg px-3 py-2 text-white"
                 >
-                  <option value="CASTRO">CASTRO</option>
                   <option value="PEREZ">PEREZ</option>
                   <option value="TECHERA">TECHERA</option>
-                  <option value="COMPARTIDO">Compartido (3 parejas)</option>
+                  <option value="COMPARTIDO">Compartido (2 parejas)</option>
                 </select>
               </div>
 
@@ -510,7 +509,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
                       description: "",
                       amountPerCouple: 0,
                       notes: "",
-                      paidBy: currentUser?.couple || "CASTRO",
+                      paidBy: currentUser?.couple || "TECHERA",
                     })
                   }}
                   className="flex-1 bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors"
@@ -674,7 +673,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             </div>
             <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 text-center">
               <h3 className="text-sm mb-2">Total General</h3>
-              <div className="text-xs text-white/70 mb-1">(3 parejas)</div>
+              <div className="text-xs text-white/70 mb-1">(2 parejas)</div>
               <div className="text-2xl font-bold">€{budget.totalGeneral.toLocaleString()}</div>
             </div>
           </div>
@@ -789,7 +788,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             </div>
             <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 text-center">
               <h3 className="text-sm mb-2">Total General</h3>
-              <div className="text-xs text-white/70 mb-1">(3 parejas)</div>
+              <div className="text-xs text-white/70 mb-1">(2 parejas)</div>
               <div className="text-2xl font-bold">€{budget.totalGeneral.toLocaleString()}</div>
             </div>
           </div>

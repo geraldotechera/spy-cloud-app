@@ -11,8 +11,6 @@ interface UserSettingsProps {
 const AVAILABLE_USERS: User[] = [
   { id: "geraldo", name: "Geraldo Techera", role: "admin", couple: "TECHERA", color: "blue" },
   { id: "laura", name: "Laura Furquin", role: "user", couple: "TECHERA", color: "blue" },
-  { id: "rodrigo-c", name: "Rodrigo Castro", role: "user", couple: "CASTRO", color: "green" },
-  { id: "patricia", name: "Patricia Cerrudo", role: "user", couple: "CASTRO", color: "green" },
   { id: "rodrigo-p", name: "Rodrigo Perez", role: "user", couple: "PEREZ", color: "orange" },
   { id: "monica", name: "Mónica Curbelo", role: "user", couple: "PEREZ", color: "orange" },
 ]
