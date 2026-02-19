@@ -25,6 +25,18 @@ export function AccommodationSection({
 
   const cities = ["Madrid", "Barcelona", "París", "Ámsterdam", "Milán", "Florencia", "Roma", "Sorrento"]
 
+  const cityDetails: Record<string, { address?: string; transport?: string[] }> = {
+    Barcelona: {
+      address: "Plaza de Europa 25, L'Hospitalet de Llobregat, Catalunya 08908",
+      transport: [
+        "🚇 Metro: Estación Europa/Fira (Líneas L3-Verde, L8, L9-Sur)",
+        "📍 A 2 min caminando del alojamiento",
+        "🎫 Comprar T-Casual (10 viajes €12.15) o Hola Barcelona Card (2 días ilimitados €16.40)",
+        "⚡ Conexión directa a Sagrada Família (15 min), Passeig de Gràcia (7 min), Park Güell (20 min)",
+      ],
+    },
+  }
+
   const luggageStorage = {
     madrid: [
       {
@@ -363,12 +375,36 @@ export function AccommodationSection({
       <div className="space-y-6">
         {cities.map((city) => {
           const cityAccommodations = getAccommodationsForCity(city)
+          const cityInfo = cityDetails[city]
 
           return (
             <div key={city} className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
               <h3 className="font-bold text-lg mb-3">
                 {city} ({cityAccommodations.length}/3)
               </h3>
+
+              {cityInfo && (
+                <div className="bg-blue-500/20 rounded-lg p-4 mb-4 border border-blue-400/30">
+                  {cityInfo.address && (
+                    <div className="mb-3">
+                      <p className="font-semibold text-blue-300 mb-1">📍 Dirección del Alojamiento:</p>
+                      <p className="text-white/90">{cityInfo.address}</p>
+                    </div>
+                  )}
+                  {cityInfo.transport && cityInfo.transport.length > 0 && (
+                    <div>
+                      <p className="font-semibold text-blue-300 mb-2">🚇 Información de Transporte:</p>
+                      <div className="space-y-1">
+                        {cityInfo.transport.map((info, idx) => (
+                          <p key={idx} className="text-sm text-white/80">
+                            {info}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {cityAccommodations.length > 0 && (
                 <div className="space-y-2 mb-3">

@@ -186,58 +186,100 @@ MADRID → BARCELONA
         Tren de alta velocidad
         Precio: €120 | https://www.renfe.com
 
-10:30 - Llegada y check-in
-        Barcelona, España
-        Dejar equipaje
+10:30 - Llegada a Barcelona Sants y check-in
+        Estación Barcelona Sants
+        
+        🏨 ALOJAMIENTO BARCELONA (2 noches):
+        Plaza de Europa 25, L'Hospitalet de Llobregat, Catalunya 08908
+        
+        🚇 DESDE LA ESTACIÓN AL ALOJAMIENTO:
+        - Opción 1: Metro L3 (verde) desde Sants → Europa/Fira (2 estaciones, 5 min)
+        - Opción 2: A pie (15 min) por Carrer de Tarragona
+        - El alojamiento está justo al lado de la estación Europa/Fira
+        
+        🚇 MOVILIDAD DESDE EL ALOJAMIENTO:
+        - Metro L3 (Línea Verde) - Estación: Europa/Fira (a 1 min caminando)
+        - Metro L8 y L9 (Línea Naranja/Línea Sur) - Estación: Europa/Fira
+        - Esta ubicación conecta DIRECTAMENTE con todo el centro de Barcelona
+        
+        💡 RECOMENDACIÓN: Comprar T-Casual (10 viajes por €12.15) o Hola Barcelona Travel Card
+        (2 días ilimitados por €16.40) en las máquinas del metro
 
 12:00 - Almuerzo en Eixample
         Eixample, Barcelona
         Pa amb tomàquet
+        🚇 Desde alojamiento: L3 Europa/Fira → Passeig de Gràcia (7 min, 5 estaciones)
 
 14:00 - Sagrada Família
         Carrer de Mallorca, 401, Barcelona
         2h con audio
         Precio: €26 | https://sagradafamilia.org
+        🚇 Desde Eixample: L2 o L5 desde Passeig de Gràcia → Sagrada Família (2 estaciones)
+        🚇 Desde alojamiento directo: L3 Europa/Fira → Passeig de Gràcia, trasbordo L2 → Sagrada Família (15 min total)
 
 17:00 - Passeig de Gràcia
         Passeig de Gràcia, Barcelona
         Fachadas modernistas (Casa Batlló, La Pedrera)
+        🚇 Desde Sagrada Família: L2 → Passeig de Gràcia (2 estaciones, 5 min)
+        🚶 Caminar por Passeig de Gràcia viendo Casa Batlló, La Pedrera, etc.
 
 20:00 - Cena catalana
-        Barcelona
+        Barcelona (zona Passeig de Gràcia o Eixample)
         Fideuà
+        🚇 Regreso al alojamiento: L3 Passeig de Gràcia → Europa/Fira (7 min directo)
 
 ═══════════════════════════════════════════════════════════════════
 
 DÍA 7 - JUEVES 11 DE SEPTIEMBRE 2026
 BARCELONA (Día 2)
 
-07:00 - Desayuno. Park Güell
+07:00 - Desayuno cerca del alojamiento
+        L'Hospitalet / Plaza Europa
+        Café con croissant en alguna cafetería local
+
+08:00 - Salida hacia Park Güell
+        🚇 Desde alojamiento: L3 Europa/Fira → Lesseps (20 min, 13 estaciones)
+        🚌 Luego bus 24 o H6 hasta Park Güell (5 min) o caminar 15 min cuesta arriba
+
+09:00 - Park Güell
         Carrer d'Olot, s/n, Barcelona
         Mosaicos de Gaudí con vistas panorámicas
         Precio: €10 | https://parkguell.barcelona
+        Visita de 1h 30min
 
-10:00 - Museo Picasso
+10:30 - Traslado al Museo Picasso
+        🚇 Desde Lesseps: L3 → Liceu (15 min), luego caminar 10 min por El Born
+        O: L3 → Jaume I (más directo al museo, 5 min caminando)
+
+11:00 - Museo Picasso
         Carrer de Montcada, 15-23, Barcelona
         Colección de primera época de Picasso
         Precio: €12 | https://www.museupicasso.bcn.cat
 
-12:00 - Almuerzo en El Born
+13:00 - Almuerzo en El Born
         El Born, Barcelona
         Tapas de mar
+        🚶 A pie desde el museo (2 min, está en El Born)
 
-14:00 - Barrio Gótico y Catedral
+14:30 - Barrio Gótico y Catedral
         Barrio Gótico, Barcelona
         Catedral de Barcelona, calles medievales
+        🚶 A pie desde El Born (5 min caminando)
 
-16:00 - Montjuïc
+16:30 - Montjuïc
         Montjuïc, Barcelona
         Teleférico, Castillo, vistas panorámicas
-        Precio: €13
+        Precio: €13 (teleférico) + €5 (castillo)
+        🚇 Desde Barrio Gótico: L3 Liceu o Drassanes → Espanya (5 min)
+        🚶 Desde Espanya subir a pie, escaleras mecánicas, o bus 150 hasta Castillo
+
+19:30 - Regreso al alojamiento
+        🚇 L3 desde Espanya → Europa/Fira (6 min, 4 estaciones)
 
 20:00 - Cena catalana
-        Barcelona
+        Barcelona (zona Plaza Europa o alrededores)
         Arroz negro
+        🚶 Restaurantes cerca del alojamiento en L'Hospitalet / Fira
 
 ═══════════════════════════════════════════════════════════════════
 
