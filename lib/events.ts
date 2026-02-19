@@ -41,86 +41,129 @@ export function getInitialData(): AppData {
     // CATEGORÍA 1: GASTOS (Alimentación, Alojamiento, Lockers, etc.)
     // ============================================
 
-    // Alojamiento (22 noches: del 5 al 27 de septiembre)
+    // Alojamiento Madrid: $462 USD total / 2 parejas = $231 USD por pareja (aprox €215 por pareja para 3 noches = €72/noche)
+    // Alojamiento Barcelona: $472 USD total / 2 parejas = $236 USD por pareja (aprox €220 por pareja para 2 noches = €110/noche)
+    // Otros alojamientos: €85/noche estimado
+    
+    // Madrid (3 noches: 6, 7, 8 sep)
     {
       id: 1,
-      date: "2026-09-05", // Cambiado de 2026-10-03
+      date: "2026-09-06",
       category: "alojamiento" as const,
-      description: "Hotel Madrid (noche del 5 al 6)",
-      amountPerCouple: 85,
-      totalAmount: 255,
+      description: "Alojamiento Madrid - Noche 1",
+      amountPerCouple: 72,
+      totalAmount: 144,
+      notes: "Calle del Barquillo 41. Total: $462 USD / 2 parejas",
     },
-    ...Array.from({ length: 21 }, (_, i) => {
-      const day = 6 + i
-      const date = `2026-09-${day.toString().padStart(2, "0")}` // Cambiado de 2026-10
+    {
+      id: 2,
+      date: "2026-09-07",
+      category: "alojamiento" as const,
+      description: "Alojamiento Madrid - Noche 2",
+      amountPerCouple: 72,
+      totalAmount: 144,
+      notes: "Calle del Barquillo 41",
+    },
+    {
+      id: 3,
+      date: "2026-09-08",
+      category: "alojamiento" as const,
+      description: "Alojamiento Madrid - Noche 3",
+      amountPerCouple: 71,
+      totalAmount: 142,
+      notes: "Calle del Barquillo 41",
+    },
+    // Barcelona (2 noches: 9, 10 sep)
+    {
+      id: 4,
+      date: "2026-09-09",
+      category: "alojamiento" as const,
+      description: "Alojamiento Barcelona - Noche 1",
+      amountPerCouple: 110,
+      totalAmount: 220,
+      notes: "Plaza de Europa 25, L'Hospitalet. Total: $472 USD / 2 parejas",
+    },
+    {
+      id: 5,
+      date: "2026-09-10",
+      category: "alojamiento" as const,
+      description: "Alojamiento Barcelona - Noche 2",
+      amountPerCouple: 110,
+      totalAmount: 220,
+      notes: "Plaza de Europa 25, L'Hospitalet",
+    },
+    // Resto de alojamientos (17 noches restantes)
+    ...Array.from({ length: 17 }, (_, i) => {
+      const day = 11 + i
+      const date = `2026-09-${day.toString().padStart(2, "0")}`
       return {
-        id: 2 + i,
+        id: 6 + i,
         date,
         category: "alojamiento" as const,
         description: `Alojamiento día ${day}`,
         amountPerCouple: 85,
-        totalAmount: 255,
+        totalAmount: 170,
       }
     }),
 
     // Alimentación (21 días)
     ...Array.from({ length: 21 }, (_, i) => {
       const day = 6 + i
-      const date = `2026-09-${day.toString().padStart(2, "0")}` // Cambiado de 2026-10
+      const date = `2026-09-${day.toString().padStart(2, "0")}`
       return {
         id: 23 + i,
         date,
         category: "alimentacion" as const,
         description: `Alimentación día ${day}`,
         amountPerCouple: 80,
-        totalAmount: 240,
+        totalAmount: 160,
       }
     }),
 
     // Lockers
     {
       id: 44,
-      date: "2026-09-09", // Cambiado de 2026-10-07
+      date: "2026-09-09",
       category: "otros" as const,
       description: "Locker Barcelona Sants",
       amountPerCouple: 8,
-      totalAmount: 24,
+      totalAmount: 16,
       notes: "Guardar equipaje hasta check-in",
     },
     {
       id: 45,
-      date: "2026-09-11", // Cambiado de 2026-10-09
+      date: "2026-09-11",
       category: "otros" as const,
       description: "Locker Gare de Lyon París",
       amountPerCouple: 10,
-      totalAmount: 30,
+      totalAmount: 20,
       notes: "Guardar equipaje hasta check-in",
     },
     {
       id: 46,
-      date: "2026-09-14", // Cambiado de 2026-10-12
+      date: "2026-09-14",
       category: "otros" as const,
       description: "Locker Zúrich HB",
       amountPerCouple: 10,
-      totalAmount: 30,
+      totalAmount: 20,
       notes: "Guardar equipaje hasta check-in (10 CHF)",
     },
     {
       id: 47,
-      date: "2026-09-19", // Cambiado de 2026-10-17
+      date: "2026-09-19",
       category: "otros" as const,
       description: "Locker Pisa",
       amountPerCouple: 6,
-      totalAmount: 18,
+      totalAmount: 12,
       notes: "Guardar equipaje durante visita",
     },
     {
       id: 48,
-      date: "2026-09-23", // Cambiado de 2026-10-21
+      date: "2026-09-23",
       category: "otros" as const,
       description: "Locker Napoli Centrale",
       amountPerCouple: 8,
-      totalAmount: 24,
+      totalAmount: 16,
       notes: "Guardar equipaje durante visita",
     },
 
@@ -131,238 +174,238 @@ export function getInitialData(): AppData {
     // Madrid
     {
       id: 49,
-      date: "2026-09-06", // Cambiado de 2026-10-04
+      date: "2026-09-06",
       category: "museo" as const,
       description: "Museo del Prado",
       amountPerCouple: 15,
-      totalAmount: 45,
+      totalAmount: 30,
       notes: "Precio oficial 2025",
     },
     {
       id: 50,
-      date: "2026-09-06", // Cambiado de 2026-10-04
+      date: "2026-09-06",
       category: "museo" as const,
       description: "Museo Reina Sofía",
       amountPerCouple: 12,
-      totalAmount: 36,
+      totalAmount: 24,
     },
     {
       id: 51,
-      date: "2026-09-07", // Cambiado de 2026-10-05
+      date: "2026-09-07",
       category: "museo" as const,
       description: "Palacio Real Madrid",
       amountPerCouple: 14,
-      totalAmount: 42,
+      totalAmount: 28,
       notes: "Precio oficial 2025",
     },
     {
       id: 52,
-      date: "2026-09-08", // Cambiado de 2026-10-06
+      date: "2026-09-08",
       category: "museo" as const,
       description: "Excursión Toledo (tren + entrada Catedral + Alcázar)",
       amountPerCouple: 45,
-      totalAmount: 135,
+      totalAmount: 90,
       notes: "Tren 25€ + Catedral 10€ + Alcázar 10€",
     },
 
     // Barcelona
     {
       id: 53,
-      date: "2026-09-09", // Cambiado de 2026-10-07
+      date: "2026-09-09",
       category: "museo" as const,
       description: "Sagrada Família (con audioguía)",
       amountPerCouple: 26,
-      totalAmount: 78,
+      totalAmount: 52,
       notes: "Precio oficial 2025",
     },
     {
       id: 54,
-      date: "2026-09-10", // Cambiado de 2026-10-08
+      date: "2026-09-10",
       category: "museo" as const,
       description: "Park Güell",
       amountPerCouple: 10,
-      totalAmount: 30,
+      totalAmount: 20,
     },
     {
       id: 55,
-      date: "2026-09-10", // Cambiado de 2026-10-08
+      date: "2026-09-10",
       category: "museo" as const,
       description: "Casa Batlló",
       amountPerCouple: 35,
-      totalAmount: 105,
+      totalAmount: 70,
       notes: "Precio oficial 2025",
     },
     {
       id: 56,
-      date: "2026-09-10", // Cambiado de 2026-10-08
+      date: "2026-09-10",
       category: "museo" as const,
       description: "Museo Picasso",
       amountPerCouple: 12,
-      totalAmount: 36,
+      totalAmount: 24,
     },
     {
       id: 57,
-      date: "2026-09-10", // Cambiado de 2026-10-08
+      date: "2026-09-10",
       category: "museo" as const,
       description: "Montjuïc (Castillo + Fundación Miró)",
       amountPerCouple: 13,
-      totalAmount: 39,
+      totalAmount: 26,
     },
 
     // París
     {
       id: 58,
-      date: "2026-09-11", // Cambiado de 2026-10-09
+      date: "2026-09-11",
       category: "museo" as const,
       description: "Sainte-Chapelle",
       amountPerCouple: 11,
-      totalAmount: 33,
+      totalAmount: 22,
     },
     {
       id: 59,
-      date: "2026-09-12", // Cambiado de 2026-10-10
+      date: "2026-09-12",
       category: "museo" as const,
       description: "Museo del Louvre",
       amountPerCouple: 22,
-      totalAmount: 66,
+      totalAmount: 44,
       notes: "Precio oficial 2025",
     },
     {
       id: 60,
-      date: "2026-09-12", // Cambiado de 2026-10-10
+      date: "2026-09-12",
       category: "museo" as const,
       description: "Torre Eiffel (cima en ascensor)",
       amountPerCouple: 36,
-      totalAmount: 108,
+      totalAmount: 72,
       notes: "Precio oficial 2025",
     },
     {
       id: 61,
-      date: "2026-09-13", // Cambiado de 2026-10-11
+      date: "2026-09-13",
       category: "museo" as const,
       description: "Centre Pompidou",
       amountPerCouple: 15,
-      totalAmount: 45,
+      totalAmount: 30,
     },
     {
       id: 62,
-      date: "2026-09-13", // Cambiado de 2026-10-11
+      date: "2026-09-13",
       category: "museo" as const,
       description: "Musée d'Orsay",
       amountPerCouple: 14,
-      totalAmount: 42,
+      totalAmount: 28,
     },
     {
       id: 63,
-      date: "2026-09-13", // Cambiado de 2026-10-11
+      date: "2026-09-13",
       category: "museo" as const,
       description: "Museo Rodin",
       amountPerCouple: 12,
-      totalAmount: 36,
+      totalAmount: 24,
     },
 
     // Milán
     {
       id: 64,
-      date: "2026-09-16", // Cambiado de 2026-10-14
+      date: "2026-09-16",
       category: "museo" as const,
       description: "Duomo de Milán (iglesia + terrazas)",
       amountPerCouple: 26,
-      totalAmount: 78,
+      totalAmount: 52,
       notes: "Precio oficial 2025",
     },
 
     // Venecia
     {
       id: 65,
-      date: "2026-09-17", // Cambiado de 2026-10-15
+      date: "2026-09-17",
       category: "museo" as const,
       description: "Palacio Ducal Venecia",
       amountPerCouple: 25,
-      totalAmount: 75,
+      totalAmount: 50,
     },
 
     // Florencia
     {
       id: 66,
-      date: "2026-09-18", // Cambiado de 2026-10-16
+      date: "2026-09-18",
       category: "museo" as const,
       description: "Galleria dell'Accademia",
       amountPerCouple: 16,
-      totalAmount: 48,
+      totalAmount: 32,
     },
     {
       id: 67,
-      date: "2026-09-18", // Cambiado de 2026-10-16
+      date: "2026-09-18",
       category: "museo" as const,
       description: "Galleria degli Uffizi",
       amountPerCouple: 29,
-      totalAmount: 87,
+      totalAmount: 58,
       notes: "25€ + 4€ reserva",
     },
 
     // Pisa
     {
       id: 68,
-      date: "2026-09-19", // Cambiado de 2026-10-17
+      date: "2026-09-19",
       category: "museo" as const,
       description: "Torre Inclinada de Pisa",
       amountPerCouple: 18,
-      totalAmount: 54,
+      totalAmount: 36,
     },
 
     // Roma
     {
       id: 69,
-      date: "2026-09-20", // Cambiado de 2026-10-18
+      date: "2026-09-20",
       category: "museo" as const,
       description: "Coliseo, Foro Romano y Palatino",
       amountPerCouple: 18,
-      totalAmount: 54,
+      totalAmount: 36,
       notes: "Ticket 24h oficial - ticketing.colosseo.it",
     },
     {
       id: 70,
-      date: "2026-09-21", // Cambiado de 2026-10-19
+      date: "2026-09-21",
       category: "museo" as const,
       description: "Museos Vaticanos + Capilla Sixtina",
       amountPerCouple: 25,
-      totalAmount: 75,
+      totalAmount: 50,
       notes: "20€ + 5€ reserva online",
     },
     {
       id: 71,
-      date: "2026-09-22", // Cambiado de 2026-10-20
+      date: "2026-09-22",
       category: "museo" as const,
       description: "Galería Borghese",
       amountPerCouple: 15,
-      totalAmount: 45,
+      totalAmount: 30,
     },
     {
       id: 72,
-      date: "2026-09-22", // Cambiado de 2026-10-20
+      date: "2026-09-22",
       category: "museo" as const,
       description: "Termas de Caracalla",
       amountPerCouple: 6,
-      totalAmount: 18,
+      totalAmount: 12,
     },
 
     // Capri
     {
       id: 73,
-      date: "2026-09-24", // Cambiado de 2026-10-23
+      date: "2026-09-24",
       category: "museo" as const,
       description: "Villa San Michele (Anacapri)",
       amountPerCouple: 12,
-      totalAmount: 36,
+      totalAmount: 24,
     },
     {
       id: 74,
-      date: "2026-09-24", // Cambiado de 2026-10-23
+      date: "2026-09-24",
       category: "museo" as const,
       description: "Jardines de Augusto (Capri)",
       amountPerCouple: 3,
-      totalAmount: 9,
+      totalAmount: 6,
     },
 
     // ============================================
@@ -372,38 +415,38 @@ export function getInitialData(): AppData {
     // Vuelos
     {
       id: 75,
-      date: "2026-09-05", // Cambiado de 2026-10-03
+      date: "2026-09-05",
       category: "vuelo" as const,
       description: "Vuelo Montevideo → Madrid (ida y vuelta)",
-      amountPerCouple: 2400,
-      totalAmount: 7200,
-      notes: "Incluye ida (5 sep) y vuelta (24 sep)", // Cambiado de 2026-10-03 to 2026-09-05 and 2026-10-24 to 2026-09-24
+      amountPerCouple: 2480,
+      totalAmount: 4960,
+      notes: "Incluye ida (5 sep) y vuelta (27 sep). $2,480 USD por pareja",
     },
     {
       id: 76,
-      date: "2026-09-09", // Cambiado de 2026-10-07
+      date: "2026-09-09",
       category: "vuelo" as const,
       description: "Vuelo Barcelona → París",
       amountPerCouple: 150,
-      totalAmount: 450,
+      totalAmount: 300,
     },
     {
       id: 77,
-      date: "2026-09-24", // Cambiado de 2026-10-24
+      date: "2026-09-27",
       category: "vuelo" as const,
       description: "Vuelo Roma → Madrid",
       amountPerCouple: 120,
-      totalAmount: 360,
+      totalAmount: 240,
     },
 
     // Trenes principales
     {
       id: 78,
-      date: "2026-09-09", // Cambiado de 2026-10-07
+      date: "2026-09-09",
       category: "transporte" as const,
       description: "Tren AVE Madrid → Barcelona",
       amountPerCouple: 120,
-      totalAmount: 360,
+      totalAmount: 240,
     },
     {
       id: 79,
@@ -411,7 +454,7 @@ export function getInitialData(): AppData {
       category: "vuelo" as const,
       description: "Vuelo París → Milán",
       amountPerCouple: 120,
-      totalAmount: 360,
+      totalAmount: 240,
       notes: "Vuelo directo desde París CDG a Milano Malpensa",
     },
     {
@@ -420,7 +463,7 @@ export function getInitialData(): AppData {
       category: "transporte" as const,
       description: "Tren Milán → Tirano (ida y vuelta)",
       amountPerCouple: 50,
-      totalAmount: 150,
+      totalAmount: 100,
       notes: "Tren regional para llegar al Bernina Express",
     },
     {
@@ -429,85 +472,85 @@ export function getInitialData(): AppData {
       category: "transporte" as const,
       description: "Bernina Express Tirano → St. Moritz (ida y vuelta)",
       amountPerCouple: 156,
-      totalAmount: 468,
+      totalAmount: 312,
       notes: "Billete ida y vuelta en tren panorámico",
     },
     {
       id: 83,
-      date: "2026-09-17", // Cambiado de 2026-10-14
+      date: "2026-09-17",
       category: "transporte" as const,
       description: "Tren Milán → Venecia",
       amountPerCouple: 85,
-      totalAmount: 255,
+      totalAmount: 170,
     },
     {
       id: 84,
-      date: "2026-09-18", // Cambiado de 2026-10-15
+      date: "2026-09-18",
       category: "transporte" as const,
       description: "Tren Venecia → Florencia",
       amountPerCouple: 85,
-      totalAmount: 255,
+      totalAmount: 170,
     },
     {
       id: 85,
-      date: "2026-09-19", // Cambiado de 2026-10-17
+      date: "2026-09-19",
       category: "transporte" as const,
       description: "Tren Florencia → Pisa",
       amountPerCouple: 10,
-      totalAmount: 30,
+      totalAmount: 20,
     },
     {
       id: 86,
-      date: "2026-09-19", // Cambiado de 2026-10-17
+      date: "2026-09-19",
       category: "transporte" as const,
       description: "Tren Pisa → Roma",
       amountPerCouple: 50,
-      totalAmount: 150,
+      totalAmount: 100,
     },
     {
       id: 87,
-      date: "2026-09-23", // Cambiado de 2026-10-21
+      date: "2026-09-23",
       category: "transporte" as const,
       description: "Tren Roma → Nápoles (ida y vuelta)",
       amountPerCouple: 50,
-      totalAmount: 150,
+      totalAmount: 100,
     },
 
     // Ferries y transporte marítimo
     {
       id: 88,
-      date: "2026-09-24", // Cambiado de 2026-10-24
+      date: "2026-09-24",
       category: "transporte" as const,
       description: "Ferry Sorrento → Positano",
       amountPerCouple: 15,
-      totalAmount: 45,
+      totalAmount: 30,
       notes: "Ferry panorámico",
     },
     {
       id: 89,
-      date: "2026-09-24", // Cambiado de 2026-10-24
+      date: "2026-09-24",
       category: "transporte" as const,
       description: "Ferry Positano → Amalfi",
       amountPerCouple: 15,
-      totalAmount: 45,
+      totalAmount: 30,
       notes: "Ferry panorámico",
     },
     {
       id: 90,
-      date: "2026-09-24", // Cambiado de 2026-10-24
+      date: "2026-09-24",
       category: "transporte" as const,
       description: "Bus Amalfi → Ravello → Sorrento",
       amountPerCouple: 10,
-      totalAmount: 30,
+      totalAmount: 20,
       notes: "Bus SITA",
     },
     {
       id: 91,
-      date: "2026-09-25", // Cambiado de 2026-10-25
+      date: "2026-09-25",
       category: "transporte" as const,
       description: "Hidroala Sorrento → Capri (ida y vuelta)",
       amountPerCouple: 50,
-      totalAmount: 150,
+      totalAmount: 100,
       notes: "Ferry rápido",
     },
   ]
@@ -531,7 +574,7 @@ export function getInitialData(): AppData {
     .reduce((sum, e) => sum + e.amountPerCouple, 0)
 
   const totalPerCouple = dailyExpenses.reduce((sum, expense) => sum + expense.amountPerCouple, 0)
-  const totalGeneral = totalPerCouple * 3 // Cambiado de * 6 a * 3 parejas
+  const totalGeneral = totalPerCouple * 2 // 2 parejas (TECHERA y PEREZ)
 
   console.log("[v0] Presupuesto recalculado:")
   console.log("[v0] - Alojamiento:", totalAlojamiento, "€ por pareja")
@@ -540,7 +583,7 @@ export function getInitialData(): AppData {
   console.log("[v0] - Eventos (museos, atracciones):", totalEventos, "€ por pareja")
   console.log("[v0] - Transporte (vuelos, trenes, ferries):", totalTransporte, "€ por pareja")
   console.log("[v0] - TOTAL POR PAREJA:", totalPerCouple, "€")
-  console.log("[v0] - TOTAL GENERAL (3 parejas):", totalGeneral, "€")
+  console.log("[v0] - TOTAL GENERAL (2 parejas):", totalGeneral, "€")
 
   const accommodations: any[] = [
     {
@@ -1371,7 +1414,7 @@ export function getInitialData(): AppData {
         title: "Llegada París CDG - Guardar equipaje",
         location: "Aeropuerto Charles de Gaulle, París, Francia",
         description:
-          "Opción 1: Lockers en Gare du Nord o Gare de Lyon (8-12€/día). Opción 2: Nannybag/Bounce (consigna en tiendas, 6€/día, reservar online). Recomendado: Dejar en consigna de Gare de Lyon si el apartamento está cerca",
+          "Opción 1: Lockers en Gare du Nord o Gare de Lyon (8-12€/d��a). Opción 2: Nannybag/Bounce (consigna en tiendas, 6€/día, reservar online). Recomendado: Dejar en consigna de Gare de Lyon si el apartamento está cerca",
         ticketPrice: 10,
         ticketUrl: "https://www.nannybag.com",
         category: "transporte",
@@ -1581,7 +1624,7 @@ export function getInitialData(): AppData {
         title: "Montmartre y Sacré-Cœur",
         location: "Montmartre, París, Francia",
         description:
-          "Basílica del Sacré-Cœur, Place du Tertre (pintores), Moulin de la Galette, vistas panorámicas de París",
+          "Basílica del Sacr��-Cœur, Place du Tertre (pintores), Moulin de la Galette, vistas panorámicas de París",
         ticketPrice: 0,
         category: "monumento",
         icon: "⛪",
