@@ -24,7 +24,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     description: "",
     amountPerCouple: 0,
     notes: "",
-    paidBy: currentUser?.couple || "CASTRO",
+    paidBy: currentUser?.couple || "TECHERA",
   })
 
   console.log("[v0] Presupuesto - Total por pareja:", budget.totalPerCouple)
@@ -160,7 +160,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
       description: expense.description,
       amountPerCouple: expense.amountPerCouple,
       notes: expense.notes || "",
-      paidBy: expense.paidBy || currentUser?.couple || "CASTRO",
+      paidBy: expense.paidBy || currentUser?.couple || "TECHERA",
     })
   }
 
@@ -604,7 +604,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
 
           {/* Resumen por pareja */}
           <div className="space-y-3">
-            {["CASTRO", "PEREZ", "TECHERA"].map((couple) => (
+            {["TECHERA", "PEREZ"].map((couple) => (
               <div key={couple} className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
                 <h4 className="font-bold mb-2">{couple}</h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
@@ -697,7 +697,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
                 <h4 className="text-sm text-white/70 mb-1">Total Transporte</h4>
                 <div className="text-2xl font-bold">€{totalAllTransport.toLocaleString()} por pareja</div>
                 <div className="text-sm text-white/70">
-                  €{(totalAllTransport * 3).toLocaleString()} total (3 parejas)
+                  €{(totalAllTransport * 2).toLocaleString()} total (2 parejas)
                 </div>
               </div>
             </div>

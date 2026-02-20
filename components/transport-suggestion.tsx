@@ -32,21 +32,17 @@ const locationCoordinates: { [key: string]: { lat: number; lng: number } } = {
   "Madrid, España": { lat: 40.4168, lng: -3.7038 },
   "Gran Vía, 32, Madrid, España": { lat: 40.4201, lng: -3.7058 },
 
-  // Toledo
+  // Madrid extras
   "Estación de Atocha, Madrid, España": { lat: 40.4068, lng: -3.6919 },
-  "Toledo, España": { lat: 39.8628, lng: -4.0273 },
-  "Plaza de Zocodover, Toledo, España": { lat: 39.8578, lng: -4.0202 },
-  "Calle Cardenal Cisneros, 1, Toledo, España": { lat: 39.8575, lng: -4.0241 },
-  "Calle de la Union, s/n, Toledo, España": { lat: 39.8578, lng: -4.0202 },
-  "Plaza del Conde, 4, Toledo, España": { lat: 39.8571, lng: -4.0281 },
-  "Calle de los Reyes Católicos, 4, Toledo, España": { lat: 39.8565, lng: -4.0295 },
-  "Calle Cristo de la Luz, 22, Toledo, España": { lat: 39.8595, lng: -4.0235 },
-  "Calle de los Reyes Católicos, 17, Toledo, España": { lat: 39.8565, lng: -4.0295 },
-  "Casco antiguo, Toledo, España": { lat: 39.8578, lng: -4.0241 },
-  "Puente de San Martín, Toledo, España": { lat: 39.8551, lng: -4.0331 },
-  "Carretera de Circunvalación, Toledo, España": { lat: 39.8495, lng: -4.0241 },
-  "Centro de Toledo, España": { lat: 39.8578, lng: -4.0241 },
-  "Estación de tren, Toledo, España": { lat: 39.8578, lng: -4.0202 },
+  "Calle del Barquillo 41, Madrid": { lat: 40.4243, lng: -3.6953 },
+  "Plaza de las Comendadoras, 9, Madrid": { lat: 40.4269, lng: -3.7073 },
+  "Paseo del Prado, s/n, Madrid": { lat: 40.4138, lng: -3.6921 },
+  "Calle de Santa Isabel, 52, Madrid": { lat: 40.4087, lng: -3.6936 },
+  "Barrio de Las Letras, Madrid": { lat: 40.4127, lng: -3.6984 },
+  "Plaza del Dos de Mayo, Malasaña, Madrid": { lat: 40.4264, lng: -3.7036 },
+  "Calle Ferraz, 1, Madrid": { lat: 40.4237, lng: -3.7178 },
+  "Plaza de Cibeles, Madrid": { lat: 40.4197, lng: -3.6937 },
+  "Paseo de Recoletos, Madrid": { lat: 40.4231, lng: -3.6926 },
 
   // Barcelona
   "Carrer de Mallorca, 401, Barcelona, España": { lat: 41.4036, lng: 2.1744 },

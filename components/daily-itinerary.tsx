@@ -39,8 +39,7 @@ export function DailyItinerary({
   const getCityFromEvents = () => {
     if (events.length === 0) return null
     const location = events[0].location
-    if (location.includes("Madrid")) return { name: "Madrid", country: "España" }
-    if (location.includes("Toledo")) return { name: "Toledo", country: "España" }
+    if (location.includes("Madrid") || location.includes("Barquillo")) return { name: "Madrid", country: "España" }
     if (location.includes("Barcelona")) return { name: "Barcelona", country: "España" }
     if (location.includes("París") || location.includes("Paris")) return { name: "París", country: "Francia" }
     if (location.includes("Versalles")) return { name: "Versalles", country: "Francia" }

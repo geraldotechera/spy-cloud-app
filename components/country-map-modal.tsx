@@ -13,18 +13,10 @@ export function CountryMapModal({ country, onClose }: CountryMapModalProps) {
       name: "España",
       flag: "🇪🇸",
       cities: [
-        { name: "Madrid", description: "Capital - 2 días" },
-        { name: "Toledo", description: "Excursión de día" },
+        { name: "Madrid", description: "Capital - 3 días" },
         { name: "Barcelona", description: "3 días" },
       ],
       routes: [
-        {
-          from: "Madrid",
-          to: "Toledo",
-          company: "Renfe Cercanías",
-          duration: "33 min",
-          type: "Cercanías",
-        },
         {
           from: "Madrid",
           to: "Barcelona",
