@@ -3949,9 +3949,8 @@ export function getInitialData(): AppData {
     currentCity: "Madrid",
     currentTicketCategory: "avion",
     couples: [
-      { id: 1, name: "CASTRO", color: "#3B82F6" },
+      { id: 1, name: "TECHERA", color: "#3B82F6" },
       { id: 2, name: "PEREZ", color: "#10B981" },
-      { id: 3, name: "TECHERA", color: "#F59E0B" },
     ],
     events: eventsByDate,
     tickets: [],

@@ -8,8 +8,6 @@ import type { Photo, User } from "@/types"
 const ALL_USERS: User[] = [
   { id: 1, name: "Geraldo", couple: "TECHERA", role: "admin", color: "bg-blue-500" },
   { id: 2, name: "Laura", couple: "TECHERA", role: "user", color: "bg-blue-400" },
-  { id: 3, name: "Rodrigo C", couple: "CASTRO", role: "user", color: "bg-green-500" },
-  { id: 4, name: "Patricia", couple: "CASTRO", role: "user", color: "bg-green-400" },
   { id: 5, name: "Rodrigo P", couple: "PEREZ", role: "user", color: "bg-orange-500" },
   { id: 6, name: "Monica", couple: "PEREZ", role: "user", color: "bg-orange-400" },
 ]
