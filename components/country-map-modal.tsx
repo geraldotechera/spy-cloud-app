@@ -35,9 +35,9 @@ export function CountryMapModal({ country, onClose }: CountryMapModalProps) {
         {
           from: "Barcelona",
           to: "París",
-          company: "Vueling / Air France",
-          duration: "1h 50min",
-          type: "Vuelo",
+          company: "SNCF TGV",
+          duration: "6h 30min",
+          type: "Tren Alta Velocidad",
         },
         {
           from: "París",
