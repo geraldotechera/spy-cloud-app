@@ -15,7 +15,6 @@ interface WeatherWidgetProps {
 
 const cityCoordinates: Record<string, { lat: number; lon: number }> = {
   Madrid: { lat: 40.4168, lon: -3.7038 },
-  Toledo: { lat: 39.8628, lon: -4.0273 },
   Barcelona: { lat: 41.3851, lon: 2.1734 },
   París: { lat: 48.8566, lon: 2.3522 },
   Versalles: { lat: 48.8049, lon: 2.1204 },
