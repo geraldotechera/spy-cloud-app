@@ -60,6 +60,13 @@ const locationCoordinates: { [key: string]: { lat: number; lng: number } } = {
   "Barcelona, España": { lat: 41.3851, lng: 2.1734 },
   "Ciudad Condal, Rambla de Catalunya, 18, Barcelona, España": { lat: 41.3879, lng: 2.1647 },
   "Aeropuerto El Prat, Barcelona, España": { lat: 41.2974, lng: 2.0833 },
+  "Estación Barcelona Sants, España": { lat: 41.375, lng: 2.1415 },
+  "La Barceloneta, Barcelona, España": { lat: 41.3784, lng: 2.1897 },
+  "Playa de la Barceloneta, Barcelona, España": { lat: 41.3758, lng: 2.1926 },
+  "Puerto Olímpico, Barcelona, España": { lat: 41.3866, lng: 2.2015 },
+  "Restaurantes Barceloneta, Barcelona, España": { lat: 41.3784, lng: 2.1897 },
+  "C/ d'Arístides Maillol, 12, Barcelona, España": { lat: 41.3809, lng: 2.1228 },
+  "El Raval, Barcelona, España": { lat: 41.3787, lng: 2.1682 },
 
   // París
   "Île de la Cité, París, Francia": { lat: 48.8546, lng: 2.3477 },
