@@ -9,12 +9,20 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  productionBrowserSourceMaps: false,
   webpack: (config, { dev, isServer }) => {
-    // Disable source maps in development to avoid path resolution issues
-    if (dev) {
-      config.devtool = false
-    }
+    // Completely disable source maps to avoid path resolution issues
+    config.devtool = false
+    
+    // Override any source map plugins
+    config.plugins = config.plugins.filter(
+      plugin => plugin.constructor.name !== 'SourceMapDevToolPlugin'
+    )
+    
     return config
+  },
+  env: {
+    GENERATE_SOURCEMAP: 'false',
   },
 }
 
