@@ -98,7 +98,6 @@ export function TicketsSection({ tickets, onBack, onUpdateTickets }: TicketsSect
         const code = jsQR(imageData.data, imageData.width, imageData.height)
 
         if (code) {
-          console.log("[v0] QR Code detectado:", code.data)
           handleQRDetected(code.data)
           stopQRScanner()
           return

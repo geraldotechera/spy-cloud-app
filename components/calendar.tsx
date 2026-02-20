@@ -36,7 +36,6 @@ export function Calendar({ selectedDate, onSelectDate, events }: CalendarProps) 
             <button
               key={day}
               onClick={() => {
-                console.log("[v0] Calendar: Día seleccionado:", day, "Fecha completa:", dateStr)
                 onSelectDate(dateStr)
               }}
               className={`

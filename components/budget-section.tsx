@@ -27,10 +27,6 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     paidBy: currentUser?.couple || "CASTRO",
   })
 
-  console.log("[v0] Presupuesto - Total por pareja:", budget.totalPerCouple)
-  console.log("[v0] Presupuesto - Total general:", budget.totalGeneral)
-  console.log("[v0] Presupuesto - Verificación (x 2 parejas):", budget.totalPerCouple * 2)
-
   const gastosExpenses = budget.dailyExpenses.filter(
     (e) => e.category === "alojamiento" || e.category === "alimentacion" || e.category === "otros",
   )
@@ -81,9 +77,6 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     const newExpenses = [...budget.dailyExpenses, newExpense]
     const newTotalPerCouple = newExpenses.reduce((sum, e) => sum + e.amountPerCouple, 0)
     const newTotalGeneral = newTotalPerCouple * 2
-
-    console.log("[v0] Nuevo gasto - Total por pareja:", newTotalPerCouple)
-    console.log("[v0] Nuevo gasto - Total general:", newTotalGeneral)
 
     onUpdateBudget({
       dailyExpenses: newExpenses,
@@ -331,14 +324,6 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
   const totalAllTransport = totalFixedTransport + totalOtherTransport
 
   const totalCalculado = totalGastos + totalEventos + totalAllTransport
-
-  console.log("[v0] Presupuesto desglosado:")
-  console.log("[v0] - Gastos (alojamiento + alimentación + otros):", totalGastos, "€")
-  console.log("[v0] - Eventos:", totalEventos, "€")
-  console.log("[v0] - Transporte:", totalAllTransport, "€")
-  console.log("[v0] - TOTAL CALCULADO:", totalCalculado, "€")
-  console.log("[v0] - TOTAL DEL SISTEMA:", budget.totalPerCouple, "€")
-  console.log("[v0] - DIFERENCIA:", Math.abs(totalCalculado - budget.totalPerCouple), "€")
 
   return (
     <div className="space-y-4">

@@ -92,13 +92,11 @@ export default function Home() {
           setCurrentUser(parsedUser)
         }
 
-        console.log("[v0] Cargando itinerario actualizado con outlets de ropa...")
         localStorage.removeItem("europeTripData")
 
         const initialData = getInitialData()
         setAppData(initialData)
         localStorage.setItem("europeTripData", JSON.stringify(initialData))
-        console.log("[v0] Datos cargados: outlets en Madrid (Primark), París (Le Marais), Roma (Via del Corso)")
       } catch (error) {
         console.error("[v0] Error crítico al cargar datos:", error)
         const initialData = getInitialData()
@@ -112,12 +110,8 @@ export default function Home() {
   useEffect(() => {
     if (!appData) return
 
-    console.log("[v0] Guardando datos en localStorage...")
-    console.log("[v0] Alojamientos a guardar:", appData.accommodations.length)
-
     try {
       localStorage.setItem("europeTripData", JSON.stringify(appData))
-      console.log("[v0] Datos guardados exitosamente en localStorage")
     } catch (error) {
       console.error("[v0] Error al guardar en localStorage:", error)
     }
@@ -367,7 +361,6 @@ export default function Home() {
               currentUser={currentUser}
               onBack={() => setCurrentSection("main")}
               onUpdateAccommodations={(newAccommodations) => {
-                console.log("[v0] Actualizando alojamientos:", newAccommodations.length)
                 setAppData({ ...appData, accommodations: newAccommodations })
                 showNotif("Alojamiento guardado")
               }}

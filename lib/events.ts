@@ -576,15 +576,6 @@ export function getInitialData(): AppData {
   const totalPerCouple = dailyExpenses.reduce((sum, expense) => sum + expense.amountPerCouple, 0)
   const totalGeneral = totalPerCouple * 2 // 2 parejas (TECHERA y PEREZ)
 
-  console.log("[v0] Presupuesto recalculado:")
-  console.log("[v0] - Alojamiento:", totalAlojamiento, "€ por pareja")
-  console.log("[v0] - Alimentación:", totalAlimentacion, "€ por pareja")
-  console.log("[v0] - Otros (lockers, etc.):", totalOtros, "€ por pareja")
-  console.log("[v0] - Eventos (museos, atracciones):", totalEventos, "€ por pareja")
-  console.log("[v0] - Transporte (vuelos, trenes, ferries):", totalTransporte, "€ por pareja")
-  console.log("[v0] - TOTAL POR PAREJA:", totalPerCouple, "€")
-  console.log("[v0] - TOTAL GENERAL (2 parejas):", totalGeneral, "€")
-
   const accommodations: any[] = [
     {
       id: 1,
@@ -3934,14 +3925,6 @@ export function getInitialData(): AppData {
       },
     ],
   }
-
-  console.log("[v0] DEBUG - Verificando días 8 y 9:")
-  console.log("[v0] - Día 8 existe:", !!eventsByDate["2026-09-08"])
-  console.log("[v0] - Día 8 eventos:", eventsByDate["2026-09-08"]?.length || 0)
-  console.log("[v0] - Día 9 existe:", !!eventsByDate["2026-09-09"])
-  console.log("[v0] - Día 9 eventos:", eventsByDate["2026-09-09"]?.length || 0)
-  console.log("[v0] - Total de días en eventsByDate:", Object.keys(eventsByDate).length)
-  console.log("[v0] - Fechas disponibles:", Object.keys(eventsByDate).sort().join(", "))
 
   return {
     currentSection: "main",
