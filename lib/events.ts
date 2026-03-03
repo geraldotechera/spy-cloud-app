@@ -2104,7 +2104,7 @@ export function getInitialData(): AppData {
         description: "El puente más famoso sobre el Gran Canal. Fotos desde arriba y desde el agua. Luego perderse por las callejuelas (calli), cruzar los pequeños puentes (ponti) y descubrir los patios interiores (corti). La verdadera Venecia está donde no llegan los mapas.",
         ticketPrice: 0,
         category: "monumento",
-        icon: "🌉",
+        icon: "���",
         coordinates: { lat: 45.438, lng: 12.3358 },
         imageUrl: "/rialto-bridge-grand-canal.jpg",
       },
@@ -2120,7 +2120,7 @@ export function getInitialData(): AppData {
         coordinates: { lat: 45.438, lng: 12.3358 },
       },
       {
-        id: 1809b,
+        id: 18091,
         time: "16:00",
         title: "Barrio de Dorsoduro y Gallerie dell'Accademia",
         location: "Dorsoduro, Venecia, Italia",
@@ -3349,143 +3349,55 @@ export function getInitialData(): AppData {
 
   console.log("[v0] DEBUG - Verificando días 8 y 9:")
   console.log("[v0] - Día 8 existe:", !!eventsByDate["2026-09-08"])
-        title: "Capri pueblo - La Piazzetta",
-        location: "Capri, Italia",
-        description: "Plaza principal, calles elegantes, boutiques de lujo, vistas panoramicas.",
-        ticketPrice: 0,
-        category: "paseo",
-        icon: "🚶",
-        coordinates: { lat: 40.5526, lng: 14.2423 },
-      },
-      {
-        id: 2204,
-        time: "10:30",
-        title: "Jardines de Augusto y Via Krupp",
-        location: "Capri, Italia",
-        description: "Jardines botanicos con vistas a los Faraglioni (rocas iconicas). Via Krupp (camino en zigzag).",
-        ticketPrice: 2,
-        category: "naturaleza",
-        icon: "🌳",
-        coordinates: { lat: 40.5509, lng: 14.2401 },
-      },
-      {
-        id: 2205,
-        time: "12:00",
-        title: "Almuerzo en Capri",
-        location: "Capri, Italia",
-        description: "Insalata caprese (tomate, mozzarella, albahaca) en su lugar de origen, ravioli capresi.",
-        ticketPrice: 0,
-        category: "gastronomia",
-        icon: "🥗",
-        coordinates: { lat: 40.5526, lng: 14.2423 },
-      },
-      {
-        id: 2206,
-        time: "13:30",
-        title: "Bus Capri - Anacapri",
-        location: "Capri, Italia",
-        description: "Subida a Anacapri (parte alta de la isla). Duracion: 15 min.",
-        ticketPrice: 2,
-        category: "transporte",
-        icon: "🚌",
-        coordinates: { lat: 40.5526, lng: 14.2423 },
-      },
-      {
-        id: 2207,
-        time: "14:00",
-        title: "Villa San Michele (Anacapri)",
-        location: "Anacapri, Capri, Italia",
-        description: "Villa del medico sueco Axel Munthe con jardines, antiguedades romanas y vistas espectaculares.",
-        ticketPrice: 12,
-        ticketUrl: "https://www.villasanmichele.eu",
-        category: "museo",
-        icon: "🏛️",
-        coordinates: { lat: 40.5621, lng: 14.222 },
-      },
-      {
-        id: 2208,
-        time: "15:30",
-        title: "Monte Solaro",
-        location: "Anacapri, Capri, Italia",
-        description: "Teleferico al punto mas alto de Capri (589m) con vistas de 360 grados. Duracion: 12 min subida.",
-        ticketPrice: 16,
-        ticketUrl: "https://www.capriseggiovia.it",
-        category: "mirador",
-        icon: "🏞️",
-        coordinates: { lat: 40.5682, lng: 14.2146 },
-      },
-      {
-        id: 2209,
-        time: "17:00",
-        title: "Bus Anacapri - Marina Grande",
-        location: "Anacapri, Capri, Italia",
-        description: "Regreso al puerto para tomar el ferry.",
-        ticketPrice: 2,
-        category: "transporte",
-        icon: "🚌",
-        coordinates: { lat: 40.5621, lng: 14.222 },
-      },
-      {
-        id: 2210,
-        time: "17:30",
-        title: "Ferry Capri - Sorrento",
-        location: "Capri, Italia",
-        description: "Regreso a Sorrento al atardecer.",
-        ticketPrice: 25,
-        ticketUrl: "https://www.caremar.it",
-        category: "transporte",
-        icon: "🚢",
-        coordinates: { lat: 40.5506, lng: 14.2456 },
-      },
-      {
-        id: 2211,
-        time: "18:30",
-        title: "Cena en Sorrento",
-        location: "Sorrento, Italia",
-        description: "Cena con vista al mar: pescado fresco, limoncello casero.",
-        ticketPrice: 0,
-        category: "gastronomia",
-        icon: "🍽️",
-        coordinates: { lat: 40.6333, lng: 14.3725 },
-        imageUrl: "/italian-dinner-sea-view-sorrento.jpg",
-      },
+  console.log("[v0] - Día 8 eventos:", eventsByDate["2026-09-08"]?.length || 0)
+  console.log("[v0] - Día 9 existe:", !!eventsByDate["2026-09-09"])
+  console.log("[v0] - Día 9 eventos:", eventsByDate["2026-09-09"]?.length || 0)
+  console.log("[v0] - Total de días en eventsByDate:", Object.keys(eventsByDate).length)
+  console.log("[v0] - Fechas disponibles:", Object.keys(eventsByDate).sort().join(", "))
+
+  return {
+    currentSection: "main",
+    selectedDate: "2026-09-06",
+    currentCity: "Madrid",
+    currentTicketCategory: "avion",
+    couples: [
+      { id: 1, name: "TECHERA", color: "#3B82F6" },
+      { id: 2, name: "PEREZ", color: "#10B981" },
     ],
-    "2026-09-23": [
-      {
-        id: 2300,
-        time: "07:00",
-        title: "Desayuno en Sorrento",
-        location: "Sorrento, Italia",
-        description: "Desayuno antes de la excursion a Napoles, Pompeya y Vesubio.",
-        ticketPrice: 0,
-        category: "gastronomia",
-        icon: "☕",
-        coordinates: { lat: 40.6333, lng: 14.3725 },
-        imageUrl: "/italian-breakfast-sorrento.jpg",
-      },
-      {
-        id: 2301,
-        time: "08:00",
-        title: "Circumvesuviana Sorrento - Napoles",
-        location: "Sorrento, Italia",
-        description: "Tren local a Napoles. Duracion: 1h 10min. Dejar equipaje en lockers de Napoli Centrale.",
-        ticketPrice: 10,
-        ticketUrl: "https://www.eavsrl.it",
-        category: "transporte",
-        icon: "🚆",
-        coordinates: { lat: 40.6333, lng: 14.3725 },
-        imageUrl: "/circumvesuviana-train.jpg",
-      },
-      {
-        id: 2302,
-        time: "09:15",
-        title: "Centro historico Napoles - Spaccanapoli",
-        location: "Spaccanapoli, Napoles, Italia",
-        description: "Calle que divide la ciudad antigua, iglesias barrocas, tiendas artesanales.",
-        ticketPrice: 0,
-        category: "paseo",
-        icon: "🚶",
-        coordinates: { lat: 40.845, lng: 14.253 },
+    events: eventsByDate,
+    tickets: [],
+    accommodations: accommodations,
+    budget: {
+      dailyExpenses,
+      totalPerCouple,
+      totalGeneral,
+    },
+    photos: [],
+    lastSync: Date.now(),
+  }
+}
+
+const budget = {
+  dailyExpenses: {
+    accommodation: 85, // por noche por pareja
+    food: 80, // por día por pareja (desayuno, almuerzo, cena)
+  },
+  accommodations: [
+    { city: "Madrid", nights: 3, pricePerNight: 72 },
+    { city: "Barcelona", nights: 3, pricePerNight: 110 },
+    { city: "París", nights: 4, pricePerNight: 85 },
+    { city: "Milán", nights: 1, pricePerNight: 85 },
+    { city: "Venecia", nights: 2, pricePerNight: 85 },
+    { city: "Florencia", nights: 3, pricePerNight: 85 },
+    { city: "Roma", nights: 3, pricePerNight: 85 },
+    { city: "Sorrento/Amalfi", nights: 4, pricePerNight: 85 },
+  ],
+  totalNights: 21,
+  totalDays: 22,
+}
+
+export { budget }
+
       },
       {
         id: 2303,
@@ -3788,7 +3700,7 @@ export function getInitialData(): AppData {
         description: "Iglesia mas grande del mundo. La Pieta de Miguel Angel. Subir a la cupula (opcional, 10 euros). Duracion: 1h 30min.",
         ticketPrice: 0,
         category: "monumento",
-        icon: "⛪",
+        icon: "��",
         coordinates: { lat: 41.9022, lng: 12.4539 },
       },
       {
