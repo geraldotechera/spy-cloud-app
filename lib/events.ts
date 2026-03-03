@@ -1323,13 +1323,36 @@ export function getInitialData(): AppData {
       },
     ],
     "2026-09-12": [
-      // Llegada a París el sábado 12 de septiembre - Check-in aprox 16:00 - Paseo de tarde
+      // Sábado 12 septiembre: TGV Barcelona → París (llega ~15:00) - Check-in - Paseo de tarde
+      {
+        id: 1200,
+        time: "08:30",
+        title: "TGV Barcelona Sants → París Gare de Lyon",
+        location: "Estación Barcelona Sants, España",
+        description: "Tren de alta velocidad TGV directo Barcelona Sants → Paris Gare de Lyon. Duración: 6h 22min. Llegada estimada a las 15:00. Salir con tiempo para pasar controles de seguridad y frontera (llegar a la estación ~07:45).",
+        ticketPrice: 120,
+        ticketUrl: "https://www.sncf.com",
+        category: "transporte",
+        icon: "🚆",
+        coordinates: { lat: 41.375, lng: 2.1415 },
+      },
+      {
+        id: 1201,
+        time: "15:00",
+        title: "Llegada a París Gare de Lyon",
+        location: "Gare de Lyon, París, Francia",
+        description: "Llegada a París. Metro desde Gare de Lyon al apartamento (~15 min según la ubicación). Primer vistazo a la ciudad desde el metro.",
+        ticketPrice: 0,
+        category: "transporte",
+        icon: "🚇",
+        coordinates: { lat: 48.8448, lng: 2.3735 },
+      },
       {
         id: 1204,
-        time: "16:00",
-        title: "Llegada y Check-in apartamento París",
+        time: "15:30",
+        title: "Check-in apartamento París",
         location: "París, Francia",
-        description: "Llegada a París el sábado 12 de septiembre. Check-in en el apartamento. Dejar equipaje, refrescarse y descansar un momento antes de salir a conocer la ciudad.",
+        description: "Check-in en el apartamento. Dejar equipaje, refrescarse y descansar un momento del viaje en tren antes de salir a conocer la ciudad.",
         ticketPrice: 0,
         category: "alojamiento",
         icon: "🏠",
@@ -1337,7 +1360,7 @@ export function getInitialData(): AppData {
       },
       {
         id: 1203,
-        time: "17:00",
+        time: "16:30",
         title: "Notre-Dame y Sainte-Chapelle",
         location: "Île de la Cité, París, Francia",
         description: "Sainte-Chapelle con sus vitrales impresionantes (reservar entrada). Notre-Dame recientemente reabierta. Desde alojamiento: metro hasta Cité (10-15 min). Duración: 1h 30min.",
@@ -1349,7 +1372,7 @@ export function getInitialData(): AppData {
       },
       {
         id: 1205,
-        time: "18:30",
+        time: "18:15",
         title: "Paseo por las orillas del Sena",
         location: "Quai de la Tournelle, París, Francia",
         description: "Caminar por los muelles del Sena, bouquinistes (libreros), vistas de Notre-Dame. Seguir caminando por la orilla sur del Sena hacia el oeste. Primer contacto con el ambiente parisino.",
@@ -1360,7 +1383,7 @@ export function getInitialData(): AppData {
       },
       {
         id: 1206,
-        time: "19:15",
+        time: "19:00",
         title: "Barrio Latino",
         location: "Barrio Latino, París, Francia",
         description: "Paseo por el Barrio Latino: callejuelas medievales, cafés, librerías. Ambiente universitario (Sorbona). A 5 min caminando desde el Sena.",
@@ -1371,7 +1394,7 @@ export function getInitialData(): AppData {
       },
       {
         id: 1210,
-        time: "20:00",
+        time: "19:45",
         title: "Regreso al apartamento - Prepararse",
         location: "París, Francia",
         description: "Volver al apartamento para cambiarse y prepararse para el crucero con cena.",
