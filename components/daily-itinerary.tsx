@@ -38,26 +38,51 @@ export function DailyItinerary({
 
   const getCityFromEvents = () => {
     if (events.length === 0) return null
-    const location = events[0].location
-    if (location.includes("Madrid") || location.includes("Barquillo")) return { name: "Madrid", country: "España" }
-    if (location.includes("Barcelona")) return { name: "Barcelona", country: "España" }
-    if (location.includes("París") || location.includes("Paris")) return { name: "París", country: "Francia" }
-    if (location.includes("Versalles")) return { name: "Versalles", country: "Francia" }
-    if (location.includes("Amsterdam")) return { name: "Amsterdam", country: "Países Bajos" }
-    if (location.includes("Zúrich") || location.includes("Zurich") || location.includes("Chur"))
-      return { name: "Zúrich", country: "Suiza" }
-    if (location.includes("Milán") || location.includes("Milan")) return { name: "Milán", country: "Italia" }
-    if (location.includes("Florencia") || location.includes("Florence")) return { name: "Florencia", country: "Italia" }
-    if (location.includes("Pisa")) return { name: "Pisa", country: "Italia" }
-    if (location.includes("Roma") || location.includes("Rome")) return { name: "Roma", country: "Italia" }
-    if (location.includes("Nápoles") || location.includes("Naples") || location.includes("Napoli"))
-      return { name: "Nápoles", country: "Italia" }
-    if (location.includes("Sorrento")) return { name: "Sorrento", country: "Italia" }
-    if (location.includes("Positano")) return { name: "Positano", country: "Italia" }
-    if (location.includes("Amalfi")) return { name: "Amalfi", country: "Italia" }
-    if (location.includes("Ravello")) return { name: "Ravello", country: "Italia" }
-    if (location.includes("Capri") || location.includes("Anacapri")) return { name: "Capri", country: "Italia" }
-    return null
+
+    const cityMatchers: { test: (loc: string) => boolean; result: { name: string; country: string } }[] = [
+      { test: (l) => l.includes("Madrid") || l.includes("Barquillo"), result: { name: "Madrid", country: "España" } },
+      { test: (l) => l.includes("Barcelona"), result: { name: "Barcelona", country: "España" } },
+      { test: (l) => l.includes("Bruselas") || l.includes("Bruxelles"), result: { name: "Bruselas", country: "Bélgica" } },
+      { test: (l) => l.includes("Ámsterdam") || l.includes("Amsterdam"), result: { name: "Ámsterdam", country: "Países Bajos" } },
+      { test: (l) => l.includes("Versalles"), result: { name: "Versalles", country: "Francia" } },
+      { test: (l) => l.includes("París") || l.includes("Paris"), result: { name: "París", country: "Francia" } },
+      { test: (l) => l.includes("Zúrich") || l.includes("Zurich") || l.includes("Chur"), result: { name: "Zúrich", country: "Suiza" } },
+      { test: (l) => l.includes("Venecia") || l.includes("Venice") || l.includes("Venezia"), result: { name: "Venecia", country: "Italia" } },
+      { test: (l) => l.includes("Milán") || l.includes("Milan"), result: { name: "Milán", country: "Italia" } },
+      { test: (l) => l.includes("Florencia") || l.includes("Florence"), result: { name: "Florencia", country: "Italia" } },
+      { test: (l) => l.includes("Pisa"), result: { name: "Pisa", country: "Italia" } },
+      { test: (l) => l.includes("Nápoles") || l.includes("Naples") || l.includes("Napoli"), result: { name: "Nápoles", country: "Italia" } },
+      { test: (l) => l.includes("Sorrento"), result: { name: "Sorrento", country: "Italia" } },
+      { test: (l) => l.includes("Positano"), result: { name: "Positano", country: "Italia" } },
+      { test: (l) => l.includes("Amalfi"), result: { name: "Amalfi", country: "Italia" } },
+      { test: (l) => l.includes("Ravello"), result: { name: "Ravello", country: "Italia" } },
+      { test: (l) => l.includes("Capri") || l.includes("Anacapri"), result: { name: "Capri", country: "Italia" } },
+      { test: (l) => l.includes("Roma") || l.includes("Rome"), result: { name: "Roma", country: "Italia" } },
+    ]
+
+    // Count how many events belong to each city
+    const cityCount = new Map<string, { count: number; result: { name: string; country: string } }>()
+
+    for (const event of events) {
+      for (const matcher of cityMatchers) {
+        if (matcher.test(event.location)) {
+          const key = matcher.result.name
+          const prev = cityCount.get(key)
+          cityCount.set(key, { count: (prev?.count ?? 0) + 1, result: matcher.result })
+          break
+        }
+      }
+    }
+
+    if (cityCount.size === 0) return null
+
+    // Return the city with the most events
+    let best: { count: number; result: { name: string; country: string } } | null = null
+    for (const entry of cityCount.values()) {
+      if (!best || entry.count > best.count) best = entry
+    }
+
+    return best?.result ?? null
   }
 
   const city = getCityFromEvents()
