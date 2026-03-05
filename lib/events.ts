@@ -1315,7 +1315,7 @@ export function getInitialData(): AppData {
         time: "21:30",
         title: "Regreso al Alojamiento",
         location: "Plaza de Europa 25, L'Hospitalet, Barcelona, España",
-        description: "Metro L1 desde Universitat/Catalunya hasta Hospitalet Av. Carrilet (15 min). Preparar equipaje. Salida temprano ma��ana.",
+        description: "Metro L1 desde Universitat/Catalunya hasta Hospitalet Av. Carrilet (15 min). Preparar equipaje. Salida temprano ma����ana.",
         ticketPrice: 0,
         category: "alojamiento",
         icon: "🏠",
@@ -1551,7 +1551,7 @@ export function getInitialData(): AppData {
         coordinates: { lat: 52.3791, lng: 4.9003 },
       },
       {
-        id: 1406b,
+        id: 14062,
         time: "12:15",
         title: "Barrio Jordaan - Canales y casas del siglo XVII",
         location: "Jordaan, Ámsterdam, Países Bajos",
