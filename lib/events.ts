@@ -2991,9 +2991,6 @@ export function getInitialData(): AppData {
         coordinates: { lat: 40.6333, lng: 14.3725 },
       },
     ],
-        imageUrl: "/italian-dinner-sea-view-sorrento.jpg",
-      },
-    ],
     "2026-09-26": [
       // Sábado 26: Mañana libre en Sorrento - Tarde: Circumvesuviana a Nápoles - Tarde y noche en Nápoles
       {
