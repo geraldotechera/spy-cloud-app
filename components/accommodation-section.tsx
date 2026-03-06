@@ -35,6 +35,19 @@ export function AccommodationSection({
         "⚡ Conexión directa a Sagrada Família (15 min), Passeig de Gràcia (7 min), Park Güell (20 min)",
       ],
     },
+    Florencia: {
+      address: "Via della Scala, 73, Florencia, Toscana 50123, Italia",
+      transport: [
+        "🚉 A 200 metros de la Estación Firenze Santa Maria Novella — la más céntrica de Florencia",
+        "📍 Salir del alojamiento, girar a la izquierda por Via della Scala — 3 min andando a la estación",
+        "🚌 Bus C1 y C2 (líneas centro histórico) con parada en Via della Scala",
+        "🚌 Bus 13 hacia Oltrarno y Piazzale Michelangelo con parada cercana",
+        "🏛️ Al Duomo: 15 min caminando por Via dei Cerretani",
+        "🌉 Al Ponte Vecchio: 20 min caminando por el centro",
+        "🔙 Llegada desde Venecia: tren Frecciarossa Venezia → Firenze SMN (2h), salir de la estación y caminar 3 min",
+        "🔙 Salida hacia Roma: caminar 3 min a la estación, tren Frecciarossa a Roma Termini (1h 30min)",
+      ],
+    },
     Milán: {
       address: "Via Alessandro Tadino, 17, Milán, Lombardía 20124, Italia",
       transport: [
