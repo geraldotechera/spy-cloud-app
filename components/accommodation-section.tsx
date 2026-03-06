@@ -35,6 +35,29 @@ export function AccommodationSection({
         "⚡ Conexión directa a Sagrada Família (15 min), Passeig de Gràcia (7 min), Park Güell (20 min)",
       ],
     },
+    Milán: {
+      address: "Via Alessandro Tadino, 17, Milán, Lombardía 20124, Italia",
+      transport: [
+        "🚇 Metro: Estación Porta Venezia (Línea M1 - Roja) a 4 min caminando",
+        "🚌 Bus 60 y 61 pasan por Via Tadino con conexión al centro",
+        "📍 Zona Porta Venezia / Buenos Aires — barrio céntrico y animado",
+        "⚡ Desde Milano Centrale: Metro M2 (Verde) desde Centrale → Repubblica → caminar 8 min, o M1 Loreto → Porta Venezia",
+        "🏛️ Al Duomo: 15 min en metro (Porta Venezia → Duomo en M1)",
+        "🔙 Para la salida a Venecia: Metro M1 desde Porta Venezia → Centrale (15 min) o taxi ~€8",
+      ],
+    },
+    París: {
+      address: "57 Rue Schaeffer Bâtiment B, Aubervilliers, Isla de Francia 93300, Francia",
+      transport: [
+        "🚇 Metro: Línea 12 — Estación Porte de la Chapelle (10 min caminando) o Línea 13 — Basilique de Saint-Denis",
+        "🚌 Bus 153 y 302 con paradas cercanas en Aubervilliers",
+        "🚃 RER D o E desde Gare du Nord / Gare de Lyon hasta el centro",
+        "📍 Zona norte de París (Seine-Saint-Denis) — barrio multicultural y bien conectado",
+        "⚡ Desde Gare de Lyon (llegada en TGV): Metro M14 → Gare du Nord → Metro M12 → Porte de la Chapelle (35 min total)",
+        "🔙 Para salida a Milán (Gare de Lyon): Bus/metro desde Aubervilliers → Gare du Nord → Metro → Gare de Lyon (~40 min)",
+        "🗺️ Al centro de París (Louvre/Torre Eiffel): 30-40 min en transporte público",
+      ],
+    },
   }
 
   const luggageStorage = {
