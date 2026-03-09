@@ -23,7 +23,7 @@ export function AccommodationSection({
   const [importCode, setImportCode] = useState("")
   const [exportCode, setExportCode] = useState("")
 
-  const cities = ["Madrid", "Barcelona", "París", "Ámsterdam", "Milán", "Florencia", "Roma", "Sorrento"]
+  const cities = ["Madrid", "Barcelona", "París", "Ámsterdam", "Milán", "Florencia", "Roma", "Vico Equense / Costa Amalfitana"]
 
   const cityDetails: Record<string, { address?: string; transport?: string[] }> = {
     Barcelona: {
@@ -56,6 +56,40 @@ export function AccommodationSection({
         "⚡ Desde Gare de Lyon (llegada en TGV): Metro M14 → Gare du Nord → Metro M12 → Porte de la Chapelle (35 min total)",
         "🔙 Para salida a Milán (Gare de Lyon): Bus/metro desde Aubervilliers → Gare du Nord → Metro → Gare de Lyon (~40 min)",
         "🗺️ Al centro de París (Louvre/Torre Eiffel): 30-40 min en transporte público",
+      ],
+    },
+    Florencia: {
+      address: "Via della Scala, 73, Florencia, Toscana 50123, Italia",
+      transport: [
+        "🚶 A 5 min caminando de la Estación Santa Maria Novella — salir por la salida principal y tomar Via della Scala a la derecha",
+        "🚌 Bus 11, 36, 37 paran en Via della Scala con conexión a toda la ciudad",
+        "📍 Zona Santa Maria Novella / Oltrarno — central, a pasos del Duomo y Ponte Vecchio",
+        "⚡ Llegada desde Venecia (tren Frecciarossa ~21:35): caminata de 5 min a la derecha saliendo de la estación",
+        "🔙 Para salida a Roma: Caminata 5 min a la estación SMN. Tren Frecciarossa Firenze → Roma Termini (1h 30min)",
+        "🗺️ Al Duomo: 10 min caminando. A los Uffizi: 15 min caminando",
+      ],
+    },
+    Roma: {
+      address: "Viale Manzoni, 91 B 24, Roma, Lacio 00185, Italia",
+      transport: [
+        "🚇 Metro: Línea A — Estación San Giovanni a 5 min caminando por Viale Manzoni",
+        "🚌 Bus 85, 87, 3 pasan por Viale Manzoni",
+        "📍 Zona San Giovanni / Celio — barrio tranquilo a 15 min del Coliseo y 20 min de la Fontana di Trevi",
+        "⚡ Desde Roma Termini: Metro A dirección Anagnina → San Giovanni (3 paradas, 8 min) + 5 min caminando",
+        "🔙 Para salida a Nápoles: Metro A desde San Giovanni → Roma Termini (2 paradas, 5 min), luego Frecciarossa Roma → Napoli (1h 10min)",
+        "🏛️ Al Coliseo: Bus 85 o 87 (15 min) o taxi ~€8",
+        "🗺️ Al Vaticano: Metro A desde San Giovanni → Ottaviano (11 paradas, 18 min)",
+      ],
+    },
+    "Vico Equense / Costa Amalfitana": {
+      address: "Via Girolamo Giusso, 5, Vico Equense, Campania 80069, Italia",
+      transport: [
+        "🚆 Circumvesuviana: parada Vico Equense. Desde Nápoles Centrale: 35 min (~€2.40). Desde Sorrento: 15 min (~€1.50)",
+        "📍 Vico Equense — pueblo sobre el acantilado entre Nápoles y Sorrento, con vistas al Vesubio y al Golfo",
+        "⚡ A Sorrento (base para ferries a Capri y Amalfi): Circumvesuviana 15 min o taxi ~€10",
+        "🚢 Ferries a Positano/Amalfi/Capri salen desde Sorrento (Marina Piccola) — 15 min desde Vico Equense",
+        "🔙 Para salida a Nápoles/aeropuerto: Circumvesuviana Vico Equense → Napoli Centrale (35 min)",
+        "🍕 Vico Equense es famosa por haber inventado la pizza al metro (Ristorante Gigino)",
       ],
     },
   }
@@ -175,15 +209,15 @@ export function AccommodationSection({
     ],
     sorrento: [
       {
-        name: "Stasher - Sorrento Centro",
-        address: "Centro de Sorrento",
+        name: "Stasher - Vico Equense / Sorrento",
+        address: "Estación o centro de Vico Equense / Sorrento",
         hours: "24/7 (según tienda)",
         price: "€6/día",
-        maps: "https://maps.google.com/?q=Sorrento+Centro",
+        maps: "https://maps.google.com/?q=Vico+Equense+stazione",
       },
       {
-        name: "LuggageHero - Estación",
-        address: "Cerca de la estación, Sorrento",
+        name: "LuggageHero - Sorrento Estación",
+        address: "Cerca de la estación Circumvesuviana, Sorrento",
         hours: "24/7 (según tienda)",
         price: "€1/hora o €8/día",
         maps: "https://maps.google.com/?q=Sorrento+Station",
@@ -192,6 +226,16 @@ export function AccommodationSection({
   }
 
   const getAccommodationsForCity = (city: string) => {
+    // Match both "Sorrento" (legacy) and "Vico Equense / Costa Amalfitana" / "Vico Equense"
+    if (city === "Vico Equense / Costa Amalfitana") {
+      return accommodations.filter(
+        (acc) =>
+          acc.city === city ||
+          acc.city === "Sorrento" ||
+          acc.city === "Vico Equense" ||
+          acc.city === "Vico Equense / Costa Amalfitana",
+      )
+    }
     return accommodations.filter((acc) => acc.city === city)
   }
 
