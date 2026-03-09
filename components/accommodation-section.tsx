@@ -23,7 +23,7 @@ export function AccommodationSection({
   const [importCode, setImportCode] = useState("")
   const [exportCode, setExportCode] = useState("")
 
-  const cities = ["Madrid", "Barcelona", "París", "Ámsterdam", "Milán", "Florencia", "Roma", "Vico Equense / Costa Amalfitana"]
+  const cities = ["Madrid", "Barcelona", "París", "Milán", "Florencia", "Roma", "Vico Equense / Costa Amalfitana"]
 
   const cityDetails: Record<string, { address?: string; transport?: string[] }> = {
     Barcelona: {
