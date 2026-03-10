@@ -1,12 +1,12 @@
 "use client"
 
 import type { User } from "@/types"
-import { Calendar, Ticket, DollarSign, Camera, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train } from "lucide-react"
+import { Calendar, Ticket, DollarSign, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train, Map, Users2 } from "lucide-react"
 
 interface MainMenuProps {
   currentUser: User
   onSelectSection: (
-    section: "agenda" | "tickets" | "alojamiento" | "presupuesto" | "conversion" | "fotos" | "bicicletas" | "web" | "metro",
+    section: "agenda" | "tickets" | "alojamiento" | "presupuesto" | "conversion" | "bicicletas" | "web" | "metro" | "maparuta" | "gastos",
   ) => void
   onRefresh: () => void
   onPrintItinerary?: () => void
@@ -20,7 +20,8 @@ export function MainMenu({ currentUser, onSelectSection, onRefresh, onPrintItine
     { id: "tickets" as const, icon: Ticket, title: "Tickets", color: "from-purple-500 to-purple-600" },
     { id: "presupuesto" as const, icon: Wallet, title: "Presupuesto", color: "from-yellow-500 to-yellow-600" },
     { id: "conversion" as const, icon: DollarSign, title: "Conversión", color: "from-emerald-500 to-emerald-600" },
-    { id: "fotos" as const, icon: Camera, title: "Fotos", color: "from-pink-500 to-pink-600" },
+    { id: "maparuta" as const, icon: Map, title: "Mapa de Ruta", color: "from-rose-500 to-rose-600" },
+    { id: "gastos" as const, icon: Users2, title: "Gastos Parejas", color: "from-amber-500 to-amber-600" },
     { id: "bicicletas" as const, icon: Bike, title: "Bicicletas", color: "from-orange-500 to-orange-600" },
     { id: "web" as const, icon: Globe, title: "Enlaces", color: "from-cyan-500 to-cyan-600" },
   ]
