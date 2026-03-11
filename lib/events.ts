@@ -304,8 +304,17 @@ export function getInitialData(): AppData {
       notes: "Arco €13 + Moulin Rouge €87",
     },
     {
-      id: 61,
+      id: 601,
       date: "2026-09-14",
+      category: "museo" as const,
+      description: "Versalles — Ticket Passport",
+      amountPerCouple: 43,
+      totalAmount: 86,
+      notes: "€21.50/persona x 2 = €43. Incluye Palacio, Trianon y Jardines",
+    },
+    {
+      id: 61,
+      date: "2026-09-15",
       category: "museo" as const,
       description: "Montmartre + Le Marais + Centre Pompidou",
       amountPerCouple: 15,
@@ -314,7 +323,7 @@ export function getInitialData(): AppData {
     },
     {
       id: 62,
-      date: "2026-09-14",
+      date: "2026-09-15",
       category: "museo" as const,
       description: "Musée d'Orsay",
       amountPerCouple: 16,
