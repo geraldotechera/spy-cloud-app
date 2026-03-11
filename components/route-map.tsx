@@ -607,13 +607,13 @@ const PARIS_SEP13: DayRoute = {
 }
 
 // ─────────────────────────────────────────────
-//  PARIS – 14 SEP — VERSALLES (reemplaza Ámsterdam)
+//  14 SEP — VERSALLES DIA COMPLETO (NO Ámsterdam)
 // ─────────────────────────────────────────────
 const VERSAILLES_SEP14: DayRoute = {
   date: "14 de septiembre 2026",
   city: "Versalles",
   country: "Francia",
-  title: "Versalles – Palacio y Jardines. Día completo",
+  title: "Versalles – Palacio Real y Jardines. Dia completo desde Paris",
   notes: [
     "TICKET PASSPORT: €21.50/persona. Incluye Palacio principal, Grandes Écuries y exposiciones. Reservar en chateauversailles.fr",
     "Jardines: GRATUITOS salvo días de Grandes Eaux Musicales (sábados y domingos €10 extra).",
