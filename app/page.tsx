@@ -106,6 +106,13 @@ export default function Home() {
       }
 
       try {
+        // v4 — forzar recarga de datos frescos siempre
+        const DATA_VERSION = "v4-versalles"
+        const savedVersion = localStorage.getItem("europeTripDataVersion")
+        if (savedVersion !== DATA_VERSION) {
+          localStorage.removeItem("europeTripData")
+          localStorage.setItem("europeTripDataVersion", DATA_VERSION)
+        }
         localStorage.removeItem("europeTripData")
         const initialData = getInitialData()
         setAppData(initialData)
@@ -115,7 +122,6 @@ export default function Home() {
           // quota exceeded or unavailable
         }
       } catch (error) {
-        console.error("[v0] Error crítico al cargar datos:", error)
         const initialData = getInitialData()
         setAppData(initialData)
       }
