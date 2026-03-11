@@ -959,8 +959,8 @@ export function RouteMap({ onBack }: RouteMapProps) {
 
   return (
     <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/20">
+      {/* Header — oculto al imprimir */}
+      <div className="print:hidden flex items-center justify-between bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/20">
         <button
           onClick={onBack}
           className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition-colors shadow"
@@ -970,7 +970,26 @@ export function RouteMap({ onBack }: RouteMapProps) {
         </button>
         <h2 className="text-lg font-bold">Mapa de Ruta</h2>
         <button
-          onClick={() => window.print()}
+          onClick={() => {
+            // Imprimir solo el área del mapa del día seleccionado
+            const printContents = document.getElementById("print-map-area")?.innerHTML
+            if (!printContents) { window.print(); return }
+            const win = window.open("", "_blank", "width=900,height=700")
+            if (!win) { window.print(); return }
+            win.document.write(`<!DOCTYPE html><html><head>
+              <meta charset="utf-8"/>
+              <title>Mapa de Ruta – Europa Mágica 2026</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 16px; color: #111; background: white; }
+                @page { size: A4; margin: 1.5cm; }
+                * { box-sizing: border-box; }
+                svg { width: 100%; height: auto; }
+              </style>
+            </head><body>${printContents}</body></html>`)
+            win.document.close()
+            win.focus()
+            setTimeout(() => { win.print(); win.close() }, 400)
+          }}
           className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 px-3 py-2 rounded-lg transition-colors text-sm"
         >
           <Printer className="w-4 h-4" />
@@ -978,8 +997,8 @@ export function RouteMap({ onBack }: RouteMapProps) {
         </button>
       </div>
 
-      {/* Day selector */}
-      <div className="grid grid-cols-2 gap-2">
+      {/* Day selector — oculto al imprimir */}
+      <div className="print:hidden grid grid-cols-2 gap-2">
         {ALL_ROUTES.map((r, i) => {
           const cityColor = CITY_COLORS[r.city] ?? "bg-gray-600"
           const dayNum = r.date.split(" ")[0]
