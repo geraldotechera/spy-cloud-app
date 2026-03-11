@@ -95,3 +95,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ── Impresión global: ocultar chrome de la app ── */
+@media print {
+  /* Ocultar header principal, breadcrumb, notificaciones */
+  header,
+  .no-print,
+  [data-no-print] {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Quitar fondo degradado del contenedor raíz */
+  body > div,
+  .min-h-screen {
+    background: white !important;
+  }
+}
