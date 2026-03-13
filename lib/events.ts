@@ -41,102 +41,67 @@ export function getInitialData(): AppData {
     // CATEGORÍA 1: GASTOS (Alimentación, Alojamiento, Lockers, etc.)
     // ============================================
 
-    // Alojamiento Madrid: $462 USD total / 2 parejas = $231 USD por pareja (aprox €215 por pareja para 3 noches = €72/noche)
-    // Alojamiento Barcelona: $472 USD total / 2 parejas = $236 USD por pareja (aprox €220 por pareja para 2 noches = €110/noche)
-    // Otros alojamientos: €85/noche estimado
-    
-    // Madrid (3 noches: 6, 7, 8 sep)
-    {
-      id: 1,
-      date: "2026-09-06",
-      category: "alojamiento" as const,
-      description: "Alojamiento Madrid - Noche 1",
-      amountPerCouple: 72,
-      totalAmount: 144,
-      notes: "Calle del Barquillo 41. Total: $462 USD / 2 parejas",
-    },
-    {
-      id: 2,
-      date: "2026-09-07",
-      category: "alojamiento" as const,
-      description: "Alojamiento Madrid - Noche 2",
-      amountPerCouple: 72,
-      totalAmount: 144,
-      notes: "Calle del Barquillo 41",
-    },
-    {
-      id: 3,
-      date: "2026-09-08",
-      category: "alojamiento" as const,
-      description: "Alojamiento Madrid - Noche 3",
-      amountPerCouple: 71,
-      totalAmount: 142,
-      notes: "Calle del Barquillo 41",
-    },
-    // Barcelona (3 noches: 9, 10, 11 sep)
-    {
-      id: 4,
-      date: "2026-09-09",
-      category: "alojamiento" as const,
-      description: "Alojamiento Barcelona - Noche 1",
-      amountPerCouple: 110,
-      totalAmount: 220,
-      notes: "Plaza de Europa 25, L'Hospitalet. Total: $472 USD / 2 parejas",
-    },
-    {
-      id: 5,
-      date: "2026-09-10",
-      category: "alojamiento" as const,
-      description: "Alojamiento Barcelona - Noche 2",
-      amountPerCouple: 110,
-      totalAmount: 220,
-      notes: "Plaza de Europa 25, L'Hospitalet",
-    },
-    {
-      id: 5.5,
-      date: "2026-09-11",
-      category: "alojamiento" as const,
-      description: "Alojamiento Barcelona - Noche 3",
-      amountPerCouple: 110,
-      totalAmount: 220,
-      notes: "Plaza de Europa 25, L'Hospitalet",
-    },
-    // Resto de alojamientos (17 noches restantes)
-    ...Array.from({ length: 17 }, (_, i) => {
-      const day = 11 + i
-      const date = `2026-09-${day.toString().padStart(2, "0")}`
-      const cityInfo: Record<number, { city: string; address: string }> = {
-        11: { city: "París", address: "57 Rue Schaeffer, Aubervilliers" },
-        12: { city: "París", address: "57 Rue Schaeffer, Aubervilliers" },
-        13: { city: "París", address: "57 Rue Schaeffer, Aubervilliers" },
-        14: { city: "París", address: "57 Rue Schaeffer, Aubervilliers" },
-        15: { city: "Milán", address: "Via Alessandro Tadino, 17" },
-        16: { city: "Milán", address: "Via Alessandro Tadino, 17" },
-        17: { city: "Venecia", address: "Alojamiento Venecia" },
-        18: { city: "Florencia", address: "Via della Scala, 73" },
-        19: { city: "Florencia", address: "Via della Scala, 73" },
-        20: { city: "Roma", address: "Viale Manzoni, 91 B 24" },
-        21: { city: "Roma", address: "Viale Manzoni, 91 B 24" },
-        22: { city: "Roma", address: "Viale Manzoni, 91 B 24" },
-        23: { city: "Vico Equense", address: "Via Girolamo Giusso, 5" },
-        24: { city: "Vico Equense", address: "Via Girolamo Giusso, 5" },
-        25: { city: "Vico Equense", address: "Via Girolamo Giusso, 5" },
-        26: { city: "Nápoles", address: "Napoli Centrale" },
-        27: { city: "En vuelo", address: "Regreso a Montevideo" },
-      }
-      const info = cityInfo[day] || { city: `Día ${day}`, address: "" }
-      return {
-        id: 6 + i,
-        date,
-        category: "alojamiento" as const,
-        description: `Alojamiento ${info.city} - Noche ${day - 10}`,
-        amountPerCouple: 85,
-        totalAmount: 170,
-        notes: info.address,
-      }
-    }),
+    // ============================================
+    // ALOJAMIENTO — 21 noches en total
+    // Unidad base: amountPerPerson (€ por persona)
+    // amountPerCouple = amountPerPerson x 2
+    // totalAmount     = amountPerPerson x 4 (2 parejas)
+    //
+    // CONFIRMADOS con precio real:
+    //   Madrid    3 noches: $462 USD total ÷ 4 personas = $115.5/p ≈ €107/persona total → €35.70/noche/persona
+    //   Barcelona 3 noches: $472 USD total ÷ 4 personas = $118/p   ≈ €110/persona total → €36.65/noche/persona
+    //
+    // ESTIMADOS (€85/noche para el departamento completo = €21.25/persona/noche):
+    //   París 4 n · Milán 2 n · Venecia 1 n · Florencia 2 n · Roma 3 n · Vico Equense 3 n
+    // ============================================
 
-    // Alimentación (21 días)
+    // --- MADRID (3 noches: 6, 7, 8 sep) ---
+    // $462 total ÷ 4 personas = $115.5/persona ≈ €107.4 → €35.80/noche/persona
+    { id: 1,   date: "2026-09-06", category: "alojamiento" as const, description: "Madrid - Noche 1 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "$462 USD total ÷ 4 personas. Calle del Barquillo 41" },
+    { id: 2,   date: "2026-09-07", category: "alojamiento" as const, description: "Madrid - Noche 2 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "Calle del Barquillo 41" },
+    { id: 3,   date: "2026-09-08", category: "alojamiento" as const, description: "Madrid - Noche 3 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "Calle del Barquillo 41 — total estadía Madrid: €107.40/persona" },
+
+    // --- BARCELONA (3 noches: 9, 10, 11 sep) ---
+    // $472 total ÷ 4 personas = $118/persona ≈ €109.7 → €36.57/noche/persona
+    { id: 4,   date: "2026-09-09", category: "alojamiento" as const, description: "Barcelona - Noche 1 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "$472 USD total ÷ 4 personas. Plaza de Europa 25, L'Hospitalet" },
+    { id: 5,   date: "2026-09-10", category: "alojamiento" as const, description: "Barcelona - Noche 2 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "Plaza de Europa 25, L'Hospitalet" },
+    { id: 6,   date: "2026-09-11", category: "alojamiento" as const, description: "Barcelona - Noche 3 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "Plaza de Europa 25, L'Hospitalet — total estadía Barcelona: €109.71/persona" },
+
+    // --- PARÍS (4 noches: 12, 13, 14, 15 sep) ---
+    // Estimado €85/noche dpto completo ÷ 4 personas = €21.25/noche/persona
+    { id: 7,   date: "2026-09-12", category: "alojamiento" as const, description: "París - Noche 1 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. 57 Rue Schaeffer, Aubervilliers" },
+    { id: 8,   date: "2026-09-13", category: "alojamiento" as const, description: "París - Noche 2 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers" },
+    { id: 9,   date: "2026-09-14", category: "alojamiento" as const, description: "París - Noche 3 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers" },
+    { id: 10,  date: "2026-09-15", category: "alojamiento" as const, description: "París - Noche 4 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers — total estadía París: €85/persona" },
+
+    // --- MILÁN (2 noches: 16, 17 sep) ---
+    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
+    { id: 11,  date: "2026-09-16", category: "alojamiento" as const, description: "Milán - Noche 1 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via Alessandro Tadino 17" },
+    { id: 12,  date: "2026-09-17", category: "alojamiento" as const, description: "Milán - Noche 2 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Alessandro Tadino 17 — total estadía Milán: €42.50/persona" },
+
+    // --- VENECIA (1 noche: 18 sep) ---
+    // Estimado €85/noche ÷ 4 = €21.25/persona
+    { id: 13,  date: "2026-09-18", category: "alojamiento" as const, description: "Venecia - Noche 1",                amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Total estadía Venecia: €21.25/persona" },
+
+    // --- FLORENCIA (2 noches: 19, 20 sep) ---
+    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
+    { id: 14,  date: "2026-09-19", category: "alojamiento" as const, description: "Florencia - Noche 1 (Via Scala 73)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via della Scala 73" },
+    { id: 15,  date: "2026-09-20", category: "alojamiento" as const, description: "Florencia - Noche 2 (Via Scala 73)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via della Scala 73 — total estadía Florencia: €42.50/persona" },
+
+    // --- ROMA (3 noches: 21, 22, 23 sep) ---
+    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
+    { id: 16,  date: "2026-09-21", category: "alojamiento" as const, description: "Roma - Noche 1 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Viale Manzoni 91 B 24" },
+    { id: 17,  date: "2026-09-22", category: "alojamiento" as const, description: "Roma - Noche 2 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24" },
+    { id: 18,  date: "2026-09-23", category: "alojamiento" as const, description: "Roma - Noche 3 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24 — total estadía Roma: €63.75/persona" },
+
+    // --- VICO EQUENSE (3 noches: 24, 25, 26 sep) ---
+    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
+    { id: 19,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via Girolamo Giusso 5" },
+    { id: 20,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Girolamo Giusso 5" },
+    { id: 21,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €63.75/persona" },
+
+
+    // Alimentación (21 días) — €40/persona/día (€80/pareja/día)
     ...Array.from({ length: 21 }, (_, i) => {
       const day = 6 + i
       const date = `2026-09-${day.toString().padStart(2, "0")}`
@@ -145,6 +110,7 @@ export function getInitialData(): AppData {
         date,
         category: "alimentacion" as const,
         description: `Alimentación día ${day}`,
+        amountPerPerson: 40,
         amountPerCouple: 80,
         totalAmount: 160,
       }
@@ -583,35 +549,40 @@ export function getInitialData(): AppData {
     },
   ]
 
+  const getPerPerson = (e: { amountPerPerson?: number; amountPerCouple: number }) =>
+    e.amountPerPerson ?? e.amountPerCouple / 2
+
   const totalAlojamiento = dailyExpenses
     .filter((e) => e.category === "alojamiento")
-    .reduce((sum, e) => sum + e.amountPerCouple, 0)
+    .reduce((sum, e) => sum + getPerPerson(e), 0)
 
   const totalAlimentacion = dailyExpenses
     .filter((e) => e.category === "alimentacion")
-    .reduce((sum, e) => sum + e.amountPerCouple, 0)
+    .reduce((sum, e) => sum + getPerPerson(e), 0)
 
-  const totalOtros = dailyExpenses.filter((e) => e.category === "otros").reduce((sum, e) => sum + e.amountPerCouple, 0)
+  const totalOtros = dailyExpenses.filter((e) => e.category === "otros" || e.category === "otro").reduce((sum, e) => sum + getPerPerson(e), 0)
 
   const totalEventos = dailyExpenses
     .filter((e) => e.category === "museo")
-    .reduce((sum, e) => sum + e.amountPerCouple, 0)
+    .reduce((sum, e) => sum + getPerPerson(e), 0)
 
   const totalTransporte = dailyExpenses
     .filter((e) => e.category === "transporte" || e.category === "vuelo")
-    .reduce((sum, e) => sum + e.amountPerCouple, 0)
+    .reduce((sum, e) => sum + getPerPerson(e), 0)
 
-  const totalPerCouple = dailyExpenses.reduce((sum, expense) => sum + expense.amountPerCouple, 0)
-  const totalGeneral = totalPerCouple * 2 // 2 parejas (TECHERA y PEREZ)
+  const totalPerPerson = dailyExpenses.reduce((sum, expense) => sum + getPerPerson(expense), 0)
+  const totalPerCouple = totalPerPerson * 2
+  const totalGeneral = totalPerPerson * 4 // 4 personas (TECHERA x2 + PEREZ x2)
 
-  console.log("[v0] Presupuesto recalculado:")
-  console.log("[v0] - Alojamiento:", totalAlojamiento, "€ por pareja")
-  console.log("[v0] - Alimentación:", totalAlimentacion, "€ por pareja")
-  console.log("[v0] - Otros (lockers, etc.):", totalOtros, "€ por pareja")
-  console.log("[v0] - Eventos (museos, atracciones):", totalEventos, "€ por pareja")
-  console.log("[v0] - Transporte (vuelos, trenes, ferries):", totalTransporte, "€ por pareja")
-  console.log("[v0] - TOTAL POR PAREJA:", totalPerCouple, "€")
-  console.log("[v0] - TOTAL GENERAL (2 parejas):", totalGeneral, "€")
+  console.log("[v0] Presupuesto recalculado (por persona):")
+  console.log("[v0] - Alojamiento:", totalAlojamiento.toFixed(2), "€ por persona")
+  console.log("[v0] - Alimentación:", totalAlimentacion.toFixed(2), "€ por persona")
+  console.log("[v0] - Otros (lockers, etc.):", totalOtros.toFixed(2), "€ por persona")
+  console.log("[v0] - Eventos (museos, atracciones):", totalEventos.toFixed(2), "€ por persona")
+  console.log("[v0] - Transporte (vuelos, trenes, ferries):", totalTransporte.toFixed(2), "€ por persona")
+  console.log("[v0] - TOTAL POR PERSONA:", totalPerPerson.toFixed(2), "€")
+  console.log("[v0] - TOTAL POR PAREJA:", totalPerCouple.toFixed(2), "€")
+  console.log("[v0] - TOTAL GENERAL (2 parejas):", totalGeneral.toFixed(2), "€")
 
   const accommodations: any[] = [
     {
@@ -1723,7 +1694,7 @@ export function getInitialData(): AppData {
         time: "15:00",
         title: "Gran Trianón y Pequeño Trianón",
         location: "Trianon, Versailles, Francia",
-        description: "El Gran Trianón (1687): palacete de mármol rosa donde Luis XIV escapaba de la corte. El Petit Trianón: el refugio personal de María Antonieta, quien aquí vivía lejos del protocolo de la corte. A 30 min caminando desde el Palacio principal o con carrito eléctrico (€8).",
+        description: "El Gran Trianón (1687): palacete de m��rmol rosa donde Luis XIV escapaba de la corte. El Petit Trianón: el refugio personal de María Antonieta, quien aquí vivía lejos del protocolo de la corte. A 30 min caminando desde el Palacio principal o con carrito eléctrico (€8).",
         ticketPrice: 0,
         category: "museo",
         icon: "🌸",
