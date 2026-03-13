@@ -28,14 +28,15 @@ export interface Couple {
 export interface DailyExpense {
   id: number
   date: string
-  category: "vuelo" | "alojamiento" | "alimentacion" | "transporte" | "museo" | "otro"
+  category: "vuelo" | "alojamiento" | "alimentacion" | "transporte" | "museo" | "otro" | "otros"
   description: string
-  amountPerCouple: number
-  totalAmount: number
+  amountPerPerson?: number  // Unidad base: costo por persona (si no existe, se calcula como amountPerCouple / 2)
+  amountPerCouple: number   // amountPerPerson x 2
+  totalAmount: number       // amountPerPerson x 4 (2 parejas)
   notes?: string
-  paidBy?: string // Quién pagó este gasto
-  addedBy?: string // Quién agregó este gasto
-  timestamp?: number // Para sincronización
+  paidBy?: string
+  addedBy?: string
+  timestamp?: number
 }
 
 export interface Budget {
