@@ -132,6 +132,7 @@ const MADRID_SEP7: DayRoute = {
     "Palacio Real: 10:00-20:00 (verano). €14/persona. Reservar ONLINE en patrimonionacional.es",
     "Plaza Mayor: Gratuita. Mejor ir temprano antes de los grupos de turistas.",
     "Mercado San Miguel: 10:00-24:00. Tapas €2-5 c/u. Ideal para almorzar.",
+    "Thyssen-Bornemisza: €13/persona. Mar–Dom 10:00-19:00 (sáb hasta 21:00). museothyssen.org",
     "Parque del Retiro: Gratuito. Alquiler de barcas en el estanque €6/30min.",
     "Metro Madrid: billete sencillo €1.50, tarjeta 10 viajes €12.20.",
   ],
@@ -190,14 +191,23 @@ const MADRID_SEP7: DayRoute = {
       ],
     },
     {
-      id: 5, name: "Parque del Retiro",
+      id: 5, name: "Museo Thyssen-Bornemisza",
+      address: "Paseo del Prado, 8, 28014 Madrid",
+      description: "Colección privada más importante del mundo. Van Eyck, Caravaggio, Monet, Hopper, Dalí. 1.600 obras del s.XIII al XX.",
+      duration: "1.5 horas", category: "museo", x: 505, y: 290,
+      transport: [
+        { type: "metro", line: "L2 Roja", direction: "Las Rosas", time: "10 min", description: "Sol (L1) → Banco de España (L2, 2 paradas). Cruzar Paseo del Prado, a 5 min caminando.", recommended: true },
+        { type: "caminando", time: "18 min", description: "Desde Sol por Carrera de San Jerónimo hasta el Paseo del Prado. Ruta escénica." },
+      ],
+    },
+    {
+      id: 6, name: "Parque del Retiro",
       address: "Parque del Buen Retiro, 28009 Madrid",
       description: "118 hectáreas. Palacio de Cristal, estanque con barcas, jardines. UNESCO Patrimonio Mundial.",
       duration: "1.5-2 horas", category: "parque", x: 565, y: 355,
       transport: [
-        { type: "metro", line: "L2 Roja", direction: "Las Rosas", time: "8 min", description: "Sol (L1/L2/L3) → Retiro (L2 dir. Las Rosas, 2 paradas). Entrada principal por Puerta de Alcalá.", recommended: true },
-        { type: "caminando", time: "22 min", description: "Por Carrera de San Jerónimo y Barrio de las Letras hasta la entrada del Retiro." },
-        { type: "bici", line: "BiciMAD", time: "12 min", description: "BiciMAD desde Sol por Calle de Alcalá hasta el parque. Estaciones en Sol y en Retiro." },
+        { type: "caminando", time: "8 min", description: "Desde el Thyssen subir por el Paseo del Prado hasta la entrada del Retiro por Puerta de Alcalá.", recommended: true },
+        { type: "metro", line: "L2 Roja", direction: "Las Rosas", time: "5 min", description: "Banco de España (L2) → Retiro (1 parada). Entrada principal por Puerta de Alcalá." },
       ],
     },
   ],
@@ -417,9 +427,9 @@ const BARCELONA_SEP11: DayRoute = {
   date: "11 de septiembre 2026",
   city: "Barcelona",
   country: "España",
-  title: "Barcelona – Camp Nou, Barceloneta y despedida",
+  title: "Barcelona – Barceloneta, Barrio Gótico y despedida",
   notes: [
-    "Camp Nou Tour: €28/persona. Visitar vestuarios, túnel y museo del club. fcbarcelona.com",
+    "Catedral de Barcelona: acceso gratuito. Claustros con 13 ocas blancas, símbolo de la ciudad.",
     "Diada Nacional de Cataluña (11 sep): posibles manifestaciones en el centro, el transporte funciona.",
     "Barceloneta: La playa más famosa de Barcelona, a 20 min del centro en metro.",
     "Por la tarde: regreso al alojamiento y preparar maletas para el tren a París mañana.",
@@ -429,7 +439,7 @@ const BARCELONA_SEP11: DayRoute = {
       { x1: 150, y1: 300, x2: 620, y2: 300, label: "Diagonal", width: 4 },
       { x1: 350, y1: 60, x2: 350, y2: 450, label: "Passeig de Gràcia", width: 4 },
     ],
-    parks: [{ cx: 160, cy: 290, rx: 90, ry: 60, label: "CAMP NOU" }],
+    parks: [{ cx: 350, cy: 220, rx: 60, ry: 40, label: "BARRI GÒTIC" }],
     water: [{ d: "M 540 180 L 680 100 L 680 460 L 560 460 Z", label: "Mar" }],
   },
   points: [
@@ -439,12 +449,12 @@ const BARCELONA_SEP11: DayRoute = {
       duration: "", category: "alojamiento", x: 70, y: 380,
     },
     {
-      id: 1, name: "Camp Nou – Tour FC Barcelona",
-      address: "Carrer d'Arístides Maillol s/n, 08028",
-      description: "El estadio más grande de Europa (99.354 espectadores). Tour por vestuarios históricos, túnel de acceso al campo y el extenso museo del club.",
-      duration: "1.5-2 horas", category: "museo", x: 155, y: 290,
+      id: 1, name: "Barrio Gótico y Catedral",
+      address: "Plaça de la Seu, 08002 Barcelona",
+      description: "El corazón medieval de Barcelona. Catedral de Santa Eulàlia con claustros y 13 ocas. Plaça del Rei, Pont del Bisbe, callejuelas romanas.",
+      duration: "1.5-2 horas", category: "monumento", x: 355, y: 225,
       transport: [
-        { type: "metro", line: "L3 Verde", direction: "Zona Universitaria", time: "20 min", description: "Torrassa (L1) → Espanya (cambio L3) → Palau Reial o Les Corts. Camp Nou a 10 min caminando.", recommended: true },
+        { type: "metro", line: "L3 Verde", direction: "Barceloneta", time: "20 min", description: "Torrassa (L1) → Liceu (L3). Gótico a 5 min caminando.", recommended: true },
       ],
     },
     {
@@ -768,7 +778,7 @@ const PARIS_SEP15: DayRoute = {
 
 // ─────────────────────────────────────────────
 //  All routes registry
-// ─────────────────────────────────────────────
+// ──────────────────────���──────────────────────
 const ALL_ROUTES: DayRoute[] = [
   MADRID_SEP6,
   MADRID_SEP7,
