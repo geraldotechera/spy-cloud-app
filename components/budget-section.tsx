@@ -313,14 +313,17 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             ))}
           </div>
 
-          {/* Nota confirmados vs estimados */}
+          {/* Nota precios confirmados */}
           <div className="bg-white/5 rounded-lg p-3 text-xs text-white/50 space-y-1">
-            <p className="font-semibold text-white/70">Precios confirmados (USD convertidos a EUR x0.93):</p>
-            <p>Madrid 3 noches: $462 ÷ 4p = <span className="text-white/80">$115.50/p = €107.42/persona</span></p>
-            <p>Barcelona 3 noches: $472 ÷ 4p = <span className="text-white/80">$118/p = €109.74/persona</span></p>
-            <p>Vico Equense 4 noches: $620 ÷ 4p = <span className="text-white/80">$155/p = €144.15/persona</span></p>
-            <p className="pt-1 border-t border-white/10">Paris, Milan, Florencia, Roma: estimado €85/noche total ÷ 4p = <span className="text-white/80">€21.25/noche/persona</span></p>
-            <p className="text-white/30">Venecia y Napoles: sin alojamiento — visitas de dia / transito</p>
+            <p className="font-semibold text-white/70">Precios confirmados (€ total dpto ÷ 4 personas):</p>
+            <p>Madrid 3 noches: €461 ÷ 4p = <span className="text-white/80">€115.25/persona</span></p>
+            <p>Barcelona 3 noches: €684 ÷ 4p = <span className="text-white/80">€171/persona</span></p>
+            <p>París 4 noches: €762 ÷ 4p = <span className="text-white/80">€190.50/persona</span></p>
+            <p>Milán 2 noches: €462 ÷ 4p = <span className="text-white/80">€115.50/persona</span></p>
+            <p>Florencia 2 noches: €482 ÷ 4p = <span className="text-white/80">€120.50/persona</span></p>
+            <p>Roma 3 noches: €650 ÷ 4p = <span className="text-white/80">€162.50/persona</span></p>
+            <p>Vico Equense 4 noches: €620 ÷ 4p = <span className="text-white/80">€155/persona</span></p>
+            <p className="text-white/30 pt-1 border-t border-white/10">Venecia y Napoles: sin alojamiento — visitas de dia / transito</p>
           </div>
         </div>
       )}

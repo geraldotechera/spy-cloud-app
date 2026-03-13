@@ -47,58 +47,59 @@ export function getInitialData(): AppData {
     // amountPerCouple = amountPerPerson x 2
     // totalAmount     = amountPerPerson x 4 (2 parejas)
     //
-    // TODOS LOS PRECIOS EN USD, CONVERTIDOS A EUR (×0.93)
-    //   Madrid       3 noches: $462 USD total ÷ 4p = $115.50/p = €107.42/p total → €35.81/noche/persona
-    //   Barcelona    3 noches: $472 USD total ÷ 4p = $118/p    = €109.74/p total → €36.58/noche/persona
-    //   Vico Equense 4 noches: $620 USD total ÷ 4p = $155/p    = €144.15/p total → €36.04/noche/persona
-    //
-    // ESTIMADOS (€85/noche para el dpto completo ÷ 4 personas = €21.25/persona/noche):
-    //   París 4 n · Milán 2 n · Florencia 2 n · Roma 3 n
+    // PRECIOS CONFIRMADOS EN EUR (precio total del dpto ÷ 4 personas):
+    //   Madrid       3 noches: €461 total ÷ 4p = €115.25/persona total → €38.42/noche/persona
+    //   Barcelona    3 noches: €684 total ÷ 4p = €171/persona total   → €57/noche/persona
+    //   París        4 noches: €762 total ÷ 4p = €190.50/persona total → €47.63/noche/persona
+    //   Milán        2 noches: €462 total ÷ 4p = €115.50/persona total → €57.75/noche/persona
+    //   Florencia    2 noches: €482 total ÷ 4p = €120.50/persona total → €60.25/noche/persona
+    //   Roma         3 noches: €650 total ÷ 4p = €162.50/persona total → €54.17/noche/persona
+    //   Vico Equense 4 noches: €620 total ÷ 4p = €155/persona total   → €38.75/noche/persona
     //   Venecia: SIN alojamiento (visita de día, sin pernoctar)
     //   Nápoles: SIN alojamiento (viaje directo desde VE el día 27, sin pernoctar)
     // ============================================
 
     // --- MADRID (3 noches: 6, 7, 8 sep) ---
-    // $462 total ÷ 4 personas = $115.5/persona ≈ €107.4 → €35.80/noche/persona
-    { id: 1,   date: "2026-09-06", category: "alojamiento" as const, description: "Madrid - Noche 1 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "$462 USD total ÷ 4 personas. Calle del Barquillo 41" },
-    { id: 2,   date: "2026-09-07", category: "alojamiento" as const, description: "Madrid - Noche 2 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "Calle del Barquillo 41" },
-    { id: 3,   date: "2026-09-08", category: "alojamiento" as const, description: "Madrid - Noche 3 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "Calle del Barquillo 41 — total estadía Madrid: €107.40/persona" },
+    // €461 total ÷ 4 personas = €115.25/persona → €38.42/noche/persona
+    { id: 1,   date: "2026-09-06", category: "alojamiento" as const, description: "Madrid - Noche 1 (Barquillo 41)",  amountPerPerson: 38.42, amountPerCouple: 76.84, totalAmount: 153.67, notes: "€461 total ÷ 4 personas. Calle del Barquillo 41" },
+    { id: 2,   date: "2026-09-07", category: "alojamiento" as const, description: "Madrid - Noche 2 (Barquillo 41)",  amountPerPerson: 38.42, amountPerCouple: 76.84, totalAmount: 153.67, notes: "Calle del Barquillo 41" },
+    { id: 3,   date: "2026-09-08", category: "alojamiento" as const, description: "Madrid - Noche 3 (Barquillo 41)",  amountPerPerson: 38.42, amountPerCouple: 76.84, totalAmount: 153.67, notes: "Calle del Barquillo 41 — total estadía Madrid: €115.25/persona" },
 
     // --- BARCELONA (3 noches: 9, 10, 11 sep) ---
-    // $472 total ÷ 4 personas = $118/persona ≈ €109.7 → €36.57/noche/persona
-    { id: 4,   date: "2026-09-09", category: "alojamiento" as const, description: "Barcelona - Noche 1 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "$472 USD total ÷ 4 personas. Plaza de Europa 25, L'Hospitalet" },
-    { id: 5,   date: "2026-09-10", category: "alojamiento" as const, description: "Barcelona - Noche 2 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "Plaza de Europa 25, L'Hospitalet" },
-    { id: 6,   date: "2026-09-11", category: "alojamiento" as const, description: "Barcelona - Noche 3 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "Plaza de Europa 25, L'Hospitalet — total estadía Barcelona: €109.71/persona" },
+    // €684 total ÷ 4 personas = €171/persona → €57/noche/persona
+    { id: 4,   date: "2026-09-09", category: "alojamiento" as const, description: "Barcelona - Noche 1 (Europa 25)",  amountPerPerson: 57.00, amountPerCouple: 114.00, totalAmount: 228.00, notes: "€684 total ÷ 4 personas. Plaza de Europa 25, L'Hospitalet" },
+    { id: 5,   date: "2026-09-10", category: "alojamiento" as const, description: "Barcelona - Noche 2 (Europa 25)",  amountPerPerson: 57.00, amountPerCouple: 114.00, totalAmount: 228.00, notes: "Plaza de Europa 25, L'Hospitalet" },
+    { id: 6,   date: "2026-09-11", category: "alojamiento" as const, description: "Barcelona - Noche 3 (Europa 25)",  amountPerPerson: 57.00, amountPerCouple: 114.00, totalAmount: 228.00, notes: "Plaza de Europa 25, L'Hospitalet — total estadía Barcelona: €171/persona" },
 
     // --- PARÍS (4 noches: 12, 13, 14, 15 sep) ---
-    // Estimado €85/noche dpto completo ÷ 4 personas = €21.25/noche/persona
-    { id: 7,   date: "2026-09-12", category: "alojamiento" as const, description: "París - Noche 1 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. 57 Rue Schaeffer, Aubervilliers" },
-    { id: 8,   date: "2026-09-13", category: "alojamiento" as const, description: "París - Noche 2 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers" },
-    { id: 9,   date: "2026-09-14", category: "alojamiento" as const, description: "París - Noche 3 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers" },
-    { id: 10,  date: "2026-09-15", category: "alojamiento" as const, description: "París - Noche 4 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers — total estadía París: €85/persona" },
+    // €762 total ÷ 4 personas = €190.50/persona → €47.63/noche/persona
+    { id: 7,   date: "2026-09-12", category: "alojamiento" as const, description: "París - Noche 1 (Rue Schaeffer)",  amountPerPerson: 47.63, amountPerCouple: 95.25, totalAmount: 190.50, notes: "€762 total ÷ 4 personas. 57 Rue Schaeffer, Aubervilliers" },
+    { id: 8,   date: "2026-09-13", category: "alojamiento" as const, description: "París - Noche 2 (Rue Schaeffer)",  amountPerPerson: 47.63, amountPerCouple: 95.25, totalAmount: 190.50, notes: "57 Rue Schaeffer, Aubervilliers" },
+    { id: 9,   date: "2026-09-14", category: "alojamiento" as const, description: "París - Noche 3 (Rue Schaeffer)",  amountPerPerson: 47.63, amountPerCouple: 95.25, totalAmount: 190.50, notes: "57 Rue Schaeffer, Aubervilliers" },
+    { id: 10,  date: "2026-09-15", category: "alojamiento" as const, description: "París - Noche 4 (Rue Schaeffer)",  amountPerPerson: 47.63, amountPerCouple: 95.25, totalAmount: 190.50, notes: "57 Rue Schaeffer, Aubervilliers — total estadía París: €190.50/persona" },
 
     // --- MILÁN (2 noches: 16, 17 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 11,  date: "2026-09-16", category: "alojamiento" as const, description: "Milán - Noche 1 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via Alessandro Tadino 17" },
-    { id: 12,  date: "2026-09-17", category: "alojamiento" as const, description: "Milán - Noche 2 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Alessandro Tadino 17 — total estadía Milán: €42.50/persona" },
+    // €462 total ÷ 4 personas = €115.50/persona → €57.75/noche/persona
+    { id: 11,  date: "2026-09-16", category: "alojamiento" as const, description: "Milán - Noche 1 (Via Tadino 17)",  amountPerPerson: 57.75, amountPerCouple: 115.50, totalAmount: 231.00, notes: "€462 total ÷ 4 personas. Via Alessandro Tadino 17" },
+    { id: 12,  date: "2026-09-17", category: "alojamiento" as const, description: "Milán - Noche 2 (Via Tadino 17)",  amountPerPerson: 57.75, amountPerCouple: 115.50, totalAmount: 231.00, notes: "Via Alessandro Tadino 17 — total estadía Milán: €115.50/persona" },
 
     // --- FLORENCIA (2 noches: 19, 20 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 14,  date: "2026-09-19", category: "alojamiento" as const, description: "Florencia - Noche 1 (Via Scala 73)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via della Scala 73" },
-    { id: 15,  date: "2026-09-20", category: "alojamiento" as const, description: "Florencia - Noche 2 (Via Scala 73)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via della Scala 73 — total estadía Florencia: €42.50/persona" },
+    // €482 total ÷ 4 personas = €120.50/persona → €60.25/noche/persona
+    { id: 14,  date: "2026-09-19", category: "alojamiento" as const, description: "Florencia - Noche 1 (Via Scala 73)", amountPerPerson: 60.25, amountPerCouple: 120.50, totalAmount: 241.00, notes: "€482 total ÷ 4 personas. Via della Scala 73" },
+    { id: 15,  date: "2026-09-20", category: "alojamiento" as const, description: "Florencia - Noche 2 (Via Scala 73)", amountPerPerson: 60.25, amountPerCouple: 120.50, totalAmount: 241.00, notes: "Via della Scala 73 — total estadía Florencia: €120.50/persona" },
 
     // --- ROMA (3 noches: 21, 22, 23 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 16,  date: "2026-09-21", category: "alojamiento" as const, description: "Roma - Noche 1 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Viale Manzoni 91 B 24" },
-    { id: 17,  date: "2026-09-22", category: "alojamiento" as const, description: "Roma - Noche 2 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24" },
-    { id: 18,  date: "2026-09-23", category: "alojamiento" as const, description: "Roma - Noche 3 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24 — total estadía Roma: €63.75/persona" },
+    // €650 total ÷ 4 personas = €162.50/persona → €54.17/noche/persona
+    { id: 16,  date: "2026-09-21", category: "alojamiento" as const, description: "Roma - Noche 1 (Viale Manzoni 91)", amountPerPerson: 54.17, amountPerCouple: 108.33, totalAmount: 216.67, notes: "€650 total ÷ 4 personas. Viale Manzoni 91 B 24" },
+    { id: 17,  date: "2026-09-22", category: "alojamiento" as const, description: "Roma - Noche 2 (Viale Manzoni 91)", amountPerPerson: 54.17, amountPerCouple: 108.33, totalAmount: 216.67, notes: "Viale Manzoni 91 B 24" },
+    { id: 18,  date: "2026-09-23", category: "alojamiento" as const, description: "Roma - Noche 3 (Viale Manzoni 91)", amountPerPerson: 54.17, amountPerCouple: 108.33, totalAmount: 216.67, notes: "Viale Manzoni 91 B 24 — total estadía Roma: €162.50/persona" },
 
     // --- VICO EQUENSE (4 noches: 23, 24, 25, 26 sep) ---
-    // $620 USD total ÷ 4 personas = $155/persona · $155 × 0.93 = €144.15/persona total · ÷ 4 noches = €36.04/noche/persona
-    { id: 19,  date: "2026-09-23", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "$620 USD total ÷ 4 personas = $155/p = €144.15/p total. Via Girolamo Giusso 5" },
-    { id: 20,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5" },
-    { id: 21,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5" },
-    { id: 22,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 4 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €144.15/persona. El 27 viajan a Nápoles sin pernoctar." },
+    // €620 total ÷ 4 personas = €155/persona → €38.75/noche/persona
+    { id: 19,  date: "2026-09-23", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 38.75, amountPerCouple: 77.50, totalAmount: 155.00, notes: "€620 total ÷ 4 personas = €155/persona total. Via Girolamo Giusso 5" },
+    { id: 20,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 38.75, amountPerCouple: 77.50, totalAmount: 155.00, notes: "Via Girolamo Giusso 5" },
+    { id: 21,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 38.75, amountPerCouple: 77.50, totalAmount: 155.00, notes: "Via Girolamo Giusso 5" },
+    { id: 22,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 4 (Via Giusso 5)", amountPerPerson: 38.75, amountPerCouple: 77.50, totalAmount: 155.00, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €155/persona. El 27 viajan a Nápoles sin pernoctar." },
 
 
     // Alimentación (21 días) — €40/persona/día (€80/pareja/día)
@@ -381,7 +382,7 @@ export function getInitialData(): AppData {
       description: "Museos Vaticanos + Capilla Sixtina",
       amountPerCouple: 25,
       totalAmount: 50,
-      notes: "20€ + 5€ reserva online",
+      notes: "20�� + 5€ reserva online",
     },
     {
       id: 71,
@@ -1376,7 +1377,7 @@ export function getInitialData(): AppData {
         id: 1104,
         time: "14:00",
         title: "Barrio Gótico y Catedral de Barcelona",
-        location: "Barri Gòtic, Barcelona, España",
+        location: "Barri G��tic, Barcelona, España",
         description: "El corazón medieval de Barcelona. Visita a la Catedral de la Santa Creu i Santa Eulàlia (gratuita, interior impresionante con claustros y 13 ocas). Callejuelas romanas, Plaça del Rei, Pont del Bisbe. Duración: 1h 30min. Desde Born/Picasso: caminar 5 min cruzando Via Laietana hacia el Gótico.",
         ticketPrice: 0,
         category: "monumento",
@@ -2894,7 +2895,7 @@ export function getInitialData(): AppData {
         ticketPrice: 18,
         ticketUrl: "https://www.capri.net/en/c/blue-grotto",
         category: "naturaleza",
-        icon: "🌊",
+        icon: "��",
         coordinates: { lat: 40.5593, lng: 14.1742 },
       },
       {
