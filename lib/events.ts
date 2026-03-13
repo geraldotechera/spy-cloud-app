@@ -42,17 +42,19 @@ export function getInitialData(): AppData {
     // ============================================
 
     // ============================================
-    // ALOJAMIENTO — 21 noches en total
+    // ALOJAMIENTO — 22 noches en total
     // Unidad base: amountPerPerson (€ por persona)
     // amountPerCouple = amountPerPerson x 2
     // totalAmount     = amountPerPerson x 4 (2 parejas)
     //
-    // CONFIRMADOS con precio real:
-    //   Madrid    3 noches: $462 USD total ÷ 4 personas = $115.5/p ≈ €107/persona total → €35.70/noche/persona
-    //   Barcelona 3 noches: $472 USD total ÷ 4 personas = $118/p   ≈ €110/persona total → €36.65/noche/persona
+    // TODOS LOS PRECIOS EN USD, CONVERTIDOS A EUR (×0.93)
+    //   Madrid       3 noches: $462 USD total ÷ 4p = $115.50/p = €107.42/p total → €35.81/noche/persona
+    //   Barcelona    3 noches: $472 USD total ÷ 4p = $118/p    = €109.74/p total → €36.58/noche/persona
+    //   Vico Equense 4 noches: $620 USD total ÷ 4p = $155/p    = €144.15/p total → €36.04/noche/persona
     //
-    // ESTIMADOS (€85/noche para el departamento completo = €21.25/persona/noche):
-    //   París 4 n · Milán 2 n · Venecia 1 n · Florencia 2 n · Roma 3 n · Vico Equense 3 n
+    // ESTIMADOS (€85/noche para el dpto completo ÷ 4 personas = €21.25/persona/noche):
+    //   París 4 n · Milán 2 n · Venecia 1 n · Florencia 2 n · Roma 3 n
+    //   Nápoles: SIN alojamiento (viaje directo desde VE el día 27, sin pernoctar)
     // ============================================
 
     // --- MADRID (3 noches: 6, 7, 8 sep) ---
@@ -94,11 +96,12 @@ export function getInitialData(): AppData {
     { id: 17,  date: "2026-09-22", category: "alojamiento" as const, description: "Roma - Noche 2 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24" },
     { id: 18,  date: "2026-09-23", category: "alojamiento" as const, description: "Roma - Noche 3 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24 — total estadía Roma: €63.75/persona" },
 
-    // --- VICO EQUENSE (3 noches: 24, 25, 26 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 19,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via Girolamo Giusso 5" },
-    { id: 20,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Girolamo Giusso 5" },
-    { id: 21,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €63.75/persona" },
+    // --- VICO EQUENSE (4 noches: 23, 24, 25, 26 sep) ---
+    // $620 USD total ÷ 4 personas = $155/persona · $155 × 0.93 = €144.15/persona total · ÷ 4 noches = €36.04/noche/persona
+    { id: 19,  date: "2026-09-23", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "$620 USD total ÷ 4 personas = $155/p = €144.15/p total. Via Girolamo Giusso 5" },
+    { id: 20,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5" },
+    { id: 21,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5" },
+    { id: 22,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 4 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €144.15/persona. El 27 viajan a Nápoles sin pernoctar." },
 
 
     // Alimentación (21 días) — €40/persona/día (€80/pareja/día)
@@ -3223,13 +3226,13 @@ export function getInitialData(): AppData {
       {
         id: 2611,
         time: "22:00",
-        title: "Alojamiento en Nápoles - Última noche en Italia",
-        location: "Nápoles, Italia",
-        description: "Check-in en el alojamiento de Nápoles (cerca de Napoli Centrale o Piazza Garibaldi para facilitar la salida mañana temprano). Preparar maletas para el vuelo a Madrid del día siguiente.",
+        title: "Última noche en Vico Equense",
+        location: "Via Girolamo Giusso, 5, Vico Equense 80069, Italia",
+        description: "Noche 4 y última en el apartamento de Vico Equense. Preparar maletas para el viaje a Nápoles mañana temprano y el vuelo de regreso. No hay alojamiento en Nápoles — el día 27 es solo tránsito hasta el aeropuerto Capodichino.",
         ticketPrice: 0,
         category: "alojamiento",
         icon: "🏠",
-        coordinates: { lat: 40.8521, lng: 14.2681 },
+        coordinates: { lat: 40.6666, lng: 14.4282 },
       },
     ],
     "2026-09-27": [
