@@ -42,7 +42,7 @@ export function getInitialData(): AppData {
     // ============================================
 
     // ============================================
-    // ALOJAMIENTO — 22 noches en total
+    // ALOJAMIENTO — 21 noches en total
     // Unidad base: amountPerPerson (€ por persona)
     // amountPerCouple = amountPerPerson x 2
     // totalAmount     = amountPerPerson x 4 (2 parejas)
@@ -53,7 +53,8 @@ export function getInitialData(): AppData {
     //   Vico Equense 4 noches: $620 USD total ÷ 4p = $155/p    = €144.15/p total → €36.04/noche/persona
     //
     // ESTIMADOS (€85/noche para el dpto completo ÷ 4 personas = €21.25/persona/noche):
-    //   París 4 n · Milán 2 n · Venecia 1 n · Florencia 2 n · Roma 3 n
+    //   París 4 n · Milán 2 n · Florencia 2 n · Roma 3 n
+    //   Venecia: SIN alojamiento (visita de día, sin pernoctar)
     //   Nápoles: SIN alojamiento (viaje directo desde VE el día 27, sin pernoctar)
     // ============================================
 
@@ -80,10 +81,6 @@ export function getInitialData(): AppData {
     // Estimado €85/noche ÷ 4 = €21.25/noche/persona
     { id: 11,  date: "2026-09-16", category: "alojamiento" as const, description: "Milán - Noche 1 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via Alessandro Tadino 17" },
     { id: 12,  date: "2026-09-17", category: "alojamiento" as const, description: "Milán - Noche 2 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Alessandro Tadino 17 — total estadía Milán: €42.50/persona" },
-
-    // --- VENECIA (1 noche: 18 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/persona
-    { id: 13,  date: "2026-09-18", category: "alojamiento" as const, description: "Venecia - Noche 1",                amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Total estadía Venecia: €21.25/persona" },
 
     // --- FLORENCIA (2 noches: 19, 20 sep) ---
     // Estimado €85/noche ÷ 4 = €21.25/noche/persona
@@ -3404,7 +3401,6 @@ const budget = {
     { city: "Barcelona", address: "Plaza de Europa 25, L'Hospitalet", nights: 3, pricePerNight: 110 },
     { city: "París", address: "57 Rue Schaeffer, Aubervilliers", nights: 4, pricePerNight: 85 },
     { city: "Milán", address: "Via Alessandro Tadino, 17", nights: 1, pricePerNight: 85 },
-    { city: "Venecia", address: "Alojamiento Venecia", nights: 2, pricePerNight: 85 },
     { city: "Florencia", address: "Via della Scala, 73", nights: 3, pricePerNight: 85 },
     { city: "Roma", address: "Viale Manzoni, 91 B 24", nights: 3, pricePerNight: 85 },
     { city: "Vico Equense/Costa Amalfitana", address: "Via Girolamo Giusso, 5", nights: 4, pricePerNight: 85 },

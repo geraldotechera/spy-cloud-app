@@ -289,7 +289,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <h3 className="text-sm mb-1 text-white/70">Total Alojamiento</h3>
             <div className="text-3xl font-bold text-green-300">{fmt(Math.round(totalAlojamiento))}</div>
             <div className="text-xs text-white/60 mt-1">
-              por persona · {fmt(Math.round(totalAlojamiento * 2))} por pareja · 22 noches
+              por persona · {fmt(Math.round(totalAlojamiento * 2))} por pareja · 21 noches
             </div>
           </div>
 
@@ -319,8 +319,8 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <p>Madrid 3 noches: $462 ÷ 4p = <span className="text-white/80">$115.50/p = €107.42/persona</span></p>
             <p>Barcelona 3 noches: $472 ÷ 4p = <span className="text-white/80">$118/p = €109.74/persona</span></p>
             <p>Vico Equense 4 noches: $620 ÷ 4p = <span className="text-white/80">$155/p = €144.15/persona</span></p>
-            <p className="pt-1 border-t border-white/10">Paris, Milan, Venecia, Florencia, Roma: estimado €85/noche total ÷ 4p = <span className="text-white/80">€21.25/noche/persona</span></p>
-            <p className="text-white/30">Napoles: sin alojamiento — transito directo dia 27</p>
+            <p className="pt-1 border-t border-white/10">Paris, Milan, Florencia, Roma: estimado €85/noche total ÷ 4p = <span className="text-white/80">€21.25/noche/persona</span></p>
+            <p className="text-white/30">Venecia y Napoles: sin alojamiento — visitas de dia / transito</p>
           </div>
         </div>
       )}
