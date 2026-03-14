@@ -1,12 +1,12 @@
 "use client"
 
 import type { User } from "@/types"
-import { Calendar, Ticket, DollarSign, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train, Map, Users2 } from "lucide-react"
+import { Calendar, Ticket, DollarSign, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train, Map, Users2, ShieldAlert } from "lucide-react"
 
 interface MainMenuProps {
   currentUser: User
   onSelectSection: (
-    section: "agenda" | "tickets" | "alojamiento" | "presupuesto" | "conversion" | "bicicletas" | "web" | "metro" | "maparuta" | "gastos",
+    section: "agenda" | "tickets" | "alojamiento" | "presupuesto" | "conversion" | "bicicletas" | "web" | "metro" | "maparuta" | "gastos" | "emergencias",
   ) => void
   onRefresh: () => void
   onPrintItinerary?: () => void
@@ -24,6 +24,7 @@ export function MainMenu({ currentUser, onSelectSection, onRefresh, onPrintItine
     { id: "gastos" as const, icon: Users2, title: "Gastos Parejas", color: "from-amber-500 to-amber-600" },
     { id: "bicicletas" as const, icon: Bike, title: "Bicicletas", color: "from-orange-500 to-orange-600" },
     { id: "web" as const, icon: Globe, title: "Enlaces", color: "from-cyan-500 to-cyan-600" },
+    { id: "emergencias" as const, icon: ShieldAlert, title: "Emergencias", color: "from-red-600 to-red-700" },
   ]
 
   return (
