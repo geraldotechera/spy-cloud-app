@@ -272,7 +272,7 @@ export function EmergencySection({ onBack }: EmergencySectionProps) {
           <div className="w-16" />
         </div>
         <p className="text-center text-red-100 text-xs mt-2">
-          Información de emergencias por ciudad · Embajada Uruguay · Tarjetas
+          Emergencias por ciudad · Embajada Uruguay · Bloqueo de tarjetas
         </p>
       </div>
 
