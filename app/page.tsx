@@ -13,6 +13,7 @@ import { WebLinksSection } from "@/components/web-links-section"
 import { MadridMetro } from "@/components/madrid-metro"
 import { RouteMap } from "@/components/route-map"
 import { SharedExpenses } from "@/components/shared-expenses"
+import { EmergencySection } from "@/components/emergency-section"
 import { UserSelector } from "@/components/user-selector"
 import { UserSettings } from "@/components/user-settings"
 import { PDFExportSimple } from "@/components/pdf-export-simple"
@@ -56,6 +57,7 @@ export default function Home() {
     | "configuracion"
     | "maparuta"
     | "gastos"
+    | "emergencias"
   >("main")
   const [selectedDate, setSelectedDate] = useState("2026-09-06")
   const [appData, setAppData] = useState<AppData | null>(null)
@@ -417,6 +419,8 @@ export default function Home() {
         {currentSection === "maparuta" && <RouteMap onBack={() => setCurrentSection("main")} />}
 
         {currentSection === "gastos" && <SharedExpenses onBack={() => setCurrentSection("main")} />}
+
+        {currentSection === "emergencias" && <EmergencySection onBack={() => setCurrentSection("main")} />}
 
         {currentSection === "configuracion" && currentUser.role === "admin" && (
           <UserSettings currentUser={currentUser} onBack={() => setCurrentSection("main")} />
