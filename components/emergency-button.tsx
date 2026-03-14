@@ -76,7 +76,6 @@ const emergencyCategories: EmergencyCategory[] = [
     icon: MapPin,
     color: "bg-cyan-600",
     contacts: [
-      { country: "España", flag: "🇪🇸", label: "Consulado AR en Barcelona", number: "+34 93 292 2200" },
       { country: "Francia", flag: "🇫🇷", label: "Consulado AR en París", number: "+33 1 4453 9400" },
       { country: "Italia", flag: "🇮🇹", label: "Consulado AR en Milán", number: "+39 02 6698 0135" },
       { country: "Italia", flag: "🇮🇹", label: "Consulado AR en Nápoles", number: "+39 081 761 3067" },
