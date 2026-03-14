@@ -107,7 +107,7 @@ export default function Home() {
 
       try {
         // v4 — forzar recarga de datos frescos siempre
-        const DATA_VERSION = "v4-versalles"
+        const DATA_VERSION = "v5-alojamiento-recalc"
         const savedVersion = localStorage.getItem("europeTripDataVersion")
         if (savedVersion !== DATA_VERSION) {
           localStorage.removeItem("europeTripData")

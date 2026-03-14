@@ -315,11 +315,15 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
 
           {/* Nota confirmados vs estimados */}
           <div className="bg-white/5 rounded-lg p-3 text-xs text-white/50 space-y-1">
-            <p className="font-semibold text-white/70">Precios confirmados (USD convertidos a EUR x0.93):</p>
-            <p>Madrid 3 noches: $462 ÷ 4p = <span className="text-white/80">$115.50/p = €107.42/persona</span></p>
-            <p>Barcelona 3 noches: $472 ÷ 4p = <span className="text-white/80">$118/p = €109.74/persona</span></p>
-            <p>Vico Equense 4 noches: $620 ÷ 4p = <span className="text-white/80">$155/p = €144.15/persona</span></p>
-            <p className="pt-1 border-t border-white/10">Paris, Milan, Florencia, Roma: estimado €85/noche total ÷ 4p = <span className="text-white/80">€21.25/noche/persona</span></p>
+            <p className="font-semibold text-white/70">Precios reales (USD ÷ 4 personas × cotización 0.92 USD/EUR):</p>
+            <p>Madrid 3n: $461 ÷ 4p = $115.25/p × 0.92 = <span className="text-white/80">€106.03/persona</span></p>
+            <p>Barcelona 3n: $684 ÷ 4p = $171/p × 0.92 = <span className="text-white/80">€157.32/persona</span></p>
+            <p>París 4n: $762 ÷ 4p = $190.50/p × 0.92 = <span className="text-white/80">€175.26/persona</span></p>
+            <p>Milán 2n: $462 ÷ 4p = $115.50/p × 0.92 = <span className="text-white/80">€106.26/persona</span></p>
+            <p>Florencia 2n: $482 ÷ 4p = $120.50/p × 0.92 = <span className="text-white/80">€110.86/persona</span></p>
+            <p>Roma 3n: $650 ÷ 4p = $162.50/p × 0.92 = <span className="text-white/80">€149.50/persona</span></p>
+            <p>Vico Equense 4n: $620 ÷ 4p = $155/p × 0.92 = <span className="text-white/80">€142.60/persona</span></p>
+            <p className="pt-1 border-t border-white/10 font-semibold text-white/60">Total alojamiento: $4121 ÷ 4p = $1030.25/p × 0.92 = <span className="text-white/80">€947.83/persona</span></p>
             <p className="text-white/30">Venecia y Napoles: sin alojamiento — visitas de dia / transito</p>
           </div>
         </div>
