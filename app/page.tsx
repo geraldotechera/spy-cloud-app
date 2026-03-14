@@ -166,7 +166,7 @@ export default function Home() {
     if (prefersDark) {
       document.documentElement.classList.add("dark")
     }
-  }, [])
+  }, [mounted])
 
   const showNotif = (message: string) => {
     setNotificationMessage(message)
@@ -214,6 +214,15 @@ export default function Home() {
       document.documentElement.classList.remove("dark")
       localStorage.setItem("theme", "light")
     }
+  }
+
+  // Evitar hydration mismatch: no renderizar nada diferente hasta que el cliente esté montado
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white/50 text-sm">Cargando...</p>
+      </div>
+    )
   }
 
   if (showSplash) {
