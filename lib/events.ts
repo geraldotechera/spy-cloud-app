@@ -381,7 +381,7 @@ export function getInitialData(): AppData {
       description: "Museos Vaticanos + Capilla Sixtina",
       amountPerCouple: 25,
       totalAmount: 50,
-      notes: "20€ + 5€ reserva online",
+      notes: "20�� + 5€ reserva online",
     },
     {
       id: 71,
@@ -439,7 +439,7 @@ export function getInitialData(): AppData {
       description: "Tren TGV Barcelona → París",
       amountPerCouple: 120,
       totalAmount: 240,
-      notes: "TGV directo Barcelona Sants → Gare de Lyon. Duración: 6h 30min",
+      notes: "TGV directo Barcelona Sants → París Gare de Lyon. Duración: 6h 30min aprox. Pasaje a comprar ~julio 2026. Tener en cuenta tiempo de llegada para check-in.",
     },
     {
       id: 77,
@@ -462,11 +462,11 @@ export function getInitialData(): AppData {
     {
       id: 79,
       date: "2026-09-16",
-      category: "vuelo" as const,
-      description: "Vuelo París → Milán",
+      category: "transporte" as const,
+      description: "Tren París Gare de Lyon → Milano Centrale",
       amountPerCouple: 120,
       totalAmount: 240,
-      notes: "Vuelo directo desde París CDG a Milano Malpensa",
+      notes: "TGV/Trenitalia salida 06:40 desde Gare de Lyon. Llegada Milano Centrale ~14:30. Pasaje a comprar ~julio 2026. Reservar en trenitalia.com o sncf.com.",
     },
 
     {
@@ -1376,7 +1376,7 @@ export function getInitialData(): AppData {
         id: 1104,
         time: "14:00",
         title: "Barrio Gótico y Catedral de Barcelona",
-        location: "Barri Gòtic, Barcelona, España",
+        location: "Barri G��tic, Barcelona, España",
         description: "El corazón medieval de Barcelona. Visita a la Catedral de la Santa Creu i Santa Eulàlia (gratuita, interior impresionante con claustros y 13 ocas). Callejuelas romanas, Plaça del Rei, Pont del Bisbe. Duración: 1h 30min. Desde Born/Picasso: caminar 5 min cruzando Via Laietana hacia el Gótico.",
         ticketPrice: 0,
         category: "monumento",
@@ -1867,7 +1867,7 @@ export function getInitialData(): AppData {
         time: "06:40",
         title: "Tren París Gare de Lyon → Milano Centrale",
         location: "Gare de Lyon, París, Francia",
-        description: "TGV/Trenitalia París Gare de Lyon → Milano Centrale. Salida 06:40. Duración: aprox 7h con parada en Turín. Llegada a Milano Centrale aproximadamente a las 14:00-14:30. Tren cómodo con vagón restaurante. Paisajes de los Alpes en la frontera franco-italiana. Reservar con anticipación en trenitalia.com o sncf.com.",
+        description: "TGV/Trenitalia París Gare de Lyon → Milano Centrale. Salida 06:40. Duración: aprox 7h con parada en Turín. Llegada a Milano Centrale aproximadamente a las 14:00-14:30. Tren cómodo con vagón restaurante. Paisajes de los Alpes en la frontera franco-italiana. Pasaje a comprar ~julio 2026. Reservar en trenitalia.com o sncf.com.",
         ticketPrice: 85,
         ticketUrl: "https://www.trenitalia.com",
         category: "transporte",
@@ -2894,7 +2894,7 @@ export function getInitialData(): AppData {
         ticketPrice: 18,
         ticketUrl: "https://www.capri.net/en/c/blue-grotto",
         category: "naturaleza",
-        icon: "🌊",
+        icon: "��",
         coordinates: { lat: 40.5593, lng: 14.1742 },
       },
       {
