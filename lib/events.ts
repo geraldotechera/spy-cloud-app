@@ -59,46 +59,46 @@ export function getInitialData(): AppData {
     // ============================================
 
     // --- MADRID (3 noches: 6, 7, 8 sep) ---
-    // $462 total ÷ 4 personas = $115.5/persona ≈ €107.4 → €35.80/noche/persona
-    { id: 1,   date: "2026-09-06", category: "alojamiento" as const, description: "Madrid - Noche 1 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "$462 USD total ÷ 4 personas. Calle del Barquillo 41" },
-    { id: 2,   date: "2026-09-07", category: "alojamiento" as const, description: "Madrid - Noche 2 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "Calle del Barquillo 41" },
-    { id: 3,   date: "2026-09-08", category: "alojamiento" as const, description: "Madrid - Noche 3 (Barquillo 41)",  amountPerPerson: 35.80, amountPerCouple: 71.60, totalAmount: 143.20, notes: "Calle del Barquillo 41 — total estadía Madrid: €107.40/persona" },
+    // $461 total ÷ 4 personas = $115.25/p × 0.92 = €106.03/p total → €35.34/noche/persona
+    { id: 1,   date: "2026-09-06", category: "alojamiento" as const, description: "Madrid - Noche 1 (Barquillo 41)",  amountPerPerson: 35.34, amountPerCouple: 70.68, totalAmount: 141.36, notes: "$461 USD total ÷ 4 personas × 0.92. Calle del Barquillo 41" },
+    { id: 2,   date: "2026-09-07", category: "alojamiento" as const, description: "Madrid - Noche 2 (Barquillo 41)",  amountPerPerson: 35.34, amountPerCouple: 70.68, totalAmount: 141.36, notes: "Calle del Barquillo 41" },
+    { id: 3,   date: "2026-09-08", category: "alojamiento" as const, description: "Madrid - Noche 3 (Barquillo 41)",  amountPerPerson: 35.35, amountPerCouple: 70.70, totalAmount: 141.40, notes: "Calle del Barquillo 41 — total estadía Madrid: €106.03/persona" },
 
     // --- BARCELONA (3 noches: 9, 10, 11 sep) ---
-    // $472 total ÷ 4 personas = $118/persona ≈ €109.7 → €36.57/noche/persona
-    { id: 4,   date: "2026-09-09", category: "alojamiento" as const, description: "Barcelona - Noche 1 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "$472 USD total ÷ 4 personas. Plaza de Europa 25, L'Hospitalet" },
-    { id: 5,   date: "2026-09-10", category: "alojamiento" as const, description: "Barcelona - Noche 2 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "Plaza de Europa 25, L'Hospitalet" },
-    { id: 6,   date: "2026-09-11", category: "alojamiento" as const, description: "Barcelona - Noche 3 (Europa 25)",  amountPerPerson: 36.57, amountPerCouple: 73.14, totalAmount: 146.28, notes: "Plaza de Europa 25, L'Hospitalet — total estadía Barcelona: €109.71/persona" },
+    // $684 total ÷ 4 personas = $171/p × 0.92 = €157.32/p total → €52.44/noche/persona
+    { id: 4,   date: "2026-09-09", category: "alojamiento" as const, description: "Barcelona - Noche 1 (Europa 25)",  amountPerPerson: 52.44, amountPerCouple: 104.88, totalAmount: 209.76, notes: "$684 USD total ÷ 4 personas × 0.92. Plaza de Europa 25, L'Hospitalet" },
+    { id: 5,   date: "2026-09-10", category: "alojamiento" as const, description: "Barcelona - Noche 2 (Europa 25)",  amountPerPerson: 52.44, amountPerCouple: 104.88, totalAmount: 209.76, notes: "Plaza de Europa 25, L'Hospitalet" },
+    { id: 6,   date: "2026-09-11", category: "alojamiento" as const, description: "Barcelona - Noche 3 (Europa 25)",  amountPerPerson: 52.44, amountPerCouple: 104.88, totalAmount: 209.76, notes: "Plaza de Europa 25, L'Hospitalet — total estadía Barcelona: €157.32/persona" },
 
     // --- PARÍS (4 noches: 12, 13, 14, 15 sep) ---
-    // Estimado €85/noche dpto completo ÷ 4 personas = €21.25/noche/persona
-    { id: 7,   date: "2026-09-12", category: "alojamiento" as const, description: "París - Noche 1 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. 57 Rue Schaeffer, Aubervilliers" },
-    { id: 8,   date: "2026-09-13", category: "alojamiento" as const, description: "París - Noche 2 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers" },
-    { id: 9,   date: "2026-09-14", category: "alojamiento" as const, description: "París - Noche 3 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers" },
-    { id: 10,  date: "2026-09-15", category: "alojamiento" as const, description: "París - Noche 4 (Rue Schaeffer)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "57 Rue Schaeffer, Aubervilliers — total estadía París: €85/persona" },
+    // $762 USD total ÷ 4 personas = $190.50/p × 0.92 = €175.26/p total → €43.82/noche/persona
+    { id: 7,   date: "2026-09-12", category: "alojamiento" as const, description: "París - Noche 1 (Rue Schaeffer)",  amountPerPerson: 43.82, amountPerCouple: 87.64, totalAmount: 175.28, notes: "$762 USD total ÷ 4 personas × 0.92. 57 Rue Schaeffer, Aubervilliers" },
+    { id: 8,   date: "2026-09-13", category: "alojamiento" as const, description: "París - Noche 2 (Rue Schaeffer)",  amountPerPerson: 43.82, amountPerCouple: 87.64, totalAmount: 175.28, notes: "57 Rue Schaeffer, Aubervilliers" },
+    { id: 9,   date: "2026-09-14", category: "alojamiento" as const, description: "París - Noche 3 (Rue Schaeffer)",  amountPerPerson: 43.82, amountPerCouple: 87.64, totalAmount: 175.28, notes: "57 Rue Schaeffer, Aubervilliers" },
+    { id: 10,  date: "2026-09-15", category: "alojamiento" as const, description: "París - Noche 4 (Rue Schaeffer)",  amountPerPerson: 43.80, amountPerCouple: 87.60, totalAmount: 175.20, notes: "57 Rue Schaeffer, Aubervilliers — total estadía París: €175.26/persona" },
 
     // --- MILÁN (2 noches: 16, 17 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 11,  date: "2026-09-16", category: "alojamiento" as const, description: "Milán - Noche 1 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via Alessandro Tadino 17" },
-    { id: 12,  date: "2026-09-17", category: "alojamiento" as const, description: "Milán - Noche 2 (Via Tadino 17)",  amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via Alessandro Tadino 17 — total estadía Milán: €42.50/persona" },
+    // $462 USD total ÷ 4 personas = $115.50/p × 0.92 = €106.26/p total → €53.13/noche/persona
+    { id: 11,  date: "2026-09-16", category: "alojamiento" as const, description: "Milán - Noche 1 (Via Tadino 17)",  amountPerPerson: 53.13, amountPerCouple: 106.26, totalAmount: 212.52, notes: "$462 USD total ÷ 4 personas × 0.92. Via Alessandro Tadino 17" },
+    { id: 12,  date: "2026-09-17", category: "alojamiento" as const, description: "Milán - Noche 2 (Via Tadino 17)",  amountPerPerson: 53.13, amountPerCouple: 106.26, totalAmount: 212.52, notes: "Via Alessandro Tadino 17 — total estadía Milán: €106.26/persona" },
 
     // --- FLORENCIA (2 noches: 19, 20 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 14,  date: "2026-09-19", category: "alojamiento" as const, description: "Florencia - Noche 1 (Via Scala 73)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Via della Scala 73" },
-    { id: 15,  date: "2026-09-20", category: "alojamiento" as const, description: "Florencia - Noche 2 (Via Scala 73)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Via della Scala 73 — total estadía Florencia: €42.50/persona" },
+    // $482 USD total ÷ 4 personas = $120.50/p × 0.92 = €110.86/p total → €55.43/noche/persona
+    { id: 14,  date: "2026-09-19", category: "alojamiento" as const, description: "Florencia - Noche 1 (Via Scala 73)", amountPerPerson: 55.43, amountPerCouple: 110.86, totalAmount: 221.72, notes: "$482 USD total ÷ 4 personas × 0.92. Via della Scala 73" },
+    { id: 15,  date: "2026-09-20", category: "alojamiento" as const, description: "Florencia - Noche 2 (Via Scala 73)", amountPerPerson: 55.43, amountPerCouple: 110.86, totalAmount: 221.72, notes: "Via della Scala 73 — total estadía Florencia: €110.86/persona" },
 
     // --- ROMA (3 noches: 21, 22, 23 sep) ---
-    // Estimado €85/noche ÷ 4 = €21.25/noche/persona
-    { id: 16,  date: "2026-09-21", category: "alojamiento" as const, description: "Roma - Noche 1 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Estimado €85/noche total ÷ 4p. Viale Manzoni 91 B 24" },
-    { id: 17,  date: "2026-09-22", category: "alojamiento" as const, description: "Roma - Noche 2 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24" },
-    { id: 18,  date: "2026-09-23", category: "alojamiento" as const, description: "Roma - Noche 3 (Viale Manzoni 91)", amountPerPerson: 21.25, amountPerCouple: 42.50, totalAmount: 85.00, notes: "Viale Manzoni 91 B 24 — total estadía Roma: €63.75/persona" },
+    // $650 USD total ÷ 4 personas = $162.50/p × 0.92 = €149.50/p total → €49.83/noche/persona
+    { id: 16,  date: "2026-09-21", category: "alojamiento" as const, description: "Roma - Noche 1 (Viale Manzoni 91)", amountPerPerson: 49.83, amountPerCouple: 99.66, totalAmount: 199.32, notes: "$650 USD total ÷ 4 personas × 0.92. Viale Manzoni 91 B 24" },
+    { id: 17,  date: "2026-09-22", category: "alojamiento" as const, description: "Roma - Noche 2 (Viale Manzoni 91)", amountPerPerson: 49.83, amountPerCouple: 99.66, totalAmount: 199.32, notes: "Viale Manzoni 91 B 24" },
+    { id: 18,  date: "2026-09-23", category: "alojamiento" as const, description: "Roma - Noche 3 (Viale Manzoni 91)", amountPerPerson: 49.84, amountPerCouple: 99.68, totalAmount: 199.36, notes: "Viale Manzoni 91 B 24 — total estadía Roma: €149.50/persona" },
 
     // --- VICO EQUENSE (4 noches: 23, 24, 25, 26 sep) ---
-    // $620 USD total ÷ 4 personas = $155/persona · $155 × 0.93 = €144.15/persona total · ÷ 4 noches = €36.04/noche/persona
-    { id: 19,  date: "2026-09-23", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "$620 USD total ÷ 4 personas = $155/p = €144.15/p total. Via Girolamo Giusso 5" },
-    { id: 20,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5" },
-    { id: 21,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5" },
-    { id: 22,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 4 (Via Giusso 5)", amountPerPerson: 36.04, amountPerCouple: 72.08, totalAmount: 144.15, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €144.15/persona. El 27 viajan a Nápoles sin pernoctar." },
+    // $620 USD total ÷ 4 personas = $155/p × 0.92 = €142.60/p total → €35.65/noche/persona
+    { id: 19,  date: "2026-09-23", category: "alojamiento" as const, description: "Vico Equense - Noche 1 (Via Giusso 5)", amountPerPerson: 35.65, amountPerCouple: 71.30, totalAmount: 142.60, notes: "$620 USD total ÷ 4 personas × 0.92 = €142.60/p total. Via Girolamo Giusso 5" },
+    { id: 20,  date: "2026-09-24", category: "alojamiento" as const, description: "Vico Equense - Noche 2 (Via Giusso 5)", amountPerPerson: 35.65, amountPerCouple: 71.30, totalAmount: 142.60, notes: "Via Girolamo Giusso 5" },
+    { id: 21,  date: "2026-09-25", category: "alojamiento" as const, description: "Vico Equense - Noche 3 (Via Giusso 5)", amountPerPerson: 35.65, amountPerCouple: 71.30, totalAmount: 142.60, notes: "Via Girolamo Giusso 5" },
+    { id: 22,  date: "2026-09-26", category: "alojamiento" as const, description: "Vico Equense - Noche 4 (Via Giusso 5)", amountPerPerson: 35.65, amountPerCouple: 71.30, totalAmount: 142.60, notes: "Via Girolamo Giusso 5 — total estadía Vico Equense: €142.60/persona. El 27 viajan a Nápoles sin pernoctar." },
 
 
     // Alimentación (21 días) — €40/persona/día (€80/pareja/día)
@@ -116,253 +116,52 @@ export function getInitialData(): AppData {
       }
     }),
 
-    // Lockers
-    {
-      id: 44,
-      date: "2026-09-09",
-      category: "otros" as const,
-      description: "Locker Barcelona Sants",
-      amountPerCouple: 8,
-      totalAmount: 16,
-      notes: "Guardar equipaje hasta check-in",
-    },
-    {
-      id: 45,
-      date: "2026-09-12",
-      category: "otros" as const,
-      description: "Locker Gare de Lyon París",
-      amountPerCouple: 10,
-      totalAmount: 20,
-      notes: "Guardar equipaje hasta check-in",
-    },
-    {
-      id: 46,
-      date: "2026-09-14",
-      category: "otros" as const,
-      description: "RER C ida/vuelta a Versalles",
-      amountPerCouple: 10,
-      totalAmount: 20,
-      notes: "RER C zona 1-4: €4.60 ida x 2 personas = €9.20 por pareja aprox.",
-    },
-    {
-      id: 47,
-      date: "2026-09-19",
-      category: "otros" as const,
-      description: "Locker Pisa",
-      amountPerCouple: 6,
-      totalAmount: 12,
-      notes: "Guardar equipaje durante visita",
-    },
-    {
-      id: 48,
-      date: "2026-09-23",
-      category: "otros" as const,
-      description: "Locker Napoli Centrale",
-      amountPerCouple: 8,
-      totalAmount: 16,
-      notes: "Guardar equipaje durante visita",
-    },
+    // Lockers — precio por persona
+    { id: 44, date: "2026-09-09", category: "otros" as const, description: "Locker Barcelona Sants",   amountPerPerson: 4,  totalAmount: 16, notes: "€4/persona. Guardar equipaje hasta check-in" },
+    { id: 45, date: "2026-09-12", category: "otros" as const, description: "Locker Gare de Lyon París", amountPerPerson: 5,  totalAmount: 20, notes: "€5/persona. Guardar equipaje hasta check-in" },
+    { id: 46, date: "2026-09-14", category: "otros" as const, description: "RER C ida/vuelta Versalles", amountPerPerson: 5,  totalAmount: 20, notes: "RER C zona 1-4: €4.60 ida aprox. €5/persona ida y vuelta" },
+    { id: 47, date: "2026-09-19", category: "otros" as const, description: "Locker Pisa",               amountPerPerson: 3,  totalAmount: 12, notes: "€3/persona. Guardar equipaje durante visita" },
+    { id: 48, date: "2026-09-23", category: "otros" as const, description: "Locker Napoli Centrale",    amountPerPerson: 4,  totalAmount: 16, notes: "€4/persona. Guardar equipaje durante visita" },
 
     // ============================================
     // CATEGORÍA 2: EVENTOS (Museos, Atracciones, Excursiones)
+    // Todos los precios son POR PERSONA
     // ============================================
 
     // Madrid
-    {
-      id: 51,
-      date: "2026-09-07",
-      category: "museo" as const,
-      description: "Palacio Real Madrid",
-      amountPerCouple: 14,
-      totalAmount: 28,
-      notes: "Precio oficial 2025",
-    },
-    {
-      id: 51.5,
-      date: "2026-09-07",
-      category: "museo" as const,
-      description: "Museo Thyssen-Bornemisza",
-      amountPerCouple: 13,
-      totalAmount: 26,
-      notes: "€13/persona. Paseo del Arte, camino al Retiro",
-    },
-    {
-      id: 52,
-      date: "2026-09-08",
-      category: "museo" as const,
-      description: "Museo del Prado + Museo Reina Sofía",
-      amountPerCouple: 27,
-      totalAmount: 54,
-      notes: "Prado €15 + Reina Sofía €12",
-    },
+    { id: 51,   date: "2026-09-07", category: "museo" as const, description: "Palacio Real Madrid",                        amountPerPerson: 14,   totalAmount: 56,  notes: "€14/persona. Precio oficial 2025" },
+    { id: 51.5, date: "2026-09-07", category: "museo" as const, description: "Museo Thyssen-Bornemisza",                   amountPerPerson: 13,   totalAmount: 52,  notes: "€13/persona. Paseo del Arte, camino al Retiro" },
+    { id: 52,   date: "2026-09-08", category: "museo" as const, description: "Museo del Prado + Museo Reina Sofía",        amountPerPerson: 27,   totalAmount: 108, notes: "Prado €15 + Reina Sofía €12 = €27/persona" },
 
     // Barcelona
-    {
-      id: 53,
-      date: "2026-09-09",
-      category: "museo" as const,
-      description: "Sagrada Família (con audioguía)",
-      amountPerCouple: 26,
-      totalAmount: 52,
-      notes: "Precio oficial 2025",
-    },
-    {
-      id: 54,
-      date: "2026-09-10",
-      category: "museo" as const,
-      description: "Park Güell",
-      amountPerCouple: 10,
-      totalAmount: 20,
-    },
-    {
-      id: 55,
-      date: "2026-09-10",
-      category: "museo" as const,
-      description: "Casa Batlló",
-      amountPerCouple: 35,
-      totalAmount: 70,
-      notes: "Precio oficial 2025",
-    },
-    {
-      id: 56,
-      date: "2026-09-10",
-      category: "museo" as const,
-      description: "Museo Picasso",
-      amountPerCouple: 12,
-      totalAmount: 24,
-    },
-    {
-      id: 57,
-      date: "2026-09-10",
-      category: "museo" as const,
-      description: "Montjuïc (Castillo + Fundación Miró)",
-      amountPerCouple: 13,
-      totalAmount: 26,
-    },
-
-    {
-      id: 57.5,
-      date: "2026-09-11",
-      category: "museo" as const,
-      description: "Barrio Gótico + Catedral de Barcelona",
-      amountPerCouple: 5,
-      totalAmount: 10,
-      notes: "Acceso gratuito a la Catedral (donativo), museo interior opcional ~€5",
-    },
+    { id: 53,   date: "2026-09-09", category: "museo" as const, description: "Sagrada Família (con audioguía)",            amountPerPerson: 26,   totalAmount: 104, notes: "€26/persona. Precio oficial 2025" },
+    { id: 54,   date: "2026-09-10", category: "museo" as const, description: "Park Güell",                                 amountPerPerson: 10,   totalAmount: 40,  notes: "€10/persona" },
+    { id: 55,   date: "2026-09-10", category: "museo" as const, description: "Casa Batlló",                                amountPerPerson: 35,   totalAmount: 140, notes: "€35/persona. Precio oficial 2025" },
+    { id: 56,   date: "2026-09-10", category: "museo" as const, description: "Museo Picasso",                              amountPerPerson: 12,   totalAmount: 48,  notes: "€12/persona" },
+    { id: 57,   date: "2026-09-10", category: "museo" as const, description: "Montjuïc (Castillo + Fundación Miró)",       amountPerPerson: 13,   totalAmount: 52,  notes: "€13/persona" },
+    { id: 57.5, date: "2026-09-11", category: "museo" as const, description: "Barrio Gótico + Catedral de Barcelona",      amountPerPerson: 5,    totalAmount: 20,  notes: "€5/persona. Catedral gratuita, museo interior opcional ~€5" },
 
     // París (12-15 sep)
-    {
-      id: 58,
-      date: "2026-09-12",
-      category: "museo" as const,
-      description: "Sainte-Chapelle + Crucero Sena con cena",
-      amountPerCouple: 96,
-      totalAmount: 192,
-      notes: "Sainte-Chapelle €11 + Crucero €85",
-    },
-    {
-      id: 59,
-      date: "2026-09-13",
-      category: "museo" as const,
-      description: "Museo del Louvre + Torre Eiffel",
-      amountPerCouple: 58,
-      totalAmount: 116,
-      notes: "Louvre €22 + Torre Eiffel €36",
-    },
-    {
-      id: 60,
-      date: "2026-09-13",
-      category: "museo" as const,
-      description: "Arco del Triunfo + Moulin Rouge",
-      amountPerCouple: 100,
-      totalAmount: 200,
-      notes: "Arco €13 + Moulin Rouge €87",
-    },
-    {
-      id: 601,
-      date: "2026-09-14",
-      category: "museo" as const,
-      description: "Versalles — Ticket Passport",
-      amountPerCouple: 43,
-      totalAmount: 86,
-      notes: "€21.50/persona x 2 = €43. Incluye Palacio, Trianon y Jardines",
-    },
-    {
-      id: 61,
-      date: "2026-09-15",
-      category: "museo" as const,
-      description: "Montmartre + Le Marais + Centre Pompidou",
-      amountPerCouple: 15,
-      totalAmount: 30,
-      notes: "Pompidou €15, resto gratuito",
-    },
-    {
-      id: 62,
-      date: "2026-09-15",
-      category: "museo" as const,
-      description: "Musée d'Orsay",
-      amountPerCouple: 16,
-      totalAmount: 32,
-    },
-    {
-      id: 63,
-      date: "2026-09-15",
-      category: "museo" as const,
-      description: "Museo Rodin + Palais Royal + Galeries Lafayette",
-      amountPerCouple: 14,
-      totalAmount: 28,
-      notes: "Rodin €14, resto gratuito",
-    },
+    { id: 58,   date: "2026-09-12", category: "museo" as const, description: "Sainte-Chapelle + Crucero Sena con cena",    amountPerPerson: 96,   totalAmount: 384, notes: "Sainte-Chapelle €11 + Crucero cena €85 = €96/persona" },
+    { id: 59,   date: "2026-09-13", category: "museo" as const, description: "Museo del Louvre + Torre Eiffel",            amountPerPerson: 58,   totalAmount: 232, notes: "Louvre €22 + Torre Eiffel €36 = €58/persona" },
+    { id: 60,   date: "2026-09-13", category: "museo" as const, description: "Arco del Triunfo + Moulin Rouge",            amountPerPerson: 100,  totalAmount: 400, notes: "Arco €13 + Moulin Rouge €87 = €100/persona" },
+    { id: 601,  date: "2026-09-14", category: "museo" as const, description: "Versalles — Ticket Passport",                amountPerPerson: 21.5, totalAmount: 86,  notes: "€21.50/persona. Incluye Palacio, Trianon y Jardines" },
+    { id: 61,   date: "2026-09-15", category: "museo" as const, description: "Montmartre + Le Marais + Centre Pompidou",   amountPerPerson: 15,   totalAmount: 60,  notes: "€15/persona. Pompidou €15, resto gratuito" },
+    { id: 62,   date: "2026-09-15", category: "museo" as const, description: "Musée d'Orsay",                              amountPerPerson: 16,   totalAmount: 64,  notes: "€16/persona" },
+    { id: 63,   date: "2026-09-15", category: "museo" as const, description: "Museo Rodin + Palais Royal + Galeries Lafayette", amountPerPerson: 14, totalAmount: 56, notes: "€14/persona. Rodin €14, resto gratuito" },
 
     // Milán
-    {
-      id: 64,
-      date: "2026-09-16",
-      category: "museo" as const,
-      description: "Duomo de Milán (iglesia + terrazas)",
-      amountPerCouple: 26,
-      totalAmount: 52,
-      notes: "Precio oficial 2025",
-    },
+    { id: 64,   date: "2026-09-16", category: "museo" as const, description: "Duomo de Milán (iglesia + terrazas)",        amountPerPerson: 26,   totalAmount: 104, notes: "€26/persona. Precio oficial 2025" },
 
     // Venecia
-    {
-      id: 65,
-      date: "2026-09-17",
-      category: "museo" as const,
-      description: "Palacio Ducal Venecia",
-      amountPerCouple: 25,
-      totalAmount: 50,
-    },
+    { id: 65,   date: "2026-09-17", category: "museo" as const, description: "Palacio Ducal Venecia",                      amountPerPerson: 25,   totalAmount: 100, notes: "€25/persona" },
 
     // Florencia
-    {
-      id: 66,
-      date: "2026-09-18",
-      category: "museo" as const,
-      description: "Galleria dell'Accademia",
-      amountPerCouple: 16,
-      totalAmount: 32,
-    },
-    {
-      id: 67,
-      date: "2026-09-18",
-      category: "museo" as const,
-      description: "Galleria degli Uffizi",
-      amountPerCouple: 29,
-      totalAmount: 58,
-      notes: "25€ + 4€ reserva",
-    },
+    { id: 66,   date: "2026-09-18", category: "museo" as const, description: "Galleria dell'Accademia",                    amountPerPerson: 16,   totalAmount: 64,  notes: "€16/persona" },
+    { id: 67,   date: "2026-09-18", category: "museo" as const, description: "Galleria degli Uffizi",                      amountPerPerson: 29,   totalAmount: 116, notes: "€29/persona (25€ + 4€ reserva)" },
 
     // Pisa
-    {
-      id: 68,
-      date: "2026-09-19",
-      category: "museo" as const,
-      description: "Torre Inclinada de Pisa",
-      amountPerCouple: 18,
-      totalAmount: 36,
-    },
+    { id: 68,   date: "2026-09-19", category: "museo" as const, description: "Torre Inclinada de Pisa",                    amountPerPerson: 18,   totalAmount: 72,  notes: "€18/persona" },
 
     // Roma
     {
@@ -401,25 +200,12 @@ export function getInitialData(): AppData {
     },
 
     // Capri
-    {
-      id: 73,
-      date: "2026-09-24",
-      category: "museo" as const,
-      description: "Villa San Michele (Anacapri)",
-      amountPerCouple: 12,
-      totalAmount: 24,
-    },
-    {
-      id: 74,
-      date: "2026-09-24",
-      category: "museo" as const,
-      description: "Jardines de Augusto (Capri)",
-      amountPerCouple: 3,
-      totalAmount: 6,
-    },
+    { id: 73,   date: "2026-09-24", category: "museo" as const, description: "Villa San Michele (Anacapri)",               amountPerPerson: 12,   totalAmount: 48,  notes: "€12/persona" },
+    { id: 74,   date: "2026-09-24", category: "museo" as const, description: "Jardines de Augusto (Capri)",                amountPerPerson: 3,    totalAmount: 12,  notes: "€3/persona" },
 
     // ============================================
     // CATEGORÍA 3: TRANSPORTE (Vuelos, Trenes, Buses, Ferries)
+    // Todos los precios son POR PERSONA
     // ============================================
 
     // Vuelos
@@ -509,48 +295,28 @@ export function getInitialData(): AppData {
       amountPerCouple: 50,
       totalAmount: 100,
     },
+    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo → Madrid (ida y vuelta)", amountPerPerson: 1240, totalAmount: 4960, notes: "€1240/persona. Incluye ida (5 sep) y vuelta (27 sep)" },
+    { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
+    { id: 77, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Roma → Madrid",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona" },
+
+    // Trenes principales
+    { id: 78, date: "2026-09-09", category: "transporte" as const, description: "Tren AVE Madrid → Barcelona",              amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona" },
+    { id: 79, date: "2026-09-16", category: "vuelo" as const,      description: "Vuelo París → Milán",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. CDG → Milano Malpensa" },
+    { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },
+    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },
+    { id: 85, date: "2026-09-19", category: "transporte" as const, description: "Tren Florencia → Pisa",                    amountPerPerson: 5,    totalAmount: 20,   notes: "€5/persona" },
+    { id: 86, date: "2026-09-19", category: "transporte" as const, description: "Tren Pisa → Roma",                         amountPerPerson: 25,   totalAmount: 100,  notes: "€25/persona" },
+    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (ida y vuelta)",       amountPerPerson: 25,   totalAmount: 100,  notes: "€25/persona ida y vuelta" },
 
     // Ferries y transporte marítimo
-    {
-      id: 88,
-      date: "2026-09-24",
-      category: "transporte" as const,
-      description: "Ferry Sorrento → Positano",
-      amountPerCouple: 15,
-      totalAmount: 30,
-      notes: "Ferry panorámico",
-    },
-    {
-      id: 89,
-      date: "2026-09-24",
-      category: "transporte" as const,
-      description: "Ferry Positano → Amalfi",
-      amountPerCouple: 15,
-      totalAmount: 30,
-      notes: "Ferry panorámico",
-    },
-    {
-      id: 90,
-      date: "2026-09-24",
-      category: "transporte" as const,
-      description: "Bus Amalfi → Ravello → Sorrento",
-      amountPerCouple: 10,
-      totalAmount: 20,
-      notes: "Bus SITA",
-    },
-    {
-      id: 91,
-      date: "2026-09-25",
-      category: "transporte" as const,
-      description: "Hidroala Sorrento → Capri (ida y vuelta)",
-      amountPerCouple: 50,
-      totalAmount: 100,
-      notes: "Ferry rápido",
-    },
+    { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 7.5,  totalAmount: 30,   notes: "€7.50/persona. Ferry panorámico" },
+    { id: 89, date: "2026-09-24", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 7.5,  totalAmount: 30,   notes: "€7.50/persona. Ferry panorámico" },
+    { id: 90, date: "2026-09-24", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 5,    totalAmount: 20,   notes: "€5/persona. Bus SITA" },
+    { id: 91, date: "2026-09-25", category: "transporte" as const, description: "Hidroala Sorrento → Capri (ida y vuelta)", amountPerPerson: 25,   totalAmount: 100,  notes: "€25/persona. Ferry rápido" },
   ]
 
-  const getPerPerson = (e: { amountPerPerson?: number; amountPerCouple: number }) =>
-    e.amountPerPerson ?? e.amountPerCouple / 2
+  const getPerPerson = (e: { amountPerPerson?: number; amountPerCouple?: number }) =>
+    e.amountPerPerson ?? (e.amountPerCouple ? e.amountPerCouple / 2 : 0)
 
   const totalAlojamiento = dailyExpenses
     .filter((e) => e.category === "alojamiento")
@@ -1694,7 +1460,7 @@ export function getInitialData(): AppData {
         time: "15:00",
         title: "Gran Trianón y Pequeño Trianón",
         location: "Trianon, Versailles, Francia",
-        description: "El Gran Trianón (1687): palacete de m��rmol rosa donde Luis XIV escapaba de la corte. El Petit Trianón: el refugio personal de María Antonieta, quien aquí vivía lejos del protocolo de la corte. A 30 min caminando desde el Palacio principal o con carrito eléctrico (€8).",
+        description: "El Gran Trian��n (1687): palacete de m��rmol rosa donde Luis XIV escapaba de la corte. El Petit Trianón: el refugio personal de María Antonieta, quien aquí vivía lejos del protocolo de la corte. A 30 min caminando desde el Palacio principal o con carrito eléctrico (€8).",
         ticketPrice: 0,
         category: "museo",
         icon: "🌸",
@@ -1999,7 +1765,7 @@ export function getInitialData(): AppData {
         time: "11:30",
         title: "Pinacoteca di Brera",
         location: "Via Brera, 28, Milán, Italia",
-        description: "Una de las galerías de arte más importantes de Italia. Obras maestras de Mantegna, Caravaggio, Raffaello, Tiziano y Piero della Francesca. Duración: 2h. Desde el Duomo: caminar hacia el norte por Corso Vittorio Emanuele (15 min). Precio 2026: €15.",
+        description: "Una de las galerías de arte más importantes de Italia. Obras maestras de Mantegna, Caravaggio, Raffaello, Tiziano y Piero della Francesca. Duración: 2h. Desde el Duomo: caminar hacia el norte por Corso Vittorio Emanuele (15 min). Precio 2026: ��15.",
         ticketPrice: 15,
         ticketUrl: "https://pinacotecabrera.org",
         category: "museo",

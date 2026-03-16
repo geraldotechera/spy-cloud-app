@@ -106,26 +106,44 @@ export default function Home() {
         // localStorage not available
       }
 
-      try {
-        // v4 — forzar recarga de datos frescos siempre
-        const DATA_VERSION = "v4-versalles"
-        const savedVersion = localStorage.getItem("europeTripDataVersion")
-        if (savedVersion !== DATA_VERSION) {
-          localStorage.removeItem("europeTripData")
-          localStorage.setItem("europeTripDataVersion", DATA_VERSION)
-        }
-        localStorage.removeItem("europeTripData")
-        const initialData = getInitialData()
-        setAppData(initialData)
         try {
-          localStorage.setItem("europeTripData", JSON.stringify(initialData))
-        } catch {
-          // quota exceeded or unavailable
+          const DATA_VERSION = "v6-per-person-fix"
+          const savedVersion = localStorage.getItem("europeTripDataVersion")
+          if (savedVersion !== DATA_VERSION) {
+            // Nueva versión de datos: limpiar caché y cargar datos frescos
+            localStorage.removeItem("europeTripData")
+            localStorage.setItem("europeTripDataVersion", DATA_VERSION)
+            const initialData = getInitialData()
+            setAppData(initialData)
+            localStorage.setItem("europeTripData", JSON.stringify(initialData))
+          } else {
+            // Misma versión: intentar cargar datos guardados por el usuario
+            const saved = localStorage.getItem("europeTripData")
+            if (saved) {
+              try {
+                const parsed = JSON.parse(saved)
+                if (validateAppData(parsed)) {
+                  setAppData(parsed)
+                } else {
+                  const initialData = getInitialData()
+                  setAppData(initialData)
+                  localStorage.setItem("europeTripData", JSON.stringify(initialData))
+                }
+              } catch {
+                const initialData = getInitialData()
+                setAppData(initialData)
+                localStorage.setItem("europeTripData", JSON.stringify(initialData))
+              }
+            } else {
+              const initialData = getInitialData()
+              setAppData(initialData)
+              localStorage.setItem("europeTripData", JSON.stringify(initialData))
+            }
+          }
+        } catch (error) {
+          const initialData = getInitialData()
+          setAppData(initialData)
         }
-      } catch (error) {
-        const initialData = getInitialData()
-        setAppData(initialData)
-      }
     }
 
     loadData()
@@ -149,7 +167,7 @@ export default function Home() {
     if (prefersDark) {
       document.documentElement.classList.add("dark")
     }
-  }, [])
+  }, [mounted])
 
   const showNotif = (message: string) => {
     setNotificationMessage(message)
@@ -197,6 +215,15 @@ export default function Home() {
       document.documentElement.classList.remove("dark")
       localStorage.setItem("theme", "light")
     }
+  }
+
+  // Evitar hydration mismatch: no renderizar nada diferente hasta que el cliente esté montado
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white/50 text-sm">Cargando...</p>
+      </div>
+    )
   }
 
   if (showSplash) {
