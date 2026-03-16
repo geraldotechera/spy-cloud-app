@@ -19,6 +19,7 @@ import { PDFExportSimple } from "@/components/pdf-export-simple"
 import { PrintItinerary } from "@/components/print-itinerary"
 import { Moon, Sun } from "lucide-react"
 import { CountryMapModal } from "@/components/country-map-modal"
+import { EmergencyButton } from "@/components/emergency-button"
 import type { AppData, User } from "@/types"
 import { getInitialData } from "@/lib/events"
 
@@ -276,6 +277,7 @@ export default function Home() {
       }}
     >
       {showCountryMap && <CountryMapModal country={showCountryMap} onClose={() => setShowCountryMap(null)} />}
+      <EmergencyButton />
 
       {showNotification && (
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl z-50 animate-fade-in flex items-center gap-2 border border-green-400">
