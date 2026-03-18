@@ -34,6 +34,7 @@ export interface DailyExpense {
   amountPerCouple: number   // amountPerPerson x 2
   totalAmount: number       // amountPerPerson x 4 (2 parejas)
   notes?: string
+  paid?: boolean            // true = ya pagado, se muestra tachado/gris
   paidBy?: string
   addedBy?: string
   timestamp?: number
