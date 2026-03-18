@@ -410,20 +410,6 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             ))}
           </div>
 
-          {/* Items detallados editables */}
-          <div className="space-y-2">
-            {alojamientoExpenses.map((expense, idx) => (
-              <ItemCard
-                key={`aloj-${expense.id}-${idx}`}
-                expense={expense}
-                idx={idx}
-                prefix="aloj"
-                bg="bg-green-500/10"
-                border="border-green-400/15"
-                icon="🏨"
-              />
-            ))}
-          </div>
           <SaldoFooter expenses={alojamientoExpenses} color="bg-green-500/10 border-green-400/20" />
         </div>
       )}
