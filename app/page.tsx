@@ -107,10 +107,10 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v14-sync-agenda"
+          const DATA_VERSION = "v16-always-dedup"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
 
-          // Helper: remove duplicate dailyExpenses by id
+          // Siempre deduplica por ID — elimina entradas repetidas del localStorage corrupto
           const dedupeExpenses = (data: AppData): AppData => {
             const seen = new Set<number>()
             const unique = data.budget.dailyExpenses.filter((e: { id: number }) => {
@@ -121,34 +121,32 @@ export default function Home() {
             return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
           }
 
+          // Siempre forzar reset si la versión no coincide
           if (savedVersion !== DATA_VERSION) {
-            // Nueva versión de datos: limpiar caché y cargar datos frescos
             localStorage.removeItem("europeTripData")
             localStorage.setItem("europeTripDataVersion", DATA_VERSION)
-            const initialData = getInitialData()
+            const initialData = dedupeExpenses(getInitialData())
             setAppData(initialData)
             localStorage.setItem("europeTripData", JSON.stringify(initialData))
           } else {
-            // Misma versión: intentar cargar datos guardados por el usuario
             const saved = localStorage.getItem("europeTripData")
             if (saved) {
               try {
                 const parsed = JSON.parse(saved)
-                if (validateAppData(parsed)) {
-                  const clean = dedupeExpenses(parsed)
-                  setAppData(clean)
-                } else {
-                  const initialData = getInitialData()
-                  setAppData(initialData)
-                  localStorage.setItem("europeTripData", JSON.stringify(initialData))
-                }
+                // Deduplicar siempre, independientemente de validateAppData
+                const clean = dedupeExpenses(
+                  validateAppData(parsed) ? parsed : getInitialData()
+                )
+                setAppData(clean)
+                // Sobrescribir localStorage con los datos limpios
+                localStorage.setItem("europeTripData", JSON.stringify(clean))
               } catch {
-                const initialData = getInitialData()
+                const initialData = dedupeExpenses(getInitialData())
                 setAppData(initialData)
                 localStorage.setItem("europeTripData", JSON.stringify(initialData))
               }
             } else {
-              const initialData = getInitialData()
+              const initialData = dedupeExpenses(getInitialData())
               setAppData(initialData)
               localStorage.setItem("europeTripData", JSON.stringify(initialData))
             }
@@ -403,8 +401,11 @@ export default function Home() {
               currentUser={currentUser}
               onUpdateEvents={(newEvents) => {
                 // Sincronizar ticketPrice de la agenda con amountPerPerson del presupuesto
+                // Usa budgetId si existe, sino cae a id para eventos de tipo museo
                 const updatedBudgetExpenses = appData.budget.dailyExpenses.map((expense) => {
-                  const matchingEvent = newEvents.find((e) => e.id === expense.id)
+                  const matchingEvent = newEvents.find(
+                    (e) => (e.budgetId !== undefined ? e.budgetId === expense.id : e.id === expense.id)
+                  )
                   if (matchingEvent && matchingEvent.ticketPrice !== expense.amountPerPerson) {
                     return {
                       ...expense,
@@ -417,14 +418,8 @@ export default function Home() {
                 })
                 setAppData({
                   ...appData,
-                  events: {
-                    ...appData.events,
-                    [selectedDate]: newEvents,
-                  },
-                  budget: {
-                    ...appData.budget,
-                    dailyExpenses: updatedBudgetExpenses,
-                  },
+                  events: { ...appData.events, [selectedDate]: newEvents },
+                  budget: { ...appData.budget, dailyExpenses: updatedBudgetExpenses },
                 })
               }}
             />

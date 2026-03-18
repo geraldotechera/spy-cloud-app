@@ -5,7 +5,11 @@ export interface Event {
   location: string
   description?: string
   ticketPrice: number
-  ticketUrl?: string // URL de compra de tickets
+  ticketUrl?: string
+  category?: string
+  icon?: string
+  coordinates?: { lat: number; lng: number }
+  budgetId?: number  // ID del DailyExpense correspondiente en el presupuesto
 }
 
 export interface Accommodation {
