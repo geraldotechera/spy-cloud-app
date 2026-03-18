@@ -209,92 +209,6 @@ export function getInitialData(): AppData {
     // ============================================
 
     // Vuelos
-    {
-      id: 75,
-      date: "2026-09-05",
-      category: "vuelo" as const,
-      description: "Vuelo Montevideo → Madrid (ida y vuelta)",
-      amountPerCouple: 2480,
-      totalAmount: 4960,
-      notes: "Incluye ida (5 sep) y vuelta (27 sep). $2,480 USD por pareja",
-    },
-    {
-      id: 76,
-      date: "2026-09-12",
-      category: "transporte" as const,
-      description: "Tren TGV Barcelona → París",
-      amountPerCouple: 120,
-      totalAmount: 240,
-      notes: "TGV directo Barcelona Sants → París Gare de Lyon. Duración: 6h 30min aprox. Pasaje a comprar ~julio 2026. Tener en cuenta tiempo de llegada para check-in.",
-    },
-    {
-      id: 77,
-      date: "2026-09-27",
-      category: "vuelo" as const,
-      description: "Vuelo Roma → Madrid",
-      amountPerCouple: 120,
-      totalAmount: 240,
-    },
-
-    // Trenes principales
-    {
-      id: 78,
-      date: "2026-09-09",
-      category: "transporte" as const,
-      description: "Tren AVE Madrid → Barcelona",
-      amountPerCouple: 120,
-      totalAmount: 240,
-    },
-    {
-      id: 79,
-      date: "2026-09-16",
-      category: "transporte" as const,
-      description: "Tren París Gare de Lyon → Milano Centrale",
-      amountPerCouple: 120,
-      totalAmount: 240,
-      notes: "TGV/Trenitalia salida 06:40 desde Gare de Lyon. Llegada Milano Centrale ~14:30. Pasaje a comprar ~julio 2026. Reservar en trenitalia.com o sncf.com.",
-    },
-
-    {
-      id: 83,
-      date: "2026-09-18",
-      category: "transporte" as const,
-      description: "Tren Milán → Venecia",
-      amountPerCouple: 85,
-      totalAmount: 170,
-    },
-    {
-      id: 84,
-      date: "2026-09-19",
-      category: "transporte" as const,
-      description: "Tren Venecia → Florencia",
-      amountPerCouple: 85,
-      totalAmount: 170,
-    },
-    {
-      id: 85,
-      date: "2026-09-19",
-      category: "transporte" as const,
-      description: "Tren Florencia → Pisa",
-      amountPerCouple: 10,
-      totalAmount: 20,
-    },
-    {
-      id: 86,
-      date: "2026-09-19",
-      category: "transporte" as const,
-      description: "Tren Pisa → Roma",
-      amountPerCouple: 50,
-      totalAmount: 100,
-    },
-    {
-      id: 87,
-      date: "2026-09-23",
-      category: "transporte" as const,
-      description: "Tren Roma → Nápoles (ida y vuelta)",
-      amountPerCouple: 50,
-      totalAmount: 100,
-    },
     { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo → Madrid (ida y vuelta)", amountPerPerson: 1240, totalAmount: 4960, notes: "€1240/persona. Incluye ida (5 sep) y vuelta (27 sep)" },
     { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
     { id: 77, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Roma → Madrid",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona" },
@@ -339,16 +253,6 @@ export function getInitialData(): AppData {
   const totalPerPerson = dailyExpenses.reduce((sum, expense) => sum + getPerPerson(expense), 0)
   const totalPerCouple = totalPerPerson * 2
   const totalGeneral = totalPerPerson * 4 // 4 personas (TECHERA x2 + PEREZ x2)
-
-  console.log("[v0] Presupuesto recalculado (por persona):")
-  console.log("[v0] - Alojamiento:", totalAlojamiento.toFixed(2), "€ por persona")
-  console.log("[v0] - Alimentación:", totalAlimentacion.toFixed(2), "€ por persona")
-  console.log("[v0] - Otros (lockers, etc.):", totalOtros.toFixed(2), "€ por persona")
-  console.log("[v0] - Eventos (museos, atracciones):", totalEventos.toFixed(2), "€ por persona")
-  console.log("[v0] - Transporte (vuelos, trenes, ferries):", totalTransporte.toFixed(2), "€ por persona")
-  console.log("[v0] - TOTAL POR PERSONA:", totalPerPerson.toFixed(2), "€")
-  console.log("[v0] - TOTAL POR PAREJA:", totalPerCouple.toFixed(2), "€")
-  console.log("[v0] - TOTAL GENERAL (2 parejas):", totalGeneral.toFixed(2), "€")
 
   const accommodations: any[] = [
     {

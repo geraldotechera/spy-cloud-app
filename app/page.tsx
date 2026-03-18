@@ -107,7 +107,7 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v6-per-person-fix"
+          const DATA_VERSION = "v7-no-duplicates"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
           if (savedVersion !== DATA_VERSION) {
             // Nueva versión de datos: limpiar caché y cargar datos frescos
