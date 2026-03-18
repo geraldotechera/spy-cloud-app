@@ -107,7 +107,7 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v11-no-pisa"
+          const DATA_VERSION = "v13-final-clean"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
 
           // Helper: remove duplicate dailyExpenses by id
@@ -166,7 +166,15 @@ export default function Home() {
     if (!appData) return
 
     try {
-      localStorage.setItem("europeTripData", JSON.stringify(appData))
+      // Deduplicar antes de guardar para que nunca se persistan IDs duplicados
+      const seen = new Set<number>()
+      const cleanExpenses = appData.budget.dailyExpenses.filter((e) => {
+        if (seen.has(e.id)) return false
+        seen.add(e.id)
+        return true
+      })
+      const cleanData = { ...appData, budget: { ...appData.budget, dailyExpenses: cleanExpenses } }
+      localStorage.setItem("europeTripData", JSON.stringify(cleanData))
     } catch {
       // quota exceeded or unavailable
     }

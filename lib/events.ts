@@ -208,23 +208,30 @@ export function getInitialData(): AppData {
     // Todos los precios son POR PERSONA
     // ============================================
 
-    // Vuelos
-    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo ↔ Madrid (ida y vuelta)", amountPerPerson: 0,    totalAmount: 0,    notes: "Ya pagado. Ida: 5 sep MVD→MAD. Vuelta: 27 sep MAD→MVD." },
-
-    // Trenes principales
-    { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
-    { id: 78, date: "2026-09-09", category: "transporte" as const, description: "Tren AVE Madrid → Barcelona",              amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona" },
-    { id: 79, date: "2026-09-16", category: "vuelo" as const,      description: "Vuelo París → Milán",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. CDG → Milano Malpensa" },
-    { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },
-    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },
-    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 15,   totalAmount: 60,   notes: "€15/persona. Solo ida, regreso desde Nápoles en vuelo el 27 sep" },
-    { id: 92, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Nápoles → Madrid",                   amountPerPerson: 0,    totalAmount: 0,    notes: "Precio a calcular. Salida 27 sep desde Nápoles (NAP) → Madrid (MAD)" },
-
-    // Ferries y transporte marítimo
-    { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 7.5,  totalAmount: 30,   notes: "€7.50/persona. Ferry panorámico" },
-    { id: 89, date: "2026-09-24", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 7.5,  totalAmount: 30,   notes: "€7.50/persona. Ferry panorámico" },
-    { id: 90, date: "2026-09-24", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 5,    totalAmount: 20,   notes: "€5/persona. Bus SITA" },
-    { id: 91, date: "2026-09-25", category: "transporte" as const, description: "Hidroala Sorrento → Capri (ida y vuelta)", amountPerPerson: 25,   totalAmount: 100,  notes: "€25/persona. Ferry rápido" },
+    // ── LOCOMOCION (ordenado por fecha) ──────────────────────────────────────
+    // 05 sep — Vuelo ida (ya pagado, vuelta incluida el 27 sep MAD→MVD)
+    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo ↔ Madrid (ida y vuelta)", amountPerPerson: 0,    amountPerCouple: 0,   totalAmount: 0,   paid: true,  notes: "Ya pagado. Ida: 5 sep MVD→MAD. Vuelta: 27 sep MAD→MVD." },
+    // 09 sep
+    { id: 78, date: "2026-09-09", category: "transporte" as const, description: "Tren AVE Madrid → Barcelona",              amountPerPerson: 60,   amountPerCouple: 120, totalAmount: 240, paid: false, notes: "€60/persona" },
+    // 12 sep
+    { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   amountPerCouple: 120, totalAmount: 240, paid: false, notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
+    // 16 sep — Tren París → Milán (antes era vuelo, ahora en tren)
+    { id: 79, date: "2026-09-16", category: "transporte" as const, description: "Tren París → Milán",                       amountPerPerson: 80,   amountPerCouple: 160, totalAmount: 320, paid: false, notes: "€80/persona. Tren directo Gare de Lyon → Milano Centrale" },
+    // 18 sep
+    { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, amountPerCouple: 85,  totalAmount: 170, paid: false, notes: "€42.50/persona" },
+    // 19 sep
+    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 42.5, amountPerCouple: 85,  totalAmount: 170, paid: false, notes: "€42.50/persona" },
+    // 23 sep
+    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 15,   amountPerCouple: 30,  totalAmount: 60,  paid: false, notes: "€15/persona. Solo ida, regreso desde Nápoles el 27 sep" },
+    // 24 sep — Ferries y transporte marítimo Costa Amalfitana
+    { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 7.5,  amountPerCouple: 15,  totalAmount: 30,  paid: false, notes: "€7.50/persona. Ferry panorámico" },
+    { id: 89, date: "2026-09-24", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 7.5,  amountPerCouple: 15,  totalAmount: 30,  paid: false, notes: "€7.50/persona. Ferry panorámico" },
+    { id: 90, date: "2026-09-24", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 5,    amountPerCouple: 10,  totalAmount: 20,  paid: false, notes: "€5/persona. Bus SITA" },
+    // 25 sep
+    { id: 91, date: "2026-09-25", category: "transporte" as const, description: "Hidroala Sorrento → Capri (ida y vuelta)", amountPerPerson: 25,   amountPerCouple: 50,  totalAmount: 100, paid: false, notes: "€25/persona. Ferry rápido" },
+    // 27 sep — Sorrento a Nápoles + vuelo Nápoles → Madrid
+    { id: 93, date: "2026-09-27", category: "transporte" as const, description: "Tren Sorrento → Nápoles (aeropuerto)",     amountPerPerson: 5,    amountPerCouple: 10,  totalAmount: 20,  paid: false, notes: "€5/persona. Circumvesuviana o metro hasta Nápoles Centrale, luego Alibus al aeropuerto" },
+    { id: 92, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Nápoles → Madrid",                   amountPerPerson: 0,    amountPerCouple: 0,   totalAmount: 0,   paid: false, notes: "Precio a calcular. NAP → MAD. Salida 27 sep" },
   ]
 
   const getPerPerson = (e: { amountPerPerson?: number; amountPerCouple?: number }) =>
@@ -894,7 +901,7 @@ export function getInitialData(): AppData {
         time: "11:00",
         title: "Sagrada Familia",
         location: "Carrer de Mallorca, 401, Barcelona, España",
-        description: "Obra maestra de Gaudí. 2h con audioguía. Reservar con anticipación. Desde Park Guell: bus 24 hasta Passeig de Gràcia + metro L4 hasta Sagrada Familia (20 min). Precio básico con audioguía: €26, con acceso a torres: €36.",
+        description: "Obra maestra de Gaudí. 2h con audioguía. Reservar con anticipación. Desde Park Guell: bus 24 hasta Passeig de Gràcia + metro L4 hasta Sagrada Familia (20 min). Precio básico con audiogu��a: €26, con acceso a torres: €36.",
         ticketPrice: 26,
         ticketUrl: "https://sagradafamilia.org",
         category: "museo",

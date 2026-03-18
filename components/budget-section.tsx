@@ -30,7 +30,10 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     (e, idx, arr) => arr.findIndex((x) => x.id === e.id) === idx
   )
 
-  const transportExpenses = uniqueExpenses.filter((e) => e.category === "transporte" || e.category === "vuelo")
+  // Ordenar transporte por fecha
+  const transportExpenses = uniqueExpenses
+    .filter((e) => e.category === "transporte" || e.category === "vuelo")
+    .sort((a, b) => a.date.localeCompare(b.date))
   const eventExpenses = uniqueExpenses.filter((e) => e.category === "museo")
   const alojamientoExpenses = uniqueExpenses.filter((e) => e.category === "alojamiento")
   const comidaExpenses = uniqueExpenses.filter((e) => e.category === "alimentacion")
@@ -64,6 +67,18 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
       totalGeneral: newTotalPerPerson * 4,
     })
     setEditingEventId(null)
+  }
+
+  const handleTogglePaid = (expenseId: number) => {
+    const updated = budget.dailyExpenses.map((e) =>
+      e.id === expenseId ? { ...e, paid: !e.paid } : e
+    )
+    const newTotalPerPerson = updated.reduce((s, e) => s + perPerson(e), 0)
+    onUpdateBudget({
+      dailyExpenses: updated,
+      totalPerCouple: newTotalPerPerson * 2,
+      totalGeneral: newTotalPerPerson * 4,
+    })
   }
 
   // Resumen de alojamiento agrupado por ciudad
@@ -264,21 +279,57 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
           <div className="space-y-2">
             {transportExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
-              const icon = expense.category === "vuelo" ? "✈️" : "🚂"
+              const isVuelo = expense.category === "vuelo"
+              const isPaid = expense.paid === true
               const pp = perPerson(expense)
+              const needsPrice = pp === 0 && !isPaid
               return (
-                <div key={`transport-${expense.id}-${idx}`} className="bg-yellow-500/15 rounded-xl p-3 border border-yellow-400/20 flex items-start gap-2">
-                  <span className="text-lg flex-shrink-0">{icon}</span>
+                <div
+                  key={`transport-${expense.id}-${idx}`}
+                  className={`rounded-xl p-3 border flex items-start gap-2 ${
+                    isPaid
+                      ? "bg-white/5 border-white/10 opacity-60"
+                      : needsPrice
+                      ? "bg-orange-500/15 border-orange-400/30"
+                      : "bg-yellow-500/15 border-yellow-400/20"
+                  }`}
+                >
+                  <span className="text-lg flex-shrink-0">{isVuelo ? "✈️" : "🚂"}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm">{expense.description}</div>
-                    <div className="text-xs text-white/50">
-                      {d.toLocaleDateString("es-ES", { day: "numeric", month: "short" })}
+                    <div className={`font-semibold text-sm ${isPaid ? "line-through text-white/40" : ""}`}>
+                      {expense.description}
                     </div>
-                    {expense.notes && <div className="text-xs text-white/50 mt-0.5">{expense.notes}</div>}
+                    <div className="text-xs text-white/50">
+                      {d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })}
+                    </div>
+                    {expense.notes && (
+                      <div className="text-xs text-white/40 mt-0.5">{expense.notes}</div>
+                    )}
+                    {needsPrice && (
+                      <div className="text-xs text-orange-300 font-semibold mt-1">Precio a confirmar</div>
+                    )}
                   </div>
-                  <div className="text-right flex-shrink-0">
-                    <div className="font-bold">{fmt(pp)}</div>
-                    <div className="text-xs text-white/50">por persona</div>
+                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                    {isPaid ? (
+                      <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">
+                        Pagado
+                      </span>
+                    ) : (
+                      <div className="text-right">
+                        <div className="font-bold text-yellow-300">{pp > 0 ? fmt(pp) : "—"}</div>
+                        <div className="text-xs text-white/50">por persona</div>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => handleTogglePaid(expense.id)}
+                      className={`text-xs px-2 py-0.5 rounded-full border transition-colors ${
+                        isPaid
+                          ? "border-white/20 text-white/40 hover:border-white/40 hover:text-white/60"
+                          : "border-green-400/40 text-green-300 hover:bg-green-500/20"
+                      }`}
+                    >
+                      {isPaid ? "Deshacer" : "Marcar pagado"}
+                    </button>
                   </div>
                 </div>
               )
