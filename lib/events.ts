@@ -209,11 +209,10 @@ export function getInitialData(): AppData {
     // ============================================
 
     // Vuelos
-    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo → Madrid (ida y vuelta)", amountPerPerson: 1240, totalAmount: 4960, notes: "€1240/persona. Incluye ida (5 sep) y vuelta (27 sep)" },
-    { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
-    { id: 77, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Roma → Madrid",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona" },
+    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo ↔ Madrid (ida y vuelta)", amountPerPerson: 1240, totalAmount: 4960, notes: "€1240/persona. Ida: 5 sep Montevideo→Madrid. Vuelta: 27 sep Madrid→Montevideo (vía São Paulo)" },
 
     // Trenes principales
+    { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
     { id: 78, date: "2026-09-09", category: "transporte" as const, description: "Tren AVE Madrid → Barcelona",              amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona" },
     { id: 79, date: "2026-09-16", category: "vuelo" as const,      description: "Vuelo París → Milán",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. CDG → Milano Malpensa" },
     { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },

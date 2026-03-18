@@ -25,11 +25,16 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
   const [editingEventId, setEditingEventId] = useState<number | null>(null)
   const [editingEventAmount, setEditingEventAmount] = useState<string>("")
 
-  const transportExpenses = budget.dailyExpenses.filter((e) => e.category === "transporte" || e.category === "vuelo")
-  const eventExpenses = budget.dailyExpenses.filter((e) => e.category === "museo")
-  const alojamientoExpenses = budget.dailyExpenses.filter((e) => e.category === "alojamiento")
-  const comidaExpenses = budget.dailyExpenses.filter((e) => e.category === "alimentacion")
-  const otrosExpenses = budget.dailyExpenses.filter((e) => e.category === "otros" || e.category === "otro")
+  // Deduplicar por ID para evitar claves duplicadas si el localStorage tiene datos viejos
+  const uniqueExpenses = budget.dailyExpenses.filter(
+    (e, idx, arr) => arr.findIndex((x) => x.id === e.id) === idx
+  )
+
+  const transportExpenses = uniqueExpenses.filter((e) => e.category === "transporte" || e.category === "vuelo")
+  const eventExpenses = uniqueExpenses.filter((e) => e.category === "museo")
+  const alojamientoExpenses = uniqueExpenses.filter((e) => e.category === "alojamiento")
+  const comidaExpenses = uniqueExpenses.filter((e) => e.category === "alimentacion")
+  const otrosExpenses = uniqueExpenses.filter((e) => e.category === "otros" || e.category === "otro")
 
   // Todos los totales en € por persona
   const totalEventos = eventExpenses.reduce((sum, e) => sum + perPerson(e), 0)
@@ -37,7 +42,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
   const totalAlojamiento = alojamientoExpenses.reduce((sum, e) => sum + perPerson(e), 0)
   const totalAlimentacion = comidaExpenses.reduce((sum, e) => sum + perPerson(e), 0)
   const totalOtros = otrosExpenses.reduce((sum, e) => sum + perPerson(e), 0)
-  const totalPerPerson = budget.dailyExpenses.reduce((sum, e) => sum + perPerson(e), 0)
+  const totalPerPerson = uniqueExpenses.reduce((sum, e) => sum + perPerson(e), 0)
 
   const handleSaveEventCost = (expenseId: number) => {
     const newAmountPerPerson = parseFloat(editingEventAmount)
