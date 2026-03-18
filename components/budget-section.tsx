@@ -262,12 +262,12 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalTransporte * 2))} por pareja</div>
           </div>
           <div className="space-y-2">
-            {transportExpenses.map((expense) => {
+            {transportExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
               const icon = expense.category === "vuelo" ? "✈️" : "🚂"
               const pp = perPerson(expense)
               return (
-                <div key={expense.id} className="bg-yellow-500/15 rounded-xl p-3 border border-yellow-400/20 flex items-start gap-2">
+                <div key={`transport-${expense.id}-${idx}`} className="bg-yellow-500/15 rounded-xl p-3 border border-yellow-400/20 flex items-start gap-2">
                   <span className="text-lg flex-shrink-0">{icon}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-sm">{expense.description}</div>
