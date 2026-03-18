@@ -142,13 +142,16 @@ export function getInitialData(): AppData {
     { id: 57.5, date: "2026-09-11", category: "museo" as const, description: "Barrio Gótico + Catedral de Barcelona",      amountPerPerson: 5,    totalAmount: 20,  notes: "€5/persona. Catedral gratuita, museo interior opcional ~€5" },
 
     // París (12-15 sep)
-    { id: 58,   date: "2026-09-12", category: "museo" as const, description: "Sainte-Chapelle + Crucero Sena con cena",    amountPerPerson: 96,   totalAmount: 384, notes: "Sainte-Chapelle €11 + Crucero cena €85 = €96/persona" },
-    { id: 59,   date: "2026-09-13", category: "museo" as const, description: "Museo del Louvre + Torre Eiffel",            amountPerPerson: 58,   totalAmount: 232, notes: "Louvre €22 + Torre Eiffel €36 = €58/persona" },
-    { id: 60,   date: "2026-09-13", category: "museo" as const, description: "Arco del Triunfo + Moulin Rouge",            amountPerPerson: 100,  totalAmount: 400, notes: "Arco €13 + Moulin Rouge €87 = €100/persona" },
-    { id: 601,  date: "2026-09-14", category: "museo" as const, description: "Versalles — Ticket Passport",                amountPerPerson: 21.5, totalAmount: 86,  notes: "€21.50/persona. Incluye Palacio, Trianon y Jardines" },
-    { id: 61,   date: "2026-09-15", category: "museo" as const, description: "Montmartre + Le Marais + Centre Pompidou",   amountPerPerson: 15,   totalAmount: 60,  notes: "€15/persona. Pompidou €15, resto gratuito" },
-    { id: 62,   date: "2026-09-15", category: "museo" as const, description: "Musée d'Orsay",                              amountPerPerson: 16,   totalAmount: 64,  notes: "€16/persona" },
-    { id: 63,   date: "2026-09-15", category: "museo" as const, description: "Museo Rodin + Palais Royal + Galeries Lafayette", amountPerPerson: 14, totalAmount: 56, notes: "€14/persona. Rodin €14, resto gratuito" },
+    { id: 58,  date: "2026-09-12", category: "museo" as const, description: "Sainte-Chapelle",                   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 580, date: "2026-09-12", category: "museo" as const, description: "Crucero Sena con cena",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 59,  date: "2026-09-13", category: "museo" as const, description: "Museo del Louvre",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 590, date: "2026-09-13", category: "museo" as const, description: "Torre Eiffel",                      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 60,  date: "2026-09-13", category: "museo" as const, description: "Arco del Triunfo",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 600, date: "2026-09-13", category: "museo" as const, description: "Moulin Rouge",                      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 601, date: "2026-09-14", category: "museo" as const, description: "Versalles — Ticket Passport",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Incluye Palacio, Trianon y Jardines" },
+    { id: 61,  date: "2026-09-15", category: "museo" as const, description: "Centre Pompidou",                   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 62,  date: "2026-09-15", category: "museo" as const, description: "Musee d'Orsay",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 63,  date: "2026-09-15", category: "museo" as const, description: "Museo Rodin",                       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Milán
     { id: 64,   date: "2026-09-16", category: "museo" as const, description: "Duomo de Milán (iglesia + terrazas)",        amountPerPerson: 26,   totalAmount: 104, notes: "€26/persona. Precio oficial 2025" },
