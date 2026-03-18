@@ -226,26 +226,6 @@ export function DailyItinerary({
                     </div>
                   )}
 
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">💰</span>
-                    {expandedEvent.ticketPrice > 0 ? (
-                      <p className="text-2xl text-blue-400 font-semibold">
-                        Entrada: €{expandedEvent.ticketPrice} por persona
-                      </p>
-                    ) : (
-                      <p className="text-2xl text-green-400 font-semibold">Gratis</p>
-                    )}
-                  </div>
-
-                  {expandedEvent.ticketUrl && (
-                    <button
-                      onClick={() => window.open(expandedEvent.ticketUrl, "_blank")}
-                      className="w-full bg-green-500 hover:bg-green-600 px-8 py-4 rounded-xl text-2xl font-semibold transition-colors"
-                    >
-                      🎫 Comprar Ticket
-                    </button>
-                  )}
-
                   <p className="text-center text-white/50 text-lg mt-6">Toca fuera para cerrar</p>
                 </div>
               </div>
@@ -307,21 +287,10 @@ export function DailyItinerary({
                       {event.description && (
                         <p className="text-xs text-white/60 mt-2 break-words line-clamp-2">{event.description}</p>
                       )}
-                      <div className="mt-2">
-                        {event.ticketPrice > 0 ? (
-                          <span className="inline-flex items-center gap-1 bg-blue-500/30 px-3 py-1 rounded-full text-sm border border-blue-400/50">
-                            💰 €{event.ticketPrice}
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 bg-green-500/30 px-3 py-1 rounded-full text-sm border border-green-400/50">
-                            ✓ Gratis
-                          </span>
-                        )}
-                      </div>
                     </div>
                   </div>
                   <div className="text-center text-white/40 text-xs mt-3 pt-2 border-t border-white/10">
-                    👆 Toca para ampliar
+                    Toca para ampliar
                   </div>
                   <div className="flex gap-2 mt-3 flex-wrap" onClick={(e) => e.stopPropagation()}>
                     {currentUser.role === "admin" && (
@@ -330,13 +299,13 @@ export function DailyItinerary({
                           onClick={() => handleEdit(event)}
                           className="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm transition-colors"
                         >
-                          ✏️ Editar
+                          Editar
                         </button>
                         <button
                           onClick={() => handleDelete(event.id)}
                           className="bg-red-500/30 hover:bg-red-500/50 px-3 py-2 rounded-lg text-sm transition-colors"
                         >
-                          🗑️ Eliminar
+                          Eliminar
                         </button>
                       </>
                     )}
@@ -344,16 +313,8 @@ export function DailyItinerary({
                       onClick={() => handleShowTransport(prevLocation, event.location, event.title, index)}
                       className="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm transition-colors"
                     >
-                      🗺️ Cómo llegar
+                      Como llegar
                     </button>
-                    {event.ticketUrl && (
-                      <button
-                        onClick={() => window.open(event.ticketUrl, "_blank")}
-                        className="bg-green-500/30 hover:bg-green-500/50 px-3 py-2 rounded-lg text-sm transition-colors"
-                      >
-                        🎫 Comprar Ticket
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>

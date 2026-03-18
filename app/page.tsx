@@ -107,7 +107,7 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v17-presupuesto-unico"
+          const DATA_VERSION = "v18-paris-individual"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
 
           // Siempre deduplica por ID — elimina entradas repetidas del localStorage corrupto
