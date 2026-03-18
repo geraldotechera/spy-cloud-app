@@ -117,11 +117,10 @@ export function getInitialData(): AppData {
     }),
 
     // Lockers — precio por persona
-    { id: 44, date: "2026-09-09", category: "otros" as const, description: "Locker Barcelona Sants",   amountPerPerson: 4,  totalAmount: 16, notes: "€4/persona. Guardar equipaje hasta check-in" },
-    { id: 45, date: "2026-09-12", category: "otros" as const, description: "Locker Gare de Lyon París", amountPerPerson: 5,  totalAmount: 20, notes: "€5/persona. Guardar equipaje hasta check-in" },
-    { id: 46, date: "2026-09-14", category: "otros" as const, description: "RER C ida/vuelta Versalles", amountPerPerson: 5,  totalAmount: 20, notes: "RER C zona 1-4: €4.60 ida aprox. €5/persona ida y vuelta" },
-    { id: 47, date: "2026-09-19", category: "otros" as const, description: "Locker Pisa",               amountPerPerson: 3,  totalAmount: 12, notes: "€3/persona. Guardar equipaje durante visita" },
-    { id: 48, date: "2026-09-23", category: "otros" as const, description: "Locker Napoli Centrale",    amountPerPerson: 4,  totalAmount: 16, notes: "€4/persona. Guardar equipaje durante visita" },
+    { id: 44, date: "2026-09-09", category: "otros" as const, description: "Locker Barcelona Sants",   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 45, date: "2026-09-12", category: "otros" as const, description: "Locker Gare de Lyon Paris", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 46, date: "2026-09-14", category: "otros" as const, description: "RER C ida/vuelta Versalles", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 48, date: "2026-09-23", category: "otros" as const, description: "Locker Napoli Centrale",    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // ============================================
     // CATEGORÍA 2: EVENTOS (Museos, Atracciones, Excursiones)
@@ -129,17 +128,20 @@ export function getInitialData(): AppData {
     // ============================================
 
     // Madrid
-    { id: 51,   date: "2026-09-07", category: "museo" as const, description: "Palacio Real Madrid",                        amountPerPerson: 14,   totalAmount: 56,  notes: "€14/persona. Precio oficial 2025" },
-    { id: 51.5, date: "2026-09-07", category: "museo" as const, description: "Museo Thyssen-Bornemisza",                   amountPerPerson: 13,   totalAmount: 52,  notes: "€13/persona. Paseo del Arte, camino al Retiro" },
-    { id: 52,   date: "2026-09-08", category: "museo" as const, description: "Museo del Prado + Museo Reina Sofía",        amountPerPerson: 27,   totalAmount: 108, notes: "Prado €15 + Reina Sofía €12 = €27/persona" },
+    { id: 51,   date: "2026-09-07", category: "museo" as const, description: "Palacio Real Madrid",         amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 515,  date: "2026-09-07", category: "museo" as const, description: "Museo Thyssen-Bornemisza",    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 52,   date: "2026-09-08", category: "museo" as const, description: "Museo del Prado",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 520,  date: "2026-09-08", category: "museo" as const, description: "Museo Reina Sofia",           amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Barcelona
-    { id: 53,   date: "2026-09-09", category: "museo" as const, description: "Sagrada Família (con audioguía)",            amountPerPerson: 26,   totalAmount: 104, notes: "€26/persona. Precio oficial 2025" },
-    { id: 54,   date: "2026-09-10", category: "museo" as const, description: "Park Güell",                                 amountPerPerson: 10,   totalAmount: 40,  notes: "€10/persona" },
-    { id: 55,   date: "2026-09-10", category: "museo" as const, description: "Casa Batlló",                                amountPerPerson: 35,   totalAmount: 140, notes: "€35/persona. Precio oficial 2025" },
-    { id: 56,   date: "2026-09-10", category: "museo" as const, description: "Museo Picasso",                              amountPerPerson: 12,   totalAmount: 48,  notes: "€12/persona" },
-    { id: 57,   date: "2026-09-10", category: "museo" as const, description: "Montjuïc (Castillo + Fundación Miró)",       amountPerPerson: 13,   totalAmount: 52,  notes: "€13/persona" },
-    { id: 57.5, date: "2026-09-11", category: "museo" as const, description: "Barrio Gótico + Catedral de Barcelona",      amountPerPerson: 5,    totalAmount: 20,  notes: "€5/persona. Catedral gratuita, museo interior opcional ~€5" },
+    { id: 53,   date: "2026-09-09", category: "museo" as const, description: "Sagrada Familia",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 54,   date: "2026-09-10", category: "museo" as const, description: "Park Guell",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 55,   date: "2026-09-10", category: "museo" as const, description: "Casa Batllo",                 amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 56,   date: "2026-09-10", category: "museo" as const, description: "Museo Picasso",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 57,   date: "2026-09-10", category: "museo" as const, description: "Castillo de Montjuic",        amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 570,  date: "2026-09-10", category: "museo" as const, description: "Fundacion Joan Miro",         amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 571,  date: "2026-09-11", category: "museo" as const, description: "Barrio Gotico",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 572,  date: "2026-09-11", category: "museo" as const, description: "Catedral de Barcelona",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // París (12-15 sep)
     { id: 58,  date: "2026-09-12", category: "museo" as const, description: "Sainte-Chapelle",                   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
@@ -153,58 +155,28 @@ export function getInitialData(): AppData {
     { id: 62,  date: "2026-09-15", category: "museo" as const, description: "Musee d'Orsay",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
     { id: 63,  date: "2026-09-15", category: "museo" as const, description: "Museo Rodin",                       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
-    // Milán
-    { id: 64,   date: "2026-09-16", category: "museo" as const, description: "Duomo de Milán (iglesia + terrazas)",        amountPerPerson: 26,   totalAmount: 104, notes: "€26/persona. Precio oficial 2025" },
+    // Milan
+    { id: 64,  date: "2026-09-16", category: "museo" as const, description: "Duomo de Milan (iglesia)",    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 640, date: "2026-09-16", category: "museo" as const, description: "Duomo de Milan (terrazas)",   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Venecia
-    { id: 65,   date: "2026-09-17", category: "museo" as const, description: "Palacio Ducal Venecia",                      amountPerPerson: 25,   totalAmount: 100, notes: "€25/persona" },
+    { id: 65,  date: "2026-09-17", category: "museo" as const, description: "Palacio Ducal Venecia",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Florencia
-    { id: 66,   date: "2026-09-18", category: "museo" as const, description: "Galleria dell'Accademia",                    amountPerPerson: 16,   totalAmount: 64,  notes: "€16/persona" },
-    { id: 67,   date: "2026-09-18", category: "museo" as const, description: "Galleria degli Uffizi",                      amountPerPerson: 29,   totalAmount: 116, notes: "€29/persona (25€ + 4€ reserva)" },
-
-    // Pisa
-    { id: 68,   date: "2026-09-19", category: "museo" as const, description: "Torre Inclinada de Pisa",                    amountPerPerson: 18,   totalAmount: 72,  notes: "€18/persona" },
+    { id: 66,  date: "2026-09-18", category: "museo" as const, description: "Galleria dell'Accademia",     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 67,  date: "2026-09-18", category: "museo" as const, description: "Galleria degli Uffizi",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Roma
-    {
-      id: 69,
-      date: "2026-09-20",
-      category: "museo" as const,
-      description: "Coliseo, Foro Romano y Palatino",
-      amountPerCouple: 18,
-      totalAmount: 36,
-      notes: "Ticket 24h oficial - ticketing.colosseo.it",
-    },
-    {
-      id: 70,
-      date: "2026-09-21",
-      category: "museo" as const,
-      description: "Museos Vaticanos + Capilla Sixtina",
-      amountPerCouple: 25,
-      totalAmount: 50,
-      notes: "20�� + 5€ reserva online",
-    },
-    {
-      id: 71,
-      date: "2026-09-22",
-      category: "museo" as const,
-      description: "Galería Borghese",
-      amountPerCouple: 15,
-      totalAmount: 30,
-    },
-    {
-      id: 72,
-      date: "2026-09-22",
-      category: "museo" as const,
-      description: "Termas de Caracalla",
-      amountPerCouple: 6,
-      totalAmount: 12,
-    },
+    { id: 69,  date: "2026-09-20", category: "museo" as const, description: "Coliseo",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "ticketing.colosseo.it" },
+    { id: 690, date: "2026-09-20", category: "museo" as const, description: "Foro Romano y Palatino",      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Incluido con ticket Coliseo" },
+    { id: 70,  date: "2026-09-21", category: "museo" as const, description: "Museos Vaticanos",            amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 700, date: "2026-09-21", category: "museo" as const, description: "Capilla Sixtina",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Incluida con ticket Museos Vaticanos" },
+    { id: 71,  date: "2026-09-22", category: "museo" as const, description: "Galeria Borghese",            amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 72,  date: "2026-09-22", category: "museo" as const, description: "Termas de Caracalla",         amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Capri
-    { id: 73,   date: "2026-09-24", category: "museo" as const, description: "Villa San Michele (Anacapri)",               amountPerPerson: 12,   totalAmount: 48,  notes: "€12/persona" },
-    { id: 74,   date: "2026-09-24", category: "museo" as const, description: "Jardines de Augusto (Capri)",                amountPerPerson: 3,    totalAmount: 12,  notes: "€3/persona" },
+    { id: 73,  date: "2026-09-24", category: "museo" as const, description: "Villa San Michele (Anacapri)",amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 74,  date: "2026-09-24", category: "museo" as const, description: "Jardines de Augusto (Capri)", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // ============================================
     // CATEGORÍA 3: TRANSPORTE (Vuelos, Trenes, Buses, Ferries)
