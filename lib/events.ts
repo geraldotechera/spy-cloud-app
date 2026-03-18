@@ -375,6 +375,7 @@ export function getInitialData(): AppData {
         icon: "✈️",
         ticketPrice: 2400,
         ticketUrl: "https://www.google.com/flights",
+        budgetId: 75,
         coordinates: { lat: -34.8499, lng: -56.0266 },
       },
     ],
@@ -780,6 +781,7 @@ export function getInitialData(): AppData {
         ticketUrl: "https://www.renfe.com",
         category: "transporte",
         icon: "🚆",
+        budgetId: 78,
         coordinates: { lat: 40.405, lng: -3.6925 },
       },
       {
@@ -1116,6 +1118,7 @@ export function getInitialData(): AppData {
         ticketUrl: "https://www.sncf.com",
         category: "transporte",
         icon: "🚆",
+        budgetId: 76,
         coordinates: { lat: 41.375, lng: 2.1415 },
       },
       {
@@ -1547,6 +1550,7 @@ export function getInitialData(): AppData {
         ticketUrl: "https://www.trenitalia.com",
         category: "transporte",
         icon: "🚆",
+        budgetId: 79,
         coordinates: { lat: 48.8448, lng: 2.3743 },
       },
       {
@@ -1771,6 +1775,7 @@ export function getInitialData(): AppData {
         ticketPrice: 45,
         ticketUrl: "https://www.trenitalia.com",
         category: "transporte",
+        budgetId: 83,
         icon: "🚆",
         coordinates: { lat: 45.4865, lng: 9.204 },
         imageUrl: "/milano-centrale-train-station.jpg",
@@ -1846,7 +1851,7 @@ export function getInitialData(): AppData {
         description: "El puente más famoso sobre el Gran Canal. Fotos desde arriba y desde el agua. Luego perderse por las callejuelas (calli), cruzar los pequeños puentes (ponti) y descubrir los patios interiores (corti). La verdadera Venecia está donde no llegan los mapas.",
         ticketPrice: 0,
         category: "monumento",
-        icon: "🌉",
+        icon: "����",
         coordinates: { lat: 45.438, lng: 12.3358 },
         imageUrl: "/rialto-bridge-grand-canal.jpg",
       },
@@ -1894,6 +1899,7 @@ export function getInitialData(): AppData {
         ticketUrl: "https://www.trenitalia.com",
         category: "transporte",
         icon: "🚆",
+        budgetId: 84,
         coordinates: { lat: 45.4408, lng: 12.3211 },
       },
       {
@@ -2350,6 +2356,7 @@ export function getInitialData(): AppData {
         ticketUrl: "https://www.trenitalia.com",
         category: "transporte",
         icon: "🚆",
+        budgetId: 87,
         coordinates: { lat: 41.9007, lng: 12.4964 },
       },
       {
@@ -2942,6 +2949,7 @@ export function getInitialData(): AppData {
         ticketUrl: "https://www.google.com/flights",
         category: "transporte",
         icon: "✈️",
+        budgetId: 92,
         coordinates: { lat: 40.884, lng: 14.2908 },
       },
       {
