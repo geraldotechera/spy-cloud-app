@@ -18,7 +18,6 @@ export function EventModal({ isOpen, onClose, onSave, event }: EventModalProps) 
     time: "",
     location: "",
     description: "",
-    ticketPrice: 0,
     ticketUrl: "",
     imageUrl: "",
   })
@@ -30,7 +29,6 @@ export function EventModal({ isOpen, onClose, onSave, event }: EventModalProps) 
         time: event.time,
         location: event.location,
         description: event.description || "",
-        ticketPrice: event.ticketPrice,
         ticketUrl: event.ticketUrl || "",
         imageUrl: event.imageUrl || "",
       })
@@ -40,7 +38,6 @@ export function EventModal({ isOpen, onClose, onSave, event }: EventModalProps) 
         time: "",
         location: "",
         description: "",
-        ticketPrice: 0,
         ticketUrl: "",
         imageUrl: "",
       })
@@ -51,6 +48,7 @@ export function EventModal({ isOpen, onClose, onSave, event }: EventModalProps) 
     e.preventDefault()
     onSave({
       id: event?.id || 0,
+      ticketPrice: event?.ticketPrice ?? 0,
       ...formData,
     })
   }
@@ -116,27 +114,15 @@ export function EventModal({ isOpen, onClose, onSave, event }: EventModalProps) 
           </div>
 
           <div>
-            <label className="block text-sm mb-1">Precio de entrada (€ por persona)</label>
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={formData.ticketPrice}
-              onChange={(e) => setFormData({ ...formData, ticketPrice: Number.parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-blue-400"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm mb-1">URL para comprar tickets (opcional)</label>
+            <label className="block text-sm mb-1">URL de la actividad / reserva (opcional)</label>
             <input
               type="url"
               value={formData.ticketUrl}
               onChange={(e) => setFormData({ ...formData, ticketUrl: e.target.value })}
               className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-blue-400"
-              placeholder="https://ejemplo.com/tickets"
+              placeholder="https://ejemplo.com"
             />
-            <p className="text-xs text-white/50 mt-1">Página web oficial para comprar entradas</p>
+            <p className="text-xs text-white/50 mt-1">Pagina oficial del lugar o actividad</p>
           </div>
 
           <div>

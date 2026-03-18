@@ -107,7 +107,7 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v16-always-dedup"
+          const DATA_VERSION = "v17-presupuesto-unico"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
 
           // Siempre deduplica por ID — elimina entradas repetidas del localStorage corrupto
@@ -400,26 +400,9 @@ export default function Home() {
               accommodations={appData.accommodations}
               currentUser={currentUser}
               onUpdateEvents={(newEvents) => {
-                // Sincronizar ticketPrice de la agenda con amountPerPerson del presupuesto
-                // Usa budgetId si existe, sino cae a id para eventos de tipo museo
-                const updatedBudgetExpenses = appData.budget.dailyExpenses.map((expense) => {
-                  const matchingEvent = newEvents.find(
-                    (e) => (e.budgetId !== undefined ? e.budgetId === expense.id : e.id === expense.id)
-                  )
-                  if (matchingEvent && matchingEvent.ticketPrice !== expense.amountPerPerson) {
-                    return {
-                      ...expense,
-                      amountPerPerson: matchingEvent.ticketPrice,
-                      amountPerCouple: matchingEvent.ticketPrice * 2,
-                      totalAmount: matchingEvent.ticketPrice * 4,
-                    }
-                  }
-                  return expense
-                })
                 setAppData({
                   ...appData,
                   events: { ...appData.events, [selectedDate]: newEvents },
-                  budget: { ...appData.budget, dailyExpenses: updatedBudgetExpenses },
                 })
               }}
             />
@@ -460,19 +443,7 @@ export default function Home() {
             currentUser={currentUser}
             onBack={() => setCurrentSection("main")}
             onUpdateBudget={(newBudget) => {
-              // Sincronizar amountPerPerson del presupuesto con ticketPrice en la agenda
-              const updatedEvents = { ...appData.events }
-              newBudget.dailyExpenses.forEach((expense) => {
-                Object.keys(updatedEvents).forEach((date) => {
-                  updatedEvents[date] = updatedEvents[date].map((event) => {
-                    if (event.id === expense.id && event.ticketPrice !== expense.amountPerPerson) {
-                      return { ...event, ticketPrice: expense.amountPerPerson ?? 0 }
-                    }
-                    return event
-                  })
-                })
-              })
-              setAppData({ ...appData, budget: newBudget, events: updatedEvents })
+              setAppData({ ...appData, budget: newBudget })
               showNotif("Presupuesto actualizado")
             }}
           />
