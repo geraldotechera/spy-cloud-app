@@ -25,11 +25,16 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
   const [editingEventId, setEditingEventId] = useState<number | null>(null)
   const [editingEventAmount, setEditingEventAmount] = useState<string>("")
 
-  const transportExpenses = budget.dailyExpenses.filter((e) => e.category === "transporte" || e.category === "vuelo")
-  const eventExpenses = budget.dailyExpenses.filter((e) => e.category === "museo")
-  const alojamientoExpenses = budget.dailyExpenses.filter((e) => e.category === "alojamiento")
-  const comidaExpenses = budget.dailyExpenses.filter((e) => e.category === "alimentacion")
-  const otrosExpenses = budget.dailyExpenses.filter((e) => e.category === "otros" || e.category === "otro")
+  // Deduplicar por ID para evitar claves duplicadas si el localStorage tiene datos viejos
+  const uniqueExpenses = budget.dailyExpenses.filter(
+    (e, idx, arr) => arr.findIndex((x) => x.id === e.id) === idx
+  )
+
+  const transportExpenses = uniqueExpenses.filter((e) => e.category === "transporte" || e.category === "vuelo")
+  const eventExpenses = uniqueExpenses.filter((e) => e.category === "museo")
+  const alojamientoExpenses = uniqueExpenses.filter((e) => e.category === "alojamiento")
+  const comidaExpenses = uniqueExpenses.filter((e) => e.category === "alimentacion")
+  const otrosExpenses = uniqueExpenses.filter((e) => e.category === "otros" || e.category === "otro")
 
   // Todos los totales en € por persona
   const totalEventos = eventExpenses.reduce((sum, e) => sum + perPerson(e), 0)
@@ -37,7 +42,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
   const totalAlojamiento = alojamientoExpenses.reduce((sum, e) => sum + perPerson(e), 0)
   const totalAlimentacion = comidaExpenses.reduce((sum, e) => sum + perPerson(e), 0)
   const totalOtros = otrosExpenses.reduce((sum, e) => sum + perPerson(e), 0)
-  const totalPerPerson = budget.dailyExpenses.reduce((sum, e) => sum + perPerson(e), 0)
+  const totalPerPerson = uniqueExpenses.reduce((sum, e) => sum + perPerson(e), 0)
 
   const handleSaveEventCost = (expenseId: number) => {
     const newAmountPerPerson = parseFloat(editingEventAmount)
@@ -197,12 +202,12 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             Toca ✏️ para corregir el precio si el sitio oficial muestra un valor diferente.
           </p>
           <div className="space-y-2">
-            {eventExpenses.map((expense) => {
+            {eventExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
               const pp = perPerson(expense)
               const isEditing = editingEventId === expense.id
               return (
-                <div key={expense.id} className="bg-pink-500/15 rounded-xl p-3 border border-pink-400/20">
+                <div key={`event-${expense.id}-${idx}`} className="bg-pink-500/15 rounded-xl p-3 border border-pink-400/20">
                   <div className="flex items-start gap-2">
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-sm">{expense.description}</div>
@@ -257,12 +262,12 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalTransporte * 2))} por pareja</div>
           </div>
           <div className="space-y-2">
-            {transportExpenses.map((expense) => {
+            {transportExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
               const icon = expense.category === "vuelo" ? "✈️" : "🚂"
               const pp = perPerson(expense)
               return (
-                <div key={expense.id} className="bg-yellow-500/15 rounded-xl p-3 border border-yellow-400/20 flex items-start gap-2">
+                <div key={`transport-${expense.id}-${idx}`} className="bg-yellow-500/15 rounded-xl p-3 border border-yellow-400/20 flex items-start gap-2">
                   <span className="text-lg flex-shrink-0">{icon}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-sm">{expense.description}</div>
@@ -342,11 +347,11 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <span className="font-bold text-white">€40 por dia por persona</span> (€80/día por pareja). Incluye desayuno, almuerzo y cena.
           </div>
           <div className="space-y-2">
-            {comidaExpenses.map((expense) => {
+            {comidaExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
               const pp = perPerson(expense)
               return (
-                <div key={expense.id} className="bg-orange-500/15 rounded-xl p-3 border border-orange-400/20 flex items-start gap-2">
+                <div key={`comida-${expense.id}-${idx}`} className="bg-orange-500/15 rounded-xl p-3 border border-orange-400/20 flex items-start gap-2">
                   <span className="text-lg flex-shrink-0">🍽️</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-sm">{expense.description}</div>

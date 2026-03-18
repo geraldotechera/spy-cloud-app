@@ -107,8 +107,20 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v6-per-person-fix"
+          const DATA_VERSION = "v11-no-pisa"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
+
+          // Helper: remove duplicate dailyExpenses by id
+          const dedupeExpenses = (data: AppData): AppData => {
+            const seen = new Set<number>()
+            const unique = data.budget.dailyExpenses.filter((e: { id: number }) => {
+              if (seen.has(e.id)) return false
+              seen.add(e.id)
+              return true
+            })
+            return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
+          }
+
           if (savedVersion !== DATA_VERSION) {
             // Nueva versión de datos: limpiar caché y cargar datos frescos
             localStorage.removeItem("europeTripData")
@@ -123,7 +135,8 @@ export default function Home() {
               try {
                 const parsed = JSON.parse(saved)
                 if (validateAppData(parsed)) {
-                  setAppData(parsed)
+                  const clean = dedupeExpenses(parsed)
+                  setAppData(clean)
                 } else {
                   const initialData = getInitialData()
                   setAppData(initialData)
