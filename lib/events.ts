@@ -209,7 +209,7 @@ export function getInitialData(): AppData {
     // ============================================
 
     // Vuelos
-    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo ↔ Madrid (ida y vuelta)", amountPerPerson: 1240, totalAmount: 4960, notes: "€1240/persona. Ida: 5 sep Montevideo→Madrid. Vuelta: 27 sep Madrid→Montevideo (vía São Paulo)" },
+    { id: 75, date: "2026-09-05", category: "vuelo" as const,      description: "Vuelo Montevideo ↔ Madrid (ida y vuelta)", amountPerPerson: 0,    totalAmount: 0,    notes: "Ya pagado. Ida: 5 sep MVD→MAD. Vuelta: 27 sep MAD→MVD." },
 
     // Trenes principales
     { id: 76, date: "2026-09-12", category: "transporte" as const, description: "Tren TGV Barcelona → París",               amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. TGV directo Sants → Gare de Lyon. 6h 30min" },
@@ -217,9 +217,8 @@ export function getInitialData(): AppData {
     { id: 79, date: "2026-09-16", category: "vuelo" as const,      description: "Vuelo París → Milán",                      amountPerPerson: 60,   totalAmount: 240,  notes: "€60/persona. CDG → Milano Malpensa" },
     { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },
     { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 42.5, totalAmount: 170,  notes: "€42.50/persona" },
-    { id: 85, date: "2026-09-19", category: "transporte" as const, description: "Tren Florencia → Pisa",                    amountPerPerson: 5,    totalAmount: 20,   notes: "€5/persona" },
-    { id: 86, date: "2026-09-19", category: "transporte" as const, description: "Tren Pisa → Roma",                         amountPerPerson: 25,   totalAmount: 100,  notes: "€25/persona" },
-    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (ida y vuelta)",       amountPerPerson: 25,   totalAmount: 100,  notes: "€25/persona ida y vuelta" },
+    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 15,   totalAmount: 60,   notes: "€15/persona. Solo ida, regreso desde Nápoles en vuelo el 27 sep" },
+    { id: 92, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Nápoles → Madrid",                   amountPerPerson: 0,    totalAmount: 0,    notes: "Precio a calcular. Salida 27 sep desde Nápoles (NAP) → Madrid (MAD)" },
 
     // Ferries y transporte marítimo
     { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 7.5,  totalAmount: 30,   notes: "€7.50/persona. Ferry panorámico" },

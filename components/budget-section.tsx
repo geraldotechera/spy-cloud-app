@@ -202,12 +202,12 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             Toca ✏️ para corregir el precio si el sitio oficial muestra un valor diferente.
           </p>
           <div className="space-y-2">
-            {eventExpenses.map((expense) => {
+            {eventExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
               const pp = perPerson(expense)
               const isEditing = editingEventId === expense.id
               return (
-                <div key={expense.id} className="bg-pink-500/15 rounded-xl p-3 border border-pink-400/20">
+                <div key={`event-${expense.id}-${idx}`} className="bg-pink-500/15 rounded-xl p-3 border border-pink-400/20">
                   <div className="flex items-start gap-2">
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-sm">{expense.description}</div>
@@ -347,11 +347,11 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <span className="font-bold text-white">€40 por dia por persona</span> (€80/día por pareja). Incluye desayuno, almuerzo y cena.
           </div>
           <div className="space-y-2">
-            {comidaExpenses.map((expense) => {
+            {comidaExpenses.map((expense, idx) => {
               const d = new Date(expense.date + "T12:00:00")
               const pp = perPerson(expense)
               return (
-                <div key={expense.id} className="bg-orange-500/15 rounded-xl p-3 border border-orange-400/20 flex items-start gap-2">
+                <div key={`comida-${expense.id}-${idx}`} className="bg-orange-500/15 rounded-xl p-3 border border-orange-400/20 flex items-start gap-2">
                   <span className="text-lg flex-shrink-0">🍽️</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-sm">{expense.description}</div>

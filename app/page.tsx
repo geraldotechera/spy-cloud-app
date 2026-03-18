@@ -107,7 +107,7 @@ export default function Home() {
       }
 
         try {
-          const DATA_VERSION = "v9-dedup"
+          const DATA_VERSION = "v11-no-pisa"
           const savedVersion = localStorage.getItem("europeTripDataVersion")
 
           // Helper: remove duplicate dailyExpenses by id
