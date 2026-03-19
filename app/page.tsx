@@ -100,6 +100,24 @@ export default function Home() {
     return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
   }, [])
 
+  // Fusiona datos guardados con los datos iniciales: agrega ítems nuevos que falten
+  // sin sobreescribir los valores editados por el usuario
+  const mergeWithInitial = useCallback((saved: AppData): AppData => {
+    const initial = getInitialData()
+    const savedIds = new Set(saved.budget.dailyExpenses.map((e: { id: number }) => e.id))
+    const missingExpenses = initial.budget.dailyExpenses.filter(e => !savedIds.has(e.id))
+    if (missingExpenses.length === 0) return saved
+    const merged = {
+      ...saved,
+      budget: {
+        ...saved.budget,
+        dailyExpenses: [...saved.budget.dailyExpenses, ...missingExpenses]
+          .sort((a, b) => a.date.localeCompare(b.date) || a.id - b.id),
+      },
+    }
+    return merged
+  }, [])
+
   // Carga inicial: Supabase primero, localStorage como fallback offline
   useEffect(() => {
     const loadData = async () => {
@@ -122,9 +140,9 @@ export default function Home() {
           .single()
 
         if (!error && row?.data && validateAppData(row.data)) {
-          const clean = dedupeExpenses(row.data as AppData)
+          const merged = mergeWithInitial(row.data as AppData)
+          const clean = dedupeExpenses(merged)
           setAppData(clean)
-          // Actualizar localStorage como cache offline
           localStorage.setItem("europeTripData", JSON.stringify(clean))
           return
         }
@@ -135,7 +153,8 @@ export default function Home() {
         const saved = localStorage.getItem("europeTripData")
         if (saved) {
           const parsed = JSON.parse(saved)
-          const clean = dedupeExpenses(validateAppData(parsed) ? parsed : getInitialData())
+          const base = validateAppData(parsed) ? parsed : getInitialData()
+          const clean = dedupeExpenses(mergeWithInitial(base))
           setAppData(clean)
           return
         }
