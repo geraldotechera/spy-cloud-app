@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
+import { createClient } from "@/lib/supabase/client"
 import { Calendar } from "@/components/calendar"
 import { DailyItinerary } from "@/components/daily-itinerary"
 import { MainMenu } from "@/components/main-menu"
@@ -86,97 +87,119 @@ export default function Home() {
     }
   }, [showSplash, mounted])
 
+  const TRIP_ID = "europe-2026"
+  const supabase = createClient()
+
+  const dedupeExpenses = useCallback((data: AppData): AppData => {
+    const seen = new Set<number>()
+    const unique = data.budget.dailyExpenses.filter((e: { id: number }) => {
+      if (seen.has(e.id)) return false
+      seen.add(e.id)
+      return true
+    })
+    return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
+  }, [])
+
+  // Fusiona datos guardados con los datos iniciales: agrega ítems nuevos que falten
+  // sin sobreescribir los valores editados por el usuario
+  const mergeWithInitial = useCallback((saved: AppData): AppData => {
+    const initial = getInitialData()
+    const savedIds = new Set(saved.budget.dailyExpenses.map((e: { id: number }) => e.id))
+    const missingExpenses = initial.budget.dailyExpenses.filter(e => !savedIds.has(e.id))
+    if (missingExpenses.length === 0) return saved
+    const merged = {
+      ...saved,
+      budget: {
+        ...saved.budget,
+        dailyExpenses: [...saved.budget.dailyExpenses, ...missingExpenses]
+          .sort((a, b) => a.date.localeCompare(b.date) || a.id - b.id),
+      },
+    }
+    return merged
+  }, [])
+
+  // Carga inicial: Supabase primero, localStorage como fallback offline
   useEffect(() => {
-    const loadData = () => {
+    const loadData = async () => {
       try {
         const savedUser = localStorage.getItem("currentUser")
         if (savedUser) {
           try {
             const parsedUser = JSON.parse(savedUser)
-            if (parsedUser && typeof parsedUser === "object" && parsedUser.name) {
-              setCurrentUser(parsedUser)
-            } else {
-              localStorage.removeItem("currentUser")
-            }
-          } catch {
-            localStorage.removeItem("currentUser")
-          }
+            if (parsedUser?.name) setCurrentUser(parsedUser)
+          } catch { /* ignore */ }
         }
-      } catch {
-        // localStorage not available
-      }
+      } catch { /* ignore */ }
 
-        try {
-          const DATA_VERSION = "v19-all-individual"
-          const savedVersion = localStorage.getItem("europeTripDataVersion")
+      try {
+        // Intentar cargar desde Supabase
+        const { data: row, error } = await supabase
+          .from("trip_data")
+          .select("data")
+          .eq("id", TRIP_ID)
+          .single()
 
-          // Siempre deduplica por ID — elimina entradas repetidas del localStorage corrupto
-          const dedupeExpenses = (data: AppData): AppData => {
-            const seen = new Set<number>()
-            const unique = data.budget.dailyExpenses.filter((e: { id: number }) => {
-              if (seen.has(e.id)) return false
-              seen.add(e.id)
-              return true
-            })
-            return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
-          }
-
-          // Siempre forzar reset si la versión no coincide
-          if (savedVersion !== DATA_VERSION) {
-            localStorage.removeItem("europeTripData")
-            localStorage.setItem("europeTripDataVersion", DATA_VERSION)
-            const initialData = dedupeExpenses(getInitialData())
-            setAppData(initialData)
-            localStorage.setItem("europeTripData", JSON.stringify(initialData))
-          } else {
-            const saved = localStorage.getItem("europeTripData")
-            if (saved) {
-              try {
-                const parsed = JSON.parse(saved)
-                // Deduplicar siempre, independientemente de validateAppData
-                const clean = dedupeExpenses(
-                  validateAppData(parsed) ? parsed : getInitialData()
-                )
-                setAppData(clean)
-                // Sobrescribir localStorage con los datos limpios
-                localStorage.setItem("europeTripData", JSON.stringify(clean))
-              } catch {
-                const initialData = dedupeExpenses(getInitialData())
-                setAppData(initialData)
-                localStorage.setItem("europeTripData", JSON.stringify(initialData))
-              }
-            } else {
-              const initialData = dedupeExpenses(getInitialData())
-              setAppData(initialData)
-              localStorage.setItem("europeTripData", JSON.stringify(initialData))
-            }
-          }
-        } catch (error) {
-          const initialData = getInitialData()
-          setAppData(initialData)
+        if (!error && row?.data && validateAppData(row.data)) {
+          const merged = mergeWithInitial(row.data as AppData)
+          const clean = dedupeExpenses(merged)
+          setAppData(clean)
+          localStorage.setItem("europeTripData", JSON.stringify(clean))
+          return
         }
+      } catch { /* red offline, caer a localStorage */ }
+
+      // Fallback: localStorage
+      try {
+        const saved = localStorage.getItem("europeTripData")
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          const base = validateAppData(parsed) ? parsed : getInitialData()
+          const clean = dedupeExpenses(mergeWithInitial(base))
+          setAppData(clean)
+          return
+        }
+      } catch { /* ignore */ }
+
+      // Ultimo recurso: datos iniciales
+      setAppData(dedupeExpenses(getInitialData()))
     }
 
     loadData()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [syncStatus, setSyncStatus] = useState<"idle" | "saving" | "saved" | "error">("idle")
+  const [lastSaved, setLastSaved] = useState<Date | null>(null)
+
+  // Guardado: Supabase + localStorage en paralelo, con debounce 1.5s
   useEffect(() => {
     if (!appData) return
 
+    setSyncStatus("saving")
+    const cleanData = dedupeExpenses(appData)
+
+    // Guardar en localStorage (offline cache)
     try {
-      // Deduplicar antes de guardar para que nunca se persistan IDs duplicados
-      const seen = new Set<number>()
-      const cleanExpenses = appData.budget.dailyExpenses.filter((e) => {
-        if (seen.has(e.id)) return false
-        seen.add(e.id)
-        return true
-      })
-      const cleanData = { ...appData, budget: { ...appData.budget, dailyExpenses: cleanExpenses } }
       localStorage.setItem("europeTripData", JSON.stringify(cleanData))
-    } catch {
-      // quota exceeded or unavailable
-    }
-  }, [appData])
+    } catch { /* quota exceeded */ }
+
+    // Debounce: guardar en Supabase 1.5s después del último cambio
+    const timer = setTimeout(() => {
+      supabase
+        .from("trip_data")
+        .upsert({ id: TRIP_ID, data: cleanData, updated_at: new Date().toISOString() })
+        .then(({ error }) => {
+          if (error) {
+            setSyncStatus("error")
+          } else {
+            setSyncStatus("saved")
+            setLastSaved(new Date())
+            setTimeout(() => setSyncStatus("idle"), 3000)
+          }
+        })
+    }, 1500)
+
+    return () => clearTimeout(timer)
+  }, [appData]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme")
@@ -304,6 +327,28 @@ export default function Home() {
           <span className="font-semibold">{notificationMessage}</span>
         </div>
       )}
+
+      {/* Indicador de sincronizacion Supabase */}
+      <div className="fixed bottom-4 right-4 z-40">
+        {syncStatus === "saving" && (
+          <div className="bg-black/60 backdrop-blur-sm text-white/70 text-xs px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+            Guardando...
+          </div>
+        )}
+        {syncStatus === "saved" && (
+          <div className="bg-black/60 backdrop-blur-sm text-white/70 text-xs px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-green-400" />
+            Guardado{lastSaved ? ` ${lastSaved.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}` : ""}
+          </div>
+        )}
+        {syncStatus === "error" && (
+          <div className="bg-black/60 backdrop-blur-sm text-red-400 text-xs px-3 py-1.5 rounded-full border border-red-400/30 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-red-400" />
+            Sin conexion — guardado local
+          </div>
+        )}
+      </div>
 
       <div className="container mx-auto px-4 py-4 max-w-4xl">
         <header data-no-print className="bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-4 shadow-xl border border-white/20">
@@ -440,11 +485,16 @@ export default function Home() {
         {currentSection === "presupuesto" && (
           <BudgetSection
             budget={appData.budget}
+            budgetNotes={appData.budgetNotes ?? ""}
             currentUser={currentUser}
             onBack={() => setCurrentSection("main")}
             onUpdateBudget={(newBudget) => {
               setAppData({ ...appData, budget: newBudget })
               showNotif("Presupuesto actualizado")
+            }}
+            onUpdateNotes={(newNotes) => {
+              setAppData({ ...appData, budgetNotes: newNotes })
+              showNotif("Notas guardadas")
             }}
           />
         )}

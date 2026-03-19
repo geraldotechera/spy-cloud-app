@@ -195,13 +195,15 @@ export function getInitialData(): AppData {
     // 18 sep
     { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, amountPerCouple: 85,  totalAmount: 170, paid: false, notes: "€42.50/persona" },
     // 19 sep
-    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 42.5, amountPerCouple: 85,  totalAmount: 170, paid: false, notes: "€42.50/persona" },
+    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    // 20 sep
+    { id: 85, date: "2026-09-20", category: "transporte" as const, description: "Tren Florencia → Roma",                    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
     // 23 sep
-    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 15,   amountPerCouple: 30,  totalAmount: 60,  paid: false, notes: "€15/persona. Solo ida, regreso desde Nápoles el 27 sep" },
+    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
     // 24 sep — Ferries y transporte marítimo Costa Amalfitana
-    { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 7.5,  amountPerCouple: 15,  totalAmount: 30,  paid: false, notes: "€7.50/persona. Ferry panorámico" },
-    { id: 89, date: "2026-09-24", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 7.5,  amountPerCouple: 15,  totalAmount: 30,  paid: false, notes: "€7.50/persona. Ferry panorámico" },
-    { id: 90, date: "2026-09-24", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 5,    amountPerCouple: 10,  totalAmount: 20,  paid: false, notes: "€5/persona. Bus SITA" },
+    { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 89, date: "2026-09-24", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 90, date: "2026-09-24", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
     // 25 sep
     { id: 91, date: "2026-09-25", category: "transporte" as const, description: "Hidroala Sorrento → Capri (ida y vuelta)", amountPerPerson: 25,   amountPerCouple: 50,  totalAmount: 100, paid: false, notes: "€25/persona. Ferry rápido" },
     // 27 sep — Sorrento a Nápoles + vuelo Nápoles → Madrid

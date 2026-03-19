@@ -34,14 +34,19 @@ export interface DailyExpense {
   date: string
   category: "vuelo" | "alojamiento" | "alimentacion" | "transporte" | "museo" | "otro" | "otros"
   description: string
-  amountPerPerson?: number  // Unidad base: costo por persona (si no existe, se calcula como amountPerCouple / 2)
-  amountPerCouple: number   // amountPerPerson x 2
-  totalAmount: number       // amountPerPerson x 4 (2 parejas)
+  amountPerPerson?: number
+  amountPerCouple: number
+  totalAmount: number
   notes?: string
-  paid?: boolean            // true = ya pagado, se muestra tachado/gris
+  paid?: boolean
   paidBy?: string
   addedBy?: string
   timestamp?: number
+  // Campos de locomocion
+  company?: string       // Aerolínea, empresa de tren, etc.
+  departureTime?: string // Horario de salida (ej: "11:30")
+  arrivalTime?: string   // Horario de llegada (ej: "14:45")
+  ticketUrl?: string     // Link para reservar / comprar
 }
 
 export interface Budget {
@@ -96,5 +101,6 @@ export interface AppData {
   accommodations: Accommodation[]
   budget: Budget
   photos?: Photo[] // Fotos compartidas
+  budgetNotes?: string   // Notas libres del presupuesto
   lastSync?: number // Última sincronización
 }

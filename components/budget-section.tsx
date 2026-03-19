@@ -9,25 +9,35 @@ interface BudgetSectionProps {
     totalPerCouple: number
     totalGeneral: number
   }
+  budgetNotes?: string
   currentUser: User | null
   onBack: () => void
   onUpdateBudget: (budget: { dailyExpenses: DailyExpense[]; totalPerCouple: number; totalGeneral: number }) => void
+  onUpdateNotes?: (notes: string) => void
 }
 
 const perPerson = (e: DailyExpense) => e.amountPerPerson ?? e.amountPerCouple / 2
-
 const fmt = (n: number) => (n % 1 === 0 ? `€${n}` : `€${n.toFixed(2)}`)
-
-// Saldo pendiente = items no pagados
 const pendingTotal = (expenses: DailyExpense[]) =>
   expenses.filter((e) => !e.paid).reduce((sum, e) => sum + perPerson(e), 0)
 
-export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: BudgetSectionProps) {
-  const [activeTab, setActiveTab] = useState<"resumen" | "paseos" | "locomocion" | "alojamiento" | "comida">("resumen")
+// Modal de edicion para locomocion
+interface TransportEditState {
+  id: number
+  amount: string
+  company: string
+  departureTime: string
+  arrivalTime: string
+  ticketUrl: string
+}
+
+export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, onUpdateBudget, onUpdateNotes }: BudgetSectionProps) {
+  const [activeTab, setActiveTab] = useState<"resumen" | "paseos" | "locomocion" | "alojamiento" | "comida" | "notas">("resumen")
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editingAmount, setEditingAmount] = useState<string>("")
+  const [transportEdit, setTransportEdit] = useState<TransportEditState | null>(null)
+  const [notes, setNotes] = useState(budgetNotes)
 
-  // Deduplicar siempre por ID
   const uniqueExpenses = budget.dailyExpenses.filter(
     (e, i, arr) => arr.findIndex((x) => x.id === e.id) === i
   )
@@ -50,32 +60,51 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
 
   const otrosExpenses = uniqueExpenses.filter((e) => e.category === "otros" || e.category === "otro")
 
-  const totalEventos     = eventExpenses.reduce((s, e) => s + perPerson(e), 0)
-  const totalTransporte  = transportExpenses.reduce((s, e) => s + perPerson(e), 0)
-  const totalAlojamiento = alojamientoExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalEventos      = eventExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalTransporte   = transportExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalAlojamiento  = alojamientoExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalAlimentacion = comidaExpenses.reduce((s, e) => s + perPerson(e), 0)
-  const totalOtros       = otrosExpenses.reduce((s, e) => s + perPerson(e), 0)
-  const totalPerPerson   = uniqueExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalOtros        = otrosExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalPerPerson    = uniqueExpenses.reduce((s, e) => s + perPerson(e), 0)
 
-  // ── helpers ──────────────────────────────────────────────────────────────
+  // ── helpers ───────────────────────────────────────────────────────────────
+
+  const pushUpdate = (updated: DailyExpense[]) => {
+    const newTotal = updated.reduce((s, e) => s + perPerson(e), 0)
+    onUpdateBudget({ dailyExpenses: updated, totalPerCouple: newTotal * 2, totalGeneral: newTotal * 4 })
+  }
 
   const saveAmount = (id: number) => {
     const val = parseFloat(editingAmount)
     if (isNaN(val) || val < 0) return
-    const updated = uniqueExpenses.map((e) =>
-      e.id === id
-        ? { ...e, amountPerPerson: val, amountPerCouple: val * 2, totalAmount: val * 4 }
-        : e
-    )
-    const newTotal = updated.reduce((s, e) => s + perPerson(e), 0)
-    onUpdateBudget({ dailyExpenses: updated, totalPerCouple: newTotal * 2, totalGeneral: newTotal * 4 })
+    pushUpdate(uniqueExpenses.map((e) =>
+      e.id === id ? { ...e, amountPerPerson: val, amountPerCouple: val * 2, totalAmount: val * 4 } : e
+    ))
     setEditingId(null)
   }
 
+  const saveTransport = () => {
+    if (!transportEdit) return
+    const val = parseFloat(transportEdit.amount)
+    pushUpdate(uniqueExpenses.map((e) =>
+      e.id === transportEdit.id
+        ? {
+            ...e,
+            amountPerPerson: isNaN(val) ? e.amountPerPerson : val,
+            amountPerCouple: isNaN(val) ? e.amountPerCouple : val * 2,
+            totalAmount: isNaN(val) ? e.totalAmount : val * 4,
+            company: transportEdit.company,
+            departureTime: transportEdit.departureTime,
+            arrivalTime: transportEdit.arrivalTime,
+            ticketUrl: transportEdit.ticketUrl,
+          }
+        : e
+    ))
+    setTransportEdit(null)
+  }
+
   const togglePaid = (id: number) => {
-    const updated = uniqueExpenses.map((e) => (e.id === id ? { ...e, paid: !e.paid } : e))
-    const newTotal = updated.reduce((s, e) => s + perPerson(e), 0)
-    onUpdateBudget({ dailyExpenses: updated, totalPerCouple: newTotal * 2, totalGeneral: newTotal * 4 })
+    pushUpdate(uniqueExpenses.map((e) => (e.id === id ? { ...e, paid: !e.paid } : e)))
   }
 
   const startEdit = (e: DailyExpense) => {
@@ -83,29 +112,30 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     setEditingAmount(String(perPerson(e)))
   }
 
-  // ── item card ─────────────────────────────────────────────────────────────
+  const startTransportEdit = (e: DailyExpense) => {
+    setTransportEdit({
+      id: e.id,
+      amount: String(e.amountPerPerson ?? 0),
+      company: e.company ?? "",
+      departureTime: e.departureTime ?? "",
+      arrivalTime: e.arrivalTime ?? "",
+      ticketUrl: e.ticketUrl ?? "",
+    })
+  }
+
+  // ── item card (paseos / comida) ───────────────────────────────────────────
 
   const ItemCard = ({
-    expense,
-    idx,
-    prefix,
-    bg,
-    border,
-    icon,
+    expense, idx, prefix, bg, border, icon,
   }: {
-    expense: DailyExpense
-    idx: number
-    prefix: string
-    bg: string
-    border: string
-    icon: string
+    expense: DailyExpense; idx: number; prefix: string; bg: string; border: string; icon: string
   }) => {
-    const isPaid   = expense.paid === true
-    const pp       = perPerson(expense)
-    const isEdit   = editingId === expense.id
-    const d        = new Date(expense.date + "T12:00:00")
-    const dateStr  = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
-    const noPrice  = pp === 0 && !isPaid
+    const isPaid  = expense.paid === true
+    const pp      = perPerson(expense)
+    const isEdit  = editingId === expense.id
+    const d       = new Date(expense.date + "T12:00:00")
+    const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
+    const noPrice = pp === 0 && !isPaid
 
     return (
       <div
@@ -115,7 +145,6 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
         }`}
       >
         <span className="text-base flex-shrink-0 mt-0.5">{icon}</span>
-
         <div className="flex-1 min-w-0">
           <div className={`font-semibold text-sm leading-tight ${isPaid ? "line-through text-white/40" : ""}`}>
             {expense.description}
@@ -125,47 +154,26 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             <div className="text-xs text-white/40 mt-0.5 leading-snug">{expense.notes}</div>
           )}
           {expense.ticketUrl && !isPaid && (
-            <a
-              href={expense.ticketUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-blue-400 underline mt-1 block"
-            >
+            <a href={expense.ticketUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 underline mt-1 block">
               Reservar / comprar
             </a>
           )}
           {noPrice && <div className="text-xs text-orange-300 font-semibold mt-1">Precio pendiente</div>}
         </div>
-
         <div className="flex flex-col items-end gap-1 flex-shrink-0">
           {isPaid ? (
-            <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">
-              Pagado
-            </span>
+            <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">Pagado</span>
           ) : isEdit ? (
             <div className="flex items-center gap-1">
               <span className="text-xs text-white/50">€</span>
               <input
-                type="number"
-                min="0"
-                step="0.5"
-                value={editingAmount}
+                type="number" min="0" step="0.5" value={editingAmount}
                 onChange={(e) => setEditingAmount(e.target.value)}
                 className="w-16 bg-white/20 rounded px-1.5 py-1 text-sm text-white text-right focus:outline-none"
                 autoFocus
               />
-              <button
-                onClick={() => saveAmount(expense.id)}
-                className="bg-green-600 hover:bg-green-700 px-2 py-1 rounded text-xs font-bold"
-              >
-                OK
-              </button>
-              <button
-                onClick={() => setEditingId(null)}
-                className="bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-xs"
-              >
-                X
-              </button>
+              <button onClick={() => saveAmount(expense.id)} className="bg-green-600 hover:bg-green-700 px-2 py-1 rounded text-xs font-bold">OK</button>
+              <button onClick={() => setEditingId(null)} className="bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-xs">X</button>
             </div>
           ) : (
             <div className="flex items-center gap-1">
@@ -174,21 +182,13 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
                 <div className="text-xs text-white/40">/ persona</div>
                 {pp > 0 && <div className="text-xs text-white/30">{fmt(pp * 2)} / pareja</div>}
               </div>
-              <button
-                onClick={() => startEdit(expense)}
-                className="bg-white/15 hover:bg-white/25 px-2 py-1 rounded text-xs transition-colors"
-                title="Editar precio"
-              >
-                ✏️
-              </button>
+              <button onClick={() => startEdit(expense)} className="bg-white/15 hover:bg-white/25 px-2 py-1 rounded text-xs transition-colors" title="Editar precio">✏️</button>
             </div>
           )}
           <button
             onClick={() => togglePaid(expense.id)}
             className={`text-xs px-2 py-0.5 rounded-full border transition-colors ${
-              isPaid
-                ? "border-white/20 text-white/40 hover:text-white/60"
-                : "border-green-400/50 text-green-300 hover:bg-green-500/20"
+              isPaid ? "border-white/20 text-white/40 hover:text-white/60" : "border-green-400/50 text-green-300 hover:bg-green-500/20"
             }`}
           >
             {isPaid ? "Deshacer" : "Marcar pagado"}
@@ -198,10 +198,100 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     )
   }
 
+  // ── transport card ────────────────────────────────────────────────────────
+
+  const TransportCard = ({ expense, idx }: { expense: DailyExpense; idx: number }) => {
+    const isPaid  = expense.paid === true
+    // Solo usar amountPerPerson si fue explicitamente guardado por el usuario (no calcular del viejo amountPerCouple)
+    const pp      = expense.amountPerPerson ?? 0
+    const noPrice = pp === 0 && !isPaid
+    const d       = new Date(expense.date + "T12:00:00")
+    const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
+    const icon    = expense.category === "vuelo" ? "✈️" : "🚆"
+
+    return (
+      <div
+        key={`transport-${expense.id}-${idx}`}
+        className={`rounded-xl p-3 border transition-opacity ${
+          isPaid ? "opacity-50 bg-white/5 border-white/10" : noPrice ? "bg-yellow-500/10 border-yellow-400/20 border-dashed" : "bg-yellow-500/15 border-yellow-400/20"
+        }`}
+      >
+        {/* Fila principal */}
+        <div className="flex items-start gap-2">
+          <span className="text-base flex-shrink-0 mt-0.5">{icon}</span>
+          <div className="flex-1 min-w-0">
+            <div className={`font-semibold text-sm leading-tight ${isPaid ? "line-through text-white/40" : ""}`}>
+              {expense.description}
+            </div>
+            <div className="text-xs text-white/50 mt-0.5">{dateStr}</div>
+
+            {/* Detalles de compañia y horarios */}
+            {(expense.company || expense.departureTime || expense.arrivalTime) && !isPaid && (
+              <div className="mt-1.5 space-y-0.5">
+                {expense.company && (
+                  <div className="text-xs text-yellow-200/80 font-medium">{expense.company}</div>
+                )}
+                {(expense.departureTime || expense.arrivalTime) && (
+                  <div className="text-xs text-white/50 flex items-center gap-1.5">
+                    {expense.departureTime && <span>Salida: <span className="text-white/70 font-medium">{expense.departureTime}</span></span>}
+                    {expense.departureTime && expense.arrivalTime && <span className="text-white/30">·</span>}
+                    {expense.arrivalTime && <span>Llegada: <span className="text-white/70 font-medium">{expense.arrivalTime}</span></span>}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {expense.notes && !isPaid && (
+              <div className="text-xs text-white/40 mt-0.5 leading-snug">{expense.notes}</div>
+            )}
+            {expense.ticketUrl && !isPaid && (
+              <a href={expense.ticketUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 underline mt-1 block">
+                Reservar / comprar
+              </a>
+            )}
+            {noPrice && !expense.company && (
+              <div className="text-xs text-orange-300 font-semibold mt-1">Precio pendiente</div>
+            )}
+          </div>
+
+          {/* Precio + botones */}
+          <div className="flex flex-col items-end gap-1 flex-shrink-0">
+            {isPaid ? (
+              <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">Pagado</span>
+            ) : (
+              <div className="flex items-center gap-1">
+                <div className="text-right">
+                  <div className="font-bold text-white">{pp > 0 ? fmt(pp) : "—"}</div>
+                  <div className="text-xs text-white/40">/ persona</div>
+                  {pp > 0 && <div className="text-xs text-white/30">{fmt(pp * 2)} / pareja</div>}
+                </div>
+                <button
+                  onClick={() => startTransportEdit(expense)}
+                  className="bg-white/15 hover:bg-white/25 px-2 py-1 rounded text-xs transition-colors"
+                  title="Editar"
+                >
+                  ✏️
+                </button>
+              </div>
+            )}
+            <button
+              onClick={() => togglePaid(expense.id)}
+              className={`text-xs px-2 py-0.5 rounded-full border transition-colors ${
+                isPaid ? "border-white/20 text-white/40 hover:text-white/60" : "border-green-400/50 text-green-300 hover:bg-green-500/20"
+              }`}
+            >
+              {isPaid ? "Deshacer" : "Marcar pagado"}
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   // ── saldo footer ──────────────────────────────────────────────────────────
 
   const SaldoFooter = ({ expenses, color }: { expenses: DailyExpense[]; color: string }) => {
-    const pagado   = expenses.filter((e) => e.paid).reduce((s, e) => s + perPerson(e), 0)
+    const pagado    = expenses.filter((e) => e.paid).reduce((s, e) => s + perPerson(e), 0)
     const pendiente = pendingTotal(expenses)
     return (
       <div className={`rounded-xl p-3 border ${color} text-sm space-y-1`}>
@@ -217,7 +307,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
     )
   }
 
-  // ── resumen agrupado alojamiento ──────────────────────────────────────────
+  // ── aloj agrupado ─────────────────────────────────────────────────────────
 
   const alojByCity: Record<string, { nights: number; total: number; address: string; paid: boolean }> = {}
   for (const e of alojamientoExpenses) {
@@ -250,6 +340,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             { id: "locomocion",  label: "Locomocion", color: "bg-yellow-500" },
             { id: "alojamiento", label: "Alojamiento",color: "bg-green-500"  },
             { id: "comida",      label: "Comida",     color: "bg-orange-500" },
+            { id: "notas",       label: "Notas",      color: "bg-purple-500" },
           ] as const
         ).map((tab) => (
           <button
@@ -257,7 +348,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             onClick={() => setActiveTab(tab.id)}
             className={`px-2 py-2 rounded-lg text-sm font-medium transition-colors ${
               activeTab === tab.id ? tab.color : "bg-white/10 hover:bg-white/20"
-            } ${tab.id === "comida" ? "col-span-2" : ""}`}
+            }`}
           >
             {tab.label}
           </button>
@@ -270,9 +361,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 text-center">
             <h3 className="text-sm mb-1 text-white/70">Total por Persona</h3>
             <div className="text-4xl font-bold">{fmt(Math.round(totalPerPerson))}</div>
-            <div className="text-xs text-white/50 mt-1">
-              {fmt(Math.round(totalPerPerson * 2))} por pareja
-            </div>
+            <div className="text-xs text-white/50 mt-1">{fmt(Math.round(totalPerPerson * 2))} por pareja</div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -321,9 +410,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
             })}
             <div className="flex justify-between border-t border-white/20 pt-1.5 mt-1">
               <span className="font-semibold text-white/90">TOTAL A PAGAR POR PAREJA</span>
-              <span className="font-bold text-yellow-300 text-base">
-                {fmt(Math.round(pendingTotal(uniqueExpenses) * 2))}
-              </span>
+              <span className="font-bold text-yellow-300 text-base">{fmt(Math.round(pendingTotal(uniqueExpenses) * 2))}</span>
             </div>
           </div>
         </div>
@@ -339,15 +426,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
           </div>
           <div className="space-y-2">
             {eventExpenses.map((expense, idx) => (
-              <ItemCard
-                key={`event-${expense.id}-${idx}`}
-                expense={expense}
-                idx={idx}
-                prefix="event"
-                bg="bg-pink-500/15"
-                border="border-pink-400/20"
-                icon="🎟️"
-              />
+              <ItemCard key={`event-${expense.id}-${idx}`} expense={expense} idx={idx} prefix="event" bg="bg-pink-500/15" border="border-pink-400/20" icon="🎟️" />
             ))}
           </div>
           <SaldoFooter expenses={eventExpenses} color="bg-pink-500/10 border-pink-400/20" />
@@ -364,15 +443,7 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
           </div>
           <div className="space-y-2">
             {transportExpenses.map((expense, idx) => (
-              <ItemCard
-                key={`transport-${expense.id}-${idx}`}
-                expense={expense}
-                idx={idx}
-                prefix="transport"
-                bg="bg-yellow-500/15"
-                border="border-yellow-400/20"
-                icon={expense.category === "vuelo" ? "✈️" : "🚆"}
-              />
+              <TransportCard key={`transport-${expense.id}-${idx}`} expense={expense} idx={idx} />
             ))}
           </div>
           <SaldoFooter expenses={transportExpenses} color="bg-yellow-500/10 border-yellow-400/20" />
@@ -385,12 +456,8 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
           <div className="bg-green-500/20 rounded-xl p-4 text-center border border-green-400/30">
             <h3 className="text-sm mb-1 text-white/70">Alojamiento</h3>
             <div className="text-3xl font-bold text-green-300">{fmt(Math.round(totalAlojamiento))}</div>
-            <div className="text-xs text-white/60 mt-1">
-              por persona · {fmt(Math.round(totalAlojamiento * 2))} por pareja · 21 noches
-            </div>
+            <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalAlojamiento * 2))} por pareja · 21 noches</div>
           </div>
-
-          {/* Resumen por ciudad */}
           <div className="space-y-2">
             {Object.entries(alojByCity).map(([city, data]) => (
               <div key={city} className="bg-green-500/15 rounded-xl p-3 border border-green-400/20 flex items-center justify-between">
@@ -409,7 +476,6 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
               </div>
             ))}
           </div>
-
           <SaldoFooter expenses={alojamientoExpenses} color="bg-green-500/10 border-green-400/20" />
         </div>
       )}
@@ -424,18 +490,117 @@ export function BudgetSection({ budget, currentUser, onBack, onUpdateBudget }: B
           </div>
           <div className="space-y-2">
             {comidaExpenses.map((expense, idx) => (
-              <ItemCard
-                key={`comida-${expense.id}-${idx}`}
-                expense={expense}
-                idx={idx}
-                prefix="comida"
-                bg="bg-orange-500/15"
-                border="border-orange-400/20"
-                icon="🍽️"
-              />
+              <ItemCard key={`comida-${expense.id}-${idx}`} expense={expense} idx={idx} prefix="comida" bg="bg-orange-500/15" border="border-orange-400/20" icon="🍽️" />
             ))}
           </div>
           <SaldoFooter expenses={comidaExpenses} color="bg-orange-500/10 border-orange-400/20" />
+        </div>
+      )}
+
+      {/* ── NOTAS ── */}
+      {activeTab === "notas" && (
+        <div className="space-y-3">
+          <div className="bg-purple-500/20 rounded-xl p-4 text-center border border-purple-400/30">
+            <h3 className="text-sm mb-1 text-white/70">Notas del Presupuesto</h3>
+            <p className="text-xs text-white/50 mt-1">Anotaciones, recordatorios y observaciones del viaje</p>
+          </div>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            onBlur={() => onUpdateNotes?.(notes)}
+            placeholder="Escribe tus notas aqui... por ejemplo: cambiar divisas antes de salir, llevar efectivo para propinas, confirmar reserva del hotel en Roma..."
+            rows={16}
+            className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-sm text-white placeholder-white/30 focus:outline-none focus:border-purple-400/60 resize-none leading-relaxed"
+          />
+          <button
+            onClick={() => onUpdateNotes?.(notes)}
+            className="w-full bg-purple-600 hover:bg-purple-700 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+          >
+            Guardar notas
+          </button>
+        </div>
+      )}
+
+      {/* ── MODAL EDICION LOCOMOCION ── */}
+      {transportEdit && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center p-4">
+          <div className="bg-gray-900 border border-white/20 rounded-2xl w-full max-w-md p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-base">Editar locomocion</h3>
+              <button onClick={() => setTransportEdit(null)} className="text-white/40 hover:text-white/70 text-xl leading-none">×</button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Costo por persona (€)</label>
+                <input
+                  type="number" min="0" step="0.5"
+                  value={transportEdit.amount}
+                  onChange={(e) => setTransportEdit({ ...transportEdit, amount: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="0"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Compania / Operador</label>
+                <input
+                  type="text"
+                  value={transportEdit.company}
+                  onChange={(e) => setTransportEdit({ ...transportEdit, company: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="Ej: RENFE, Iberia, Trenitalia..."
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-white/60 mb-1">Horario salida</label>
+                  <input
+                    type="time"
+                    value={transportEdit.departureTime}
+                    onChange={(e) => setTransportEdit({ ...transportEdit, departureTime: e.target.value })}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-white/60 mb-1">Horario llegada</label>
+                  <input
+                    type="time"
+                    value={transportEdit.arrivalTime}
+                    onChange={(e) => setTransportEdit({ ...transportEdit, arrivalTime: e.target.value })}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Link para reservar / comprar (opcional)</label>
+                <input
+                  type="url"
+                  value={transportEdit.ticketUrl}
+                  onChange={(e) => setTransportEdit({ ...transportEdit, ticketUrl: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="https://..."
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setTransportEdit(null)}
+                className="flex-1 bg-white/10 hover:bg-white/20 py-2.5 rounded-xl text-sm transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={saveTransport}
+                className="flex-1 bg-yellow-500 hover:bg-yellow-600 py-2.5 rounded-xl text-sm font-semibold transition-colors text-black"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
