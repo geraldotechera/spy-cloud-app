@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
+import { createClient } from "@/lib/supabase/client"
 import { Calendar } from "@/components/calendar"
 import { DailyItinerary } from "@/components/daily-itinerary"
 import { MainMenu } from "@/components/main-menu"
@@ -86,97 +87,87 @@ export default function Home() {
     }
   }, [showSplash, mounted])
 
+  const TRIP_ID = "europe-2026"
+  const supabase = createClient()
+
+  const dedupeExpenses = useCallback((data: AppData): AppData => {
+    const seen = new Set<number>()
+    const unique = data.budget.dailyExpenses.filter((e: { id: number }) => {
+      if (seen.has(e.id)) return false
+      seen.add(e.id)
+      return true
+    })
+    return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
+  }, [])
+
+  // Carga inicial: Supabase primero, localStorage como fallback offline
   useEffect(() => {
-    const loadData = () => {
+    const loadData = async () => {
       try {
         const savedUser = localStorage.getItem("currentUser")
         if (savedUser) {
           try {
             const parsedUser = JSON.parse(savedUser)
-            if (parsedUser && typeof parsedUser === "object" && parsedUser.name) {
-              setCurrentUser(parsedUser)
-            } else {
-              localStorage.removeItem("currentUser")
-            }
-          } catch {
-            localStorage.removeItem("currentUser")
-          }
+            if (parsedUser?.name) setCurrentUser(parsedUser)
+          } catch { /* ignore */ }
         }
-      } catch {
-        // localStorage not available
-      }
+      } catch { /* ignore */ }
 
-        try {
-          const DATA_VERSION = "v19-all-individual"
-          const savedVersion = localStorage.getItem("europeTripDataVersion")
+      try {
+        // Intentar cargar desde Supabase
+        const { data: row, error } = await supabase
+          .from("trip_data")
+          .select("data")
+          .eq("id", TRIP_ID)
+          .single()
 
-          // Siempre deduplica por ID — elimina entradas repetidas del localStorage corrupto
-          const dedupeExpenses = (data: AppData): AppData => {
-            const seen = new Set<number>()
-            const unique = data.budget.dailyExpenses.filter((e: { id: number }) => {
-              if (seen.has(e.id)) return false
-              seen.add(e.id)
-              return true
-            })
-            return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
-          }
-
-          // Siempre forzar reset si la versión no coincide
-          if (savedVersion !== DATA_VERSION) {
-            localStorage.removeItem("europeTripData")
-            localStorage.setItem("europeTripDataVersion", DATA_VERSION)
-            const initialData = dedupeExpenses(getInitialData())
-            setAppData(initialData)
-            localStorage.setItem("europeTripData", JSON.stringify(initialData))
-          } else {
-            const saved = localStorage.getItem("europeTripData")
-            if (saved) {
-              try {
-                const parsed = JSON.parse(saved)
-                // Deduplicar siempre, independientemente de validateAppData
-                const clean = dedupeExpenses(
-                  validateAppData(parsed) ? parsed : getInitialData()
-                )
-                setAppData(clean)
-                // Sobrescribir localStorage con los datos limpios
-                localStorage.setItem("europeTripData", JSON.stringify(clean))
-              } catch {
-                const initialData = dedupeExpenses(getInitialData())
-                setAppData(initialData)
-                localStorage.setItem("europeTripData", JSON.stringify(initialData))
-              }
-            } else {
-              const initialData = dedupeExpenses(getInitialData())
-              setAppData(initialData)
-              localStorage.setItem("europeTripData", JSON.stringify(initialData))
-            }
-          }
-        } catch (error) {
-          const initialData = getInitialData()
-          setAppData(initialData)
+        if (!error && row?.data && validateAppData(row.data)) {
+          const clean = dedupeExpenses(row.data as AppData)
+          setAppData(clean)
+          // Actualizar localStorage como cache offline
+          localStorage.setItem("europeTripData", JSON.stringify(clean))
+          return
         }
+      } catch { /* red offline, caer a localStorage */ }
+
+      // Fallback: localStorage
+      try {
+        const saved = localStorage.getItem("europeTripData")
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          const clean = dedupeExpenses(validateAppData(parsed) ? parsed : getInitialData())
+          setAppData(clean)
+          return
+        }
+      } catch { /* ignore */ }
+
+      // Ultimo recurso: datos iniciales
+      setAppData(dedupeExpenses(getInitialData()))
     }
 
     loadData()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Guardado: Supabase + localStorage en paralelo
   useEffect(() => {
     if (!appData) return
 
+    const seen = new Set<number>()
+    const cleanData = dedupeExpenses(appData)
+
+    // Guardar en localStorage (offline cache)
     try {
-      // Deduplicar antes de guardar para que nunca se persistan IDs duplicados
-      const seen = new Set<number>()
-      const cleanExpenses = appData.budget.dailyExpenses.filter((e) => {
-        if (seen.has(e.id)) return false
-        seen.add(e.id)
-        return true
-      })
-      const cleanData = { ...appData, budget: { ...appData.budget, dailyExpenses: cleanExpenses } }
       localStorage.setItem("europeTripData", JSON.stringify(cleanData))
-    } catch {
-      // quota exceeded or unavailable
-    }
-  }, [appData])
+    } catch { /* quota exceeded */ }
+
+    // Guardar en Supabase (upsert)
+    supabase
+      .from("trip_data")
+      .upsert({ id: TRIP_ID, data: cleanData, updated_at: new Date().toISOString() })
+      .then(({ error }) => {
+        if (error) console.log("[v0] Error guardando en Supabase:", error.message)
+      })
+  }, [appData]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme")
