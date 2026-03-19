@@ -201,11 +201,13 @@ export function getInitialData(): AppData {
     // 23 sep
     { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
     // 24 sep — Ferries y transporte marítimo Costa Amalfitana
-    { id: 88, date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
-    { id: 89, date: "2026-09-24", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
-    { id: 90, date: "2026-09-24", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
-    // 25 sep
-    { id: 91, date: "2026-09-25", category: "transporte" as const, description: "Hidroala Sorrento → Capri (ida y vuelta)", amountPerPerson: 25,   amountPerCouple: 50,  totalAmount: 100, paid: false, notes: "€25/persona. Ferry rápido" },
+    // 24 sep — Ferry Sorrento ↔ Capri
+    { id: 91,  date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento → Capri (ida)",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 08:30. Companias: NLG, Caremar, SNAV" },
+    { id: 910, date: "2026-09-24", category: "transporte" as const, description: "Ferry Capri → Sorrento (vuelta)",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Regreso 18:10" },
+    // 25 sep — Costa Amalfitana
+    { id: 88, date: "2026-09-25", category: "transporte" as const, description: "Ferry Sorrento → Positano",                amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 89, date: "2026-09-25", category: "transporte" as const, description: "Ferry Positano → Amalfi",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 90, date: "2026-09-25", category: "transporte" as const, description: "Bus Amalfi → Ravello → Sorrento",          amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
     // 27 sep — Sorrento a Nápoles + vuelo Nápoles → Madrid
     { id: 93, date: "2026-09-27", category: "transporte" as const, description: "Tren Sorrento → Nápoles (aeropuerto)",     amountPerPerson: 5,    amountPerCouple: 10,  totalAmount: 20,  paid: false, notes: "€5/persona. Circumvesuviana o metro hasta Nápoles Centrale, luego Alibus al aeropuerto" },
     { id: 92, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Nápoles → Madrid",                   amountPerPerson: 0,    amountPerCouple: 0,   totalAmount: 0,   paid: false, notes: "Precio a calcular. NAP → MAD. Salida 27 sep" },
@@ -2455,11 +2457,11 @@ export function getInitialData(): AppData {
       },
       {
         id: 2401,
-        time: "09:00",
-        title: "Hidroala Sorrento → Capri (Marina Grande)",
+        time: "08:30",
+        title: "Ferry Sorrento → Capri (Marina Grande)",
         location: "Marina Piccola, Sorrento, Italia",
-        description: "Hidroala (ferry rápido) Sorrento → Capri Marina Grande. Duración: 20-25 min. Compañías: NLG o Caremar. Precio 2026: ~€19 por persona ida (septiembre). Las vistas de Sorrento desde el mar son espectaculares. Primer avistamiento de Capri al llegar.",
-        ticketPrice: 19,
+        description: "Ferry Sorrento → Capri Marina Grande. Salida 08:30. Duracion: 20-25 min. Companias: NLG, Caremar o SNAV. Llevar tickets comprados con anticipacion. Las vistas de Sorrento desde el mar son espectaculares.",
+        ticketPrice: 0,
         ticketUrl: "https://www.caremar.it",
         category: "transporte",
         icon: "🚢",
@@ -2569,10 +2571,10 @@ export function getInitialData(): AppData {
       },
       {
         id: 2411,
-        time: "18:00",
-        title: "Hidroala Capri → Sorrento (regreso)",
+        time: "18:10",
+        title: "Ferry Capri → Sorrento (regreso)",
         location: "Marina Grande, Capri, Italia",
-        description: "Ferry de regreso Capri Marina Grande → Sorrento. Duración: 20-25 min. La vista de Capri desde el mar al atardecer, con los Faraglioni iluminados, es la imagen final perfecta del día.",
+        description: "Ferry de regreso Capri Marina Grande → Sorrento. Salida 18:10. Duracion: 20-25 min. La vista de Capri desde el mar con la luz del atardecer es el cierre perfecto del dia.",
         ticketPrice: 0,
         category: "transporte",
         icon: "🚢",
