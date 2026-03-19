@@ -148,11 +148,14 @@ export default function Home() {
     loadData()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Guardado: Supabase + localStorage en paralelo
+  const [syncStatus, setSyncStatus] = useState<"idle" | "saving" | "saved" | "error">("idle")
+  const [lastSaved, setLastSaved] = useState<Date | null>(null)
+
+  // Guardado: Supabase + localStorage en paralelo, con debounce 1.5s
   useEffect(() => {
     if (!appData) return
 
-    const seen = new Set<number>()
+    setSyncStatus("saving")
     const cleanData = dedupeExpenses(appData)
 
     // Guardar en localStorage (offline cache)
@@ -160,13 +163,23 @@ export default function Home() {
       localStorage.setItem("europeTripData", JSON.stringify(cleanData))
     } catch { /* quota exceeded */ }
 
-    // Guardar en Supabase (upsert)
-    supabase
-      .from("trip_data")
-      .upsert({ id: TRIP_ID, data: cleanData, updated_at: new Date().toISOString() })
-      .then(({ error }) => {
-        if (error) console.log("[v0] Error guardando en Supabase:", error.message)
-      })
+    // Debounce: guardar en Supabase 1.5s después del último cambio
+    const timer = setTimeout(() => {
+      supabase
+        .from("trip_data")
+        .upsert({ id: TRIP_ID, data: cleanData, updated_at: new Date().toISOString() })
+        .then(({ error }) => {
+          if (error) {
+            setSyncStatus("error")
+          } else {
+            setSyncStatus("saved")
+            setLastSaved(new Date())
+            setTimeout(() => setSyncStatus("idle"), 3000)
+          }
+        })
+    }, 1500)
+
+    return () => clearTimeout(timer)
   }, [appData]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -295,6 +308,28 @@ export default function Home() {
           <span className="font-semibold">{notificationMessage}</span>
         </div>
       )}
+
+      {/* Indicador de sincronizacion Supabase */}
+      <div className="fixed bottom-4 right-4 z-40">
+        {syncStatus === "saving" && (
+          <div className="bg-black/60 backdrop-blur-sm text-white/70 text-xs px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+            Guardando...
+          </div>
+        )}
+        {syncStatus === "saved" && (
+          <div className="bg-black/60 backdrop-blur-sm text-white/70 text-xs px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-green-400" />
+            Guardado{lastSaved ? ` ${lastSaved.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}` : ""}
+          </div>
+        )}
+        {syncStatus === "error" && (
+          <div className="bg-black/60 backdrop-blur-sm text-red-400 text-xs px-3 py-1.5 rounded-full border border-red-400/30 flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-red-400" />
+            Sin conexion — guardado local
+          </div>
+        )}
+      </div>
 
       <div className="container mx-auto px-4 py-4 max-w-4xl">
         <header data-no-print className="bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-4 shadow-xl border border-white/20">
