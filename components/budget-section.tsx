@@ -115,7 +115,7 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   const startTransportEdit = (e: DailyExpense) => {
     setTransportEdit({
       id: e.id,
-      amount: String(perPerson(e)),
+      amount: String(e.amountPerPerson ?? 0),
       company: e.company ?? "",
       departureTime: e.departureTime ?? "",
       arrivalTime: e.arrivalTime ?? "",
@@ -202,7 +202,8 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
 
   const TransportCard = ({ expense, idx }: { expense: DailyExpense; idx: number }) => {
     const isPaid  = expense.paid === true
-    const pp      = perPerson(expense)
+    // Solo usar amountPerPerson si fue explicitamente guardado por el usuario (no calcular del viejo amountPerCouple)
+    const pp      = expense.amountPerPerson ?? 0
     const noPrice = pp === 0 && !isPaid
     const d       = new Date(expense.date + "T12:00:00")
     const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
