@@ -466,11 +466,16 @@ export default function Home() {
         {currentSection === "presupuesto" && (
           <BudgetSection
             budget={appData.budget}
+            budgetNotes={appData.budgetNotes ?? ""}
             currentUser={currentUser}
             onBack={() => setCurrentSection("main")}
             onUpdateBudget={(newBudget) => {
               setAppData({ ...appData, budget: newBudget })
               showNotif("Presupuesto actualizado")
+            }}
+            onUpdateNotes={(newNotes) => {
+              setAppData({ ...appData, budgetNotes: newNotes })
+              showNotif("Notas guardadas")
             }}
           />
         )}
