@@ -100,15 +100,38 @@ export default function Home() {
     return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
   }, [])
 
-  // Fusiona datos guardados con los datos iniciales: agrega ítems nuevos que falten
-  // sin sobreescribir los valores editados por el usuario
+  // Fusiona datos guardados con los datos iniciales:
+  // - Los EVENTOS de la agenda vienen de lib/events.ts PERO conservan ticketUrl y ticketFiles editados
+  // - El PRESUPUESTO conserva los valores editados por el usuario, pero agrega items nuevos
   const mergeWithInitial = useCallback((saved: AppData): AppData => {
     const initial = getInitialData()
+    
+    // Presupuesto: agregar items nuevos sin sobreescribir los editados
     const savedIds = new Set(saved.budget.dailyExpenses.map((e: { id: number }) => e.id))
     const missingExpenses = initial.budget.dailyExpenses.filter(e => !savedIds.has(e.id))
-    if (missingExpenses.length === 0) return saved
+    
+    // EVENTOS: usar datos de lib/events.ts pero conservar ticketUrl y ticketFiles editados por el usuario
+    const mergedEvents: Record<string, typeof initial.events[string]> = {}
+    for (const [date, events] of Object.entries(initial.events)) {
+      const savedEventsForDate = saved.events?.[date] || []
+      mergedEvents[date] = events.map(event => {
+        const savedEvent = savedEventsForDate.find(e => e.id === event.id)
+        if (savedEvent) {
+          // Conservar ticketUrl, ticketFiles e imageUrl editados por el usuario
+          return {
+            ...event,
+            ticketUrl: savedEvent.ticketUrl || event.ticketUrl,
+            ticketFiles: savedEvent.ticketFiles,
+            imageUrl: savedEvent.imageUrl || event.imageUrl,
+          }
+        }
+        return event
+      })
+    }
+    
     const merged = {
       ...saved,
+      events: mergedEvents,
       budget: {
         ...saved.budget,
         dailyExpenses: [...saved.budget.dailyExpenses, ...missingExpenses]
