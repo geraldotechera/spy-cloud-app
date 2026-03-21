@@ -37,21 +37,21 @@ export function PrintItinerary({ appData, onClose }: PrintItineraryProps) {
       {sortedDates.map((date, index) => {
         const events = appData.events[date] || []
         const dateObj = new Date(date + "T12:00:00")
-        const dayNumber = index + 1
+        const formattedDate = dateObj.toLocaleDateString("es-ES", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+        })
+        const shortDate = dateObj.toLocaleDateString("es-ES", { day: "numeric", month: "short" })
         const accommodation = appData.accommodations.find((acc) => acc.date === date)
 
         return (
           <div key={date} className="page-break">
-            {/* Encabezado del día */}
+            {/* Encabezado del dia */}
             <div className="day-header">
-              <div className="day-number">Día {dayNumber}</div>
+              <div className="day-number">{shortDate.toUpperCase()}</div>
               <div className="day-date">
-                {dateObj.toLocaleDateString("es-ES", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+                {formattedDate}
               </div>
             </div>
 
@@ -111,8 +111,8 @@ export function PrintItinerary({ appData, onClose }: PrintItineraryProps) {
               )}
             </div>
 
-            {/* Pie de pagina con numero de dia */}
-            <div className="page-footer">Europa Magica 2026 - Dia {dayNumber} de 23 (5-27 Septiembre)</div>
+            {/* Pie de pagina con fecha */}
+            <div className="page-footer">Europa Magica 2026 - {formattedDate}</div>
           </div>
         )
       })}
