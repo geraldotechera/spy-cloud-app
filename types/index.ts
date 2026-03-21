@@ -1,3 +1,10 @@
+export interface TicketFile {
+  url: string
+  name: string
+  type: string // "pdf" | "image"
+  uploadedAt: number
+}
+
 export interface Event {
   id: number
   time: string
@@ -6,8 +13,10 @@ export interface Event {
   description?: string
   ticketPrice: number
   ticketUrl?: string
+  ticketFiles?: TicketFile[] // Archivos de tickets/entradas subidos
   category?: string
   icon?: string
+  imageUrl?: string
   coordinates?: { lat: number; lng: number }
   budgetId?: number  // ID del DailyExpense correspondiente en el presupuesto
 }
