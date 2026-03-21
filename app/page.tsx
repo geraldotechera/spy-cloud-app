@@ -100,15 +100,20 @@ export default function Home() {
     return { ...data, budget: { ...data.budget, dailyExpenses: unique } }
   }, [])
 
-  // Fusiona datos guardados con los datos iniciales: agrega ítems nuevos que falten
-  // sin sobreescribir los valores editados por el usuario
+  // Fusiona datos guardados con los datos iniciales:
+  // - Los EVENTOS de la agenda siempre vienen de lib/events.ts (para reflejar cambios del codigo)
+  // - El PRESUPUESTO conserva los valores editados por el usuario, pero agrega items nuevos
   const mergeWithInitial = useCallback((saved: AppData): AppData => {
     const initial = getInitialData()
+    
+    // Presupuesto: agregar items nuevos sin sobreescribir los editados
     const savedIds = new Set(saved.budget.dailyExpenses.map((e: { id: number }) => e.id))
     const missingExpenses = initial.budget.dailyExpenses.filter(e => !savedIds.has(e.id))
-    if (missingExpenses.length === 0) return saved
+    
     const merged = {
       ...saved,
+      // EVENTOS: siempre usar los datos frescos de lib/events.ts
+      events: initial.events,
       budget: {
         ...saved.budget,
         dailyExpenses: [...saved.budget.dailyExpenses, ...missingExpenses]
