@@ -139,8 +139,7 @@ export function getInitialData(): AppData {
     { id: 55,   date: "2026-09-10", category: "museo" as const, description: "Casa Batllo",                 amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
     { id: 56,   date: "2026-09-10", category: "museo" as const, description: "Museo Picasso",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
     { id: 57,   date: "2026-09-10", category: "museo" as const, description: "Castillo de Montjuic",        amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 570,  date: "2026-09-10", category: "museo" as const, description: "Fundacion Joan Miro",         amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 571,  date: "2026-09-11", category: "museo" as const, description: "Barrio Gotico",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+
     { id: 572,  date: "2026-09-11", category: "museo" as const, description: "Catedral de Barcelona",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // París (12-15 sep)
