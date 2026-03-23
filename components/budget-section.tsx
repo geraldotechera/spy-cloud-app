@@ -46,6 +46,7 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   const [transportEdit, setTransportEdit] = useState<TransportEditState | null>(null)
   const [paseoEdit, setPaseoEdit] = useState<PaseoEditState | null>(null)
   const [notes, setNotes] = useState(budgetNotes)
+  const [hiddenPaseoIds, setHiddenPaseoIds] = useState<Set<number>>(new Set())
 
   const uniqueExpenses = budget.dailyExpenses.filter(
     (e, i, arr) => arr.findIndex((x) => x.id === e.id) === i
@@ -55,9 +56,12 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
     .filter((e) => e.category === "transporte" || e.category === "vuelo")
     .sort((a, b) => a.date.localeCompare(b.date))
 
-  const eventExpenses = uniqueExpenses
+  const allEventExpenses = uniqueExpenses
     .filter((e) => e.category === "museo")
     .sort((a, b) => a.date.localeCompare(b.date))
+  
+  const eventExpenses = allEventExpenses.filter((e) => !hiddenPaseoIds.has(e.id))
+  const hiddenEventExpenses = allEventExpenses.filter((e) => hiddenPaseoIds.has(e.id))
 
   const alojamientoExpenses = uniqueExpenses
     .filter((e) => e.category === "alojamiento")
@@ -138,6 +142,18 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
       amount: String(e.amountPerPerson ?? 0),
       ticketUrl: e.ticketUrl ?? "",
       notes: e.notes ?? "",
+    })
+  }
+
+  const hidePaseo = (id: number) => {
+    setHiddenPaseoIds((prev) => new Set([...prev, id]))
+  }
+
+  const showPaseo = (id: number) => {
+    setHiddenPaseoIds((prev) => {
+      const newSet = new Set(prev)
+      newSet.delete(id)
+      return newSet
     })
   }
 
