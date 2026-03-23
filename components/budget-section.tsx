@@ -31,11 +31,20 @@ interface TransportEditState {
   ticketUrl: string
 }
 
+// Modal de edicion para paseos/entradas
+interface PaseoEditState {
+  id: number
+  amount: string
+  ticketUrl: string
+  notes: string
+}
+
 export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, onUpdateBudget, onUpdateNotes }: BudgetSectionProps) {
   const [activeTab, setActiveTab] = useState<"resumen" | "paseos" | "locomocion" | "alojamiento" | "comida" | "notas">("resumen")
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editingAmount, setEditingAmount] = useState<string>("")
   const [transportEdit, setTransportEdit] = useState<TransportEditState | null>(null)
+  const [paseoEdit, setPaseoEdit] = useState<PaseoEditState | null>(null)
   const [notes, setNotes] = useState(budgetNotes)
 
   const uniqueExpenses = budget.dailyExpenses.filter(
@@ -123,6 +132,33 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
     })
   }
 
+  const startPaseoEdit = (e: DailyExpense) => {
+    setPaseoEdit({
+      id: e.id,
+      amount: String(e.amountPerPerson ?? 0),
+      ticketUrl: e.ticketUrl ?? "",
+      notes: e.notes ?? "",
+    })
+  }
+
+  const savePaseo = () => {
+    if (!paseoEdit) return
+    const val = parseFloat(paseoEdit.amount)
+    pushUpdate(uniqueExpenses.map((e) =>
+      e.id === paseoEdit.id
+        ? {
+            ...e,
+            amountPerPerson: isNaN(val) ? e.amountPerPerson : val,
+            amountPerCouple: isNaN(val) ? e.amountPerCouple : val * 2,
+            totalAmount: isNaN(val) ? e.totalAmount : val * 4,
+            ticketUrl: paseoEdit.ticketUrl,
+            notes: paseoEdit.notes,
+          }
+        : e
+    ))
+    setPaseoEdit(null)
+  }
+
   // ── item card (paseos / comida) ───────────────────────────────────────────
 
   const ItemCard = ({
@@ -132,7 +168,6 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   }) => {
     const isPaid  = expense.paid === true
     const pp      = perPerson(expense)
-    const isEdit  = editingId === expense.id
     const d       = new Date(expense.date + "T12:00:00")
     const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
     const noPrice = pp === 0 && !isPaid
@@ -163,18 +198,6 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
         <div className="flex flex-col items-end gap-1 flex-shrink-0">
           {isPaid ? (
             <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">Pagado</span>
-          ) : isEdit ? (
-            <div className="flex items-center gap-1">
-              <span className="text-xs text-white/50">€</span>
-              <input
-                type="number" min="0" step="0.5" value={editingAmount}
-                onChange={(e) => setEditingAmount(e.target.value)}
-                className="w-16 bg-white/20 rounded px-1.5 py-1 text-sm text-white text-right focus:outline-none"
-                autoFocus
-              />
-              <button onClick={() => saveAmount(expense.id)} className="bg-green-600 hover:bg-green-700 px-2 py-1 rounded text-xs font-bold">OK</button>
-              <button onClick={() => setEditingId(null)} className="bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-xs">X</button>
-            </div>
           ) : (
             <div className="flex items-center gap-1">
               <div className="text-right">
@@ -182,7 +205,7 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
                 <div className="text-xs text-white/40">/ persona</div>
                 {pp > 0 && <div className="text-xs text-white/30">{fmt(pp * 2)} / pareja</div>}
               </div>
-              <button onClick={() => startEdit(expense)} className="bg-white/15 hover:bg-white/25 px-2 py-1 rounded text-xs transition-colors" title="Editar precio">✏️</button>
+              <button onClick={() => startPaseoEdit(expense)} className="bg-white/15 hover:bg-white/25 px-2 py-1 rounded text-xs transition-colors" title="Editar">✏️</button>
             </div>
           )}
           <button
@@ -596,6 +619,68 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
               <button
                 onClick={saveTransport}
                 className="flex-1 bg-yellow-500 hover:bg-yellow-600 py-2.5 rounded-xl text-sm font-semibold transition-colors text-black"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL EDICION PASEOS ── */}
+      {paseoEdit && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center p-4">
+          <div className="bg-gray-900 border border-white/20 rounded-2xl w-full max-w-md p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-base">Editar paseo / entrada</h3>
+              <button onClick={() => setPaseoEdit(null)} className="text-white/40 hover:text-white/70 text-xl leading-none">x</button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Costo por persona (EUR)</label>
+                <input
+                  type="number" min="0" step="0.5"
+                  value={paseoEdit.amount}
+                  onChange={(e) => setPaseoEdit({ ...paseoEdit, amount: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60"
+                  placeholder="0"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Web para comprar entrada</label>
+                <input
+                  type="url"
+                  value={paseoEdit.ticketUrl}
+                  onChange={(e) => setPaseoEdit({ ...paseoEdit, ticketUrl: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60"
+                  placeholder="https://..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Notas (horario, observaciones)</label>
+                <textarea
+                  value={paseoEdit.notes}
+                  onChange={(e) => setPaseoEdit({ ...paseoEdit, notes: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60 resize-none"
+                  placeholder="Ej: Entrada a las 10:00, reservar con anticipacion..."
+                  rows={3}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setPaseoEdit(null)}
+                className="flex-1 bg-white/10 hover:bg-white/20 py-2.5 rounded-xl text-sm transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={savePaseo}
+                className="flex-1 bg-pink-500 hover:bg-pink-600 py-2.5 rounded-xl text-sm font-semibold transition-colors text-white"
               >
                 Guardar
               </button>
