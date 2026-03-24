@@ -56,6 +56,8 @@ export interface DailyExpense {
   departureTime?: string // Horario de salida (ej: "11:30")
   arrivalTime?: string   // Horario de llegada (ej: "14:45")
   ticketUrl?: string     // Link para reservar / comprar
+  // Campos de paseos
+  hidden?: boolean       // Si el paseo está oculto del presupuesto
 }
 
 export interface Budget {
