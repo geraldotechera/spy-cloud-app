@@ -78,7 +78,7 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   const totalAlojamiento  = alojamientoExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalAlimentacion = comidaExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalOtros        = otrosExpenses.reduce((s, e) => s + perPerson(e), 0)
-  const totalPerPerson    = uniqueExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalPerPerson    = totalEventos + totalTransporte + totalAlojamiento + totalAlimentacion + totalOtros
 
   // ── helpers ───────────────────────────────────────────────────────────────
 
@@ -462,13 +462,122 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
             <h3 className="text-sm mb-1 text-white/70">Paseos y Entradas</h3>
             <div className="text-3xl font-bold text-pink-300">{fmt(Math.round(totalEventos))}</div>
             <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalEventos * 2))} por pareja</div>
+            {hiddenEventExpenses.length > 0 && (
+              <div className="text-xs text-white/40 mt-1">{hiddenEventExpenses.length} paseo{hiddenEventExpenses.length !== 1 ? "s" : ""} no incluido{hiddenEventExpenses.length !== 1 ? "s" : ""}</div>
+            )}
           </div>
+
+          {/* Paseos activos */}
           <div className="space-y-2">
-            {eventExpenses.map((expense, idx) => (
-              <ItemCard key={`event-${expense.id}-${idx}`} expense={expense} idx={idx} prefix="event" bg="bg-pink-500/15" border="border-pink-400/20" icon="🎟️" />
-            ))}
+            {eventExpenses.map((expense, idx) => {
+              const isPaid = expense.paid === true
+              const pp = perPerson(expense)
+              const d = new Date(expense.date + "T12:00:00")
+              const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
+              const noPrice = pp === 0 && !isPaid
+              return (
+                <div
+                  key={`event-${expense.id}-${idx}`}
+                  className={`rounded-xl p-3 border flex items-start gap-2 transition-opacity ${
+                    isPaid ? "opacity-50 bg-white/5 border-white/10" : noPrice ? "bg-pink-500/15 border-pink-400/20 border-dashed" : "bg-pink-500/15 border-pink-400/20"
+                  }`}
+                >
+                  <span className="text-base flex-shrink-0 mt-0.5">🎟️</span>
+                  <div className="flex-1 min-w-0">
+                    <div className={`font-semibold text-sm leading-tight ${isPaid ? "line-through text-white/40" : ""}`}>
+                      {expense.description}
+                    </div>
+                    <div className="text-xs text-white/50 mt-0.5">{dateStr}</div>
+                    {expense.notes && !isPaid && (
+                      <div className="text-xs text-white/40 mt-0.5 leading-snug">{expense.notes}</div>
+                    )}
+                    {expense.ticketUrl && !isPaid && (
+                      <a href={expense.ticketUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 underline mt-1 block">
+                        Reservar / comprar
+                      </a>
+                    )}
+                    {noPrice && <div className="text-xs text-orange-300 font-semibold mt-1">Precio pendiente</div>}
+                  </div>
+                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                    {isPaid ? (
+                      <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">Pagado</span>
+                    ) : (
+                      <div className="flex items-center gap-1">
+                        <div className="text-right">
+                          <div className="font-bold text-white">{pp > 0 ? fmt(pp) : "—"}</div>
+                          <div className="text-xs text-white/40">/ persona</div>
+                          {pp > 0 && <div className="text-xs text-white/30">{fmt(pp * 2)} / pareja</div>}
+                        </div>
+                        <button onClick={() => startPaseoEdit(expense)} className="bg-white/15 hover:bg-white/25 px-2 py-1 rounded text-xs transition-colors" title="Editar">✏️</button>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => togglePaid(expense.id)}
+                      className={`text-xs px-2 py-0.5 rounded-full border transition-colors ${
+                        isPaid ? "border-white/20 text-white/40 hover:text-white/60" : "border-green-400/50 text-green-300 hover:bg-green-500/20"
+                      }`}
+                    >
+                      {isPaid ? "Deshacer" : "Marcar pagado"}
+                    </button>
+                    {!isPaid && (
+                      <button
+                        onClick={() => hidePaseo(expense.id)}
+                        className="text-xs px-2 py-0.5 rounded-full border border-red-400/40 text-red-300 hover:bg-red-500/20 transition-colors"
+                        title="Quitar del presupuesto"
+                      >
+                        Quitar
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
           </div>
+
           <SaldoFooter expenses={eventExpenses} color="bg-pink-500/10 border-pink-400/20" />
+
+          {/* Paseos ocultos */}
+          {hiddenEventExpenses.length > 0 && (
+            <div className="space-y-2 pt-2">
+              <div className="flex items-center gap-2">
+                <div className="h-px flex-1 bg-white/10" />
+                <span className="text-xs text-white/30 font-medium">No incluidos en el total</span>
+                <div className="h-px flex-1 bg-white/10" />
+              </div>
+              {hiddenEventExpenses.map((expense, idx) => {
+                const pp = perPerson(expense)
+                const d = new Date(expense.date + "T12:00:00")
+                const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
+                return (
+                  <div
+                    key={`hidden-${expense.id}-${idx}`}
+                    className="rounded-xl p-3 border border-white/10 bg-white/5 flex items-start gap-2 opacity-50"
+                  >
+                    <span className="text-base flex-shrink-0 mt-0.5 grayscale">🎟️</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm leading-tight text-white/50 line-through">
+                        {expense.description}
+                      </div>
+                      <div className="text-xs text-white/30 mt-0.5">{dateStr}</div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                      <div className="text-right">
+                        <div className="font-bold text-white/30">{pp > 0 ? fmt(pp) : "—"}</div>
+                        <div className="text-xs text-white/20">/ persona</div>
+                      </div>
+                      <button
+                        onClick={() => showPaseo(expense.id)}
+                        className="text-xs px-2 py-0.5 rounded-full border border-pink-400/40 text-pink-300 hover:bg-pink-500/20 transition-colors opacity-100"
+                        title="Volver a incluir en el presupuesto"
+                      >
+                        Agregar
+                      </button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       )}
 
