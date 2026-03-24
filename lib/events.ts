@@ -155,8 +155,9 @@ export function getInitialData(): AppData {
     { id: 63,  date: "2026-09-15", category: "museo" as const, description: "Museo Rodin",                       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
 
     // Milan
-    { id: 64,  date: "2026-09-16", category: "museo" as const, description: "Duomo de Milan (iglesia)",    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 640, date: "2026-09-16", category: "museo" as const, description: "Duomo de Milan (terrazas)",   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 64,  date: "2026-09-17", category: "museo" as const, description: "Duomo de Milan (interior + terrazas)", amountPerPerson: 15, amountPerCouple: 30, totalAmount: 60, notes: "duomomilano.it", ticketUrl: "https://www.duomomilano.it" },
+    { id: 641, date: "2026-09-17", category: "museo" as const, description: "Pinacoteca di Brera", amountPerPerson: 15, amountPerCouple: 30, totalAmount: 60, notes: "pinacotecabrera.org", ticketUrl: "https://pinacotecabrera.org" },
+    { id: 642, date: "2026-09-17", category: "museo" as const, description: "La Ultima Cena (Cenacolo)", amountPerPerson: 17, amountPerCouple: 34, totalAmount: 68, notes: "RESERVAR CON MESES DE ANTICIPACION. 15 euros + 2 euros reserva", ticketUrl: "https://www.vivaticket.com" },
 
     // Venecia
     { id: 65,  date: "2026-09-17", category: "museo" as const, description: "Palacio Ducal Venecia",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
