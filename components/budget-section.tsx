@@ -39,6 +39,27 @@ interface PaseoEditState {
   notes: string
 }
 
+// Modal para agregar nuevo paseo
+interface NewPaseoState {
+  description: string
+  date: string
+  amount: string
+  ticketUrl: string
+  notes: string
+}
+
+// Modal para agregar nueva locomocion
+interface NewTransportState {
+  description: string
+  date: string
+  amount: string
+  company: string
+  departureTime: string
+  arrivalTime: string
+  ticketUrl: string
+  category: "transporte" | "vuelo"
+}
+
 export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, onUpdateBudget, onUpdateNotes }: BudgetSectionProps) {
   const [activeTab, setActiveTab] = useState<"resumen" | "paseos" | "locomocion" | "alojamiento" | "comida" | "notas">("resumen")
   const [editingId, setEditingId] = useState<number | null>(null)
@@ -46,6 +67,8 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   const [transportEdit, setTransportEdit] = useState<TransportEditState | null>(null)
   const [paseoEdit, setPaseoEdit] = useState<PaseoEditState | null>(null)
   const [notes, setNotes] = useState(budgetNotes)
+  const [newPaseo, setNewPaseo] = useState<NewPaseoState | null>(null)
+  const [newTransport, setNewTransport] = useState<NewTransportState | null>(null)
   const uniqueExpenses = budget.dailyExpenses.filter(
     (e, i, arr) => arr.findIndex((x) => x.id === e.id) === i
   )
@@ -167,6 +190,56 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
         : e
     ))
     setPaseoEdit(null)
+  }
+
+  // Agregar nuevo paseo
+  const addNewPaseo = () => {
+    if (!newPaseo || !newPaseo.description.trim() || !newPaseo.date) return
+    const val = parseFloat(newPaseo.amount) || 0
+    const maxId = Math.max(...uniqueExpenses.map((e) => e.id), 0)
+    const newExpense: DailyExpense = {
+      id: maxId + 1,
+      date: newPaseo.date,
+      category: "museo",
+      description: newPaseo.description.trim(),
+      amountPerPerson: val,
+      amountPerCouple: val * 2,
+      totalAmount: val * 4,
+      ticketUrl: newPaseo.ticketUrl || undefined,
+      notes: newPaseo.notes || undefined,
+      paid: false,
+      hidden: false,
+    }
+    pushUpdate([...uniqueExpenses, newExpense])
+    setNewPaseo(null)
+  }
+
+  // Agregar nueva locomocion
+  const addNewTransport = () => {
+    if (!newTransport || !newTransport.description.trim() || !newTransport.date) return
+    const val = parseFloat(newTransport.amount) || 0
+    const maxId = Math.max(...uniqueExpenses.map((e) => e.id), 0)
+    const newExpense: DailyExpense = {
+      id: maxId + 1,
+      date: newTransport.date,
+      category: newTransport.category,
+      description: newTransport.description.trim(),
+      amountPerPerson: val,
+      amountPerCouple: val * 2,
+      totalAmount: val * 4,
+      company: newTransport.company || undefined,
+      departureTime: newTransport.departureTime || undefined,
+      arrivalTime: newTransport.arrivalTime || undefined,
+      ticketUrl: newTransport.ticketUrl || undefined,
+      paid: false,
+    }
+    pushUpdate([...uniqueExpenses, newExpense])
+    setNewTransport(null)
+  }
+
+  // Eliminar/Anular un gasto
+  const deleteExpense = (id: number) => {
+    pushUpdate(uniqueExpenses.filter((e) => e.id !== id))
   }
 
   // ── item card (paseos / comida) ───────────────────────────────────────────
@@ -315,6 +388,15 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
             >
               {isPaid ? "Deshacer" : "Marcar pagado"}
             </button>
+            {!isPaid && (
+              <button
+                onClick={() => deleteExpense(expense.id)}
+                className="text-xs px-2 py-0.5 rounded-full border border-red-400/40 text-red-300 hover:bg-red-500/20 transition-colors"
+                title="Eliminar permanentemente"
+              >
+                Anular
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -461,6 +543,15 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
             )}
           </div>
 
+          {/* Boton para agregar nuevo paseo */}
+          <button
+            onClick={() => setNewPaseo({ description: "", date: "", amount: "", ticketUrl: "", notes: "" })}
+            className="w-full bg-pink-500/30 hover:bg-pink-500/50 border border-pink-400/40 rounded-xl p-3 flex items-center justify-center gap-2 transition-colors"
+          >
+            <span className="text-lg">+</span>
+            <span className="font-medium text-sm">Agregar paseo / entrada</span>
+          </button>
+
           {/* Paseos activos */}
           <div className="space-y-2">
             {eventExpenses.map((expense, idx) => {
@@ -514,13 +605,22 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
                       {isPaid ? "Deshacer" : "Marcar pagado"}
                     </button>
                     {!isPaid && (
-                      <button
-                        onClick={() => hidePaseo(expense.id)}
-                        className="text-xs px-2 py-0.5 rounded-full border border-red-400/40 text-red-300 hover:bg-red-500/20 transition-colors"
-                        title="Quitar del presupuesto"
-                      >
-                        Quitar
-                      </button>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => hidePaseo(expense.id)}
+                          className="text-xs px-2 py-0.5 rounded-full border border-orange-400/40 text-orange-300 hover:bg-orange-500/20 transition-colors"
+                          title="Quitar del presupuesto (ocultar)"
+                        >
+                          Ocultar
+                        </button>
+                        <button
+                          onClick={() => deleteExpense(expense.id)}
+                          className="text-xs px-2 py-0.5 rounded-full border border-red-400/40 text-red-300 hover:bg-red-500/20 transition-colors"
+                          title="Eliminar permanentemente"
+                        >
+                          Anular
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -583,6 +683,16 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
             <div className="text-3xl font-bold text-yellow-300">{fmt(Math.round(totalTransporte))}</div>
             <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalTransporte * 2))} por pareja</div>
           </div>
+
+          {/* Boton para agregar nueva locomocion */}
+          <button
+            onClick={() => setNewTransport({ description: "", date: "", amount: "", company: "", departureTime: "", arrivalTime: "", ticketUrl: "", category: "transporte" })}
+            className="w-full bg-yellow-500/30 hover:bg-yellow-500/50 border border-yellow-400/40 rounded-xl p-3 flex items-center justify-center gap-2 transition-colors"
+          >
+            <span className="text-lg">+</span>
+            <span className="font-medium text-sm">Agregar locomocion</span>
+          </button>
+
           <div className="space-y-2">
             {transportExpenses.map((expense, idx) => (
               <TransportCard key={`transport-${expense.id}-${idx}`} expense={expense} idx={idx} />
@@ -802,6 +912,217 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
                 className="flex-1 bg-pink-500 hover:bg-pink-600 py-2.5 rounded-xl text-sm font-semibold transition-colors text-white"
               >
                 Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL AGREGAR NUEVO PASEO ── */}
+      {newPaseo && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center p-4">
+          <div className="bg-gray-900 border border-white/20 rounded-2xl w-full max-w-md p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-base">Agregar paseo / entrada</h3>
+              <button onClick={() => setNewPaseo(null)} className="text-white/40 hover:text-white/70 text-xl leading-none">x</button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Nombre del paseo *</label>
+                <input
+                  type="text"
+                  value={newPaseo.description}
+                  onChange={(e) => setNewPaseo({ ...newPaseo, description: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60"
+                  placeholder="Ej: Museo del Prado, Torre Eiffel..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Fecha *</label>
+                <input
+                  type="date"
+                  value={newPaseo.date}
+                  onChange={(e) => setNewPaseo({ ...newPaseo, date: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Costo por persona (EUR)</label>
+                <input
+                  type="number" min="0" step="0.5"
+                  value={newPaseo.amount}
+                  onChange={(e) => setNewPaseo({ ...newPaseo, amount: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60"
+                  placeholder="0"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Web para comprar entrada</label>
+                <input
+                  type="url"
+                  value={newPaseo.ticketUrl}
+                  onChange={(e) => setNewPaseo({ ...newPaseo, ticketUrl: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60"
+                  placeholder="https://..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Notas</label>
+                <textarea
+                  value={newPaseo.notes}
+                  onChange={(e) => setNewPaseo({ ...newPaseo, notes: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-pink-400/60 resize-none"
+                  placeholder="Horario, observaciones..."
+                  rows={2}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setNewPaseo(null)}
+                className="flex-1 bg-white/10 hover:bg-white/20 py-2.5 rounded-xl text-sm transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={addNewPaseo}
+                disabled={!newPaseo.description.trim() || !newPaseo.date}
+                className="flex-1 bg-pink-500 hover:bg-pink-600 disabled:bg-pink-500/30 disabled:cursor-not-allowed py-2.5 rounded-xl text-sm font-semibold transition-colors text-white"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL AGREGAR NUEVA LOCOMOCION ── */}
+      {newTransport && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center p-4">
+          <div className="bg-gray-900 border border-white/20 rounded-2xl w-full max-w-md p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-base">Agregar locomocion</h3>
+              <button onClick={() => setNewTransport(null)} className="text-white/40 hover:text-white/70 text-xl leading-none">x</button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Tipo</label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setNewTransport({ ...newTransport, category: "transporte" })}
+                    className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      newTransport.category === "transporte" ? "bg-yellow-500 text-black" : "bg-white/10 hover:bg-white/20"
+                    }`}
+                  >
+                    Tren / Bus
+                  </button>
+                  <button
+                    onClick={() => setNewTransport({ ...newTransport, category: "vuelo" })}
+                    className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      newTransport.category === "vuelo" ? "bg-yellow-500 text-black" : "bg-white/10 hover:bg-white/20"
+                    }`}
+                  >
+                    Vuelo
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Descripcion *</label>
+                <input
+                  type="text"
+                  value={newTransport.description}
+                  onChange={(e) => setNewTransport({ ...newTransport, description: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="Ej: Tren Madrid → Barcelona, Ferry Capri..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Fecha *</label>
+                <input
+                  type="date"
+                  value={newTransport.date}
+                  onChange={(e) => setNewTransport({ ...newTransport, date: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Costo por persona (EUR)</label>
+                <input
+                  type="number" min="0" step="0.5"
+                  value={newTransport.amount}
+                  onChange={(e) => setNewTransport({ ...newTransport, amount: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="0"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Compania / Operador</label>
+                <input
+                  type="text"
+                  value={newTransport.company}
+                  onChange={(e) => setNewTransport({ ...newTransport, company: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="Ej: RENFE, Iberia, Trenitalia..."
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-white/60 mb-1">Horario salida</label>
+                  <input
+                    type="time"
+                    value={newTransport.departureTime}
+                    onChange={(e) => setNewTransport({ ...newTransport, departureTime: e.target.value })}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-white/60 mb-1">Horario llegada</label>
+                  <input
+                    type="time"
+                    value={newTransport.arrivalTime}
+                    onChange={(e) => setNewTransport({ ...newTransport, arrivalTime: e.target.value })}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Link para reservar / comprar</label>
+                <input
+                  type="url"
+                  value={newTransport.ticketUrl}
+                  onChange={(e) => setNewTransport({ ...newTransport, ticketUrl: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-400/60"
+                  placeholder="https://..."
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setNewTransport(null)}
+                className="flex-1 bg-white/10 hover:bg-white/20 py-2.5 rounded-xl text-sm transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={addNewTransport}
+                disabled={!newTransport.description.trim() || !newTransport.date}
+                className="flex-1 bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/30 disabled:cursor-not-allowed py-2.5 rounded-xl text-sm font-semibold transition-colors text-black"
+              >
+                Agregar
               </button>
             </div>
           </div>
