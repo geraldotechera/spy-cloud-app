@@ -2114,6 +2114,18 @@ export function getInitialData(): AppData {
     ],
     "2026-09-19": [
       // Sábado 19: DÍA COMPLETO FLORENCIA - Duomo + Uffizi + Ponte Vecchio + Oltrarno + Cumpleaños de la señora (cena especial)
+      // NOTA: Llegan el 18 tarde/noche desde Venecia. Se van a Roma el 20 a las 10:30. REVISAR QUÉ VISITAR - estas son sugerencias
+      {
+        id: 1899,
+        time: "00:00",
+        title: "REVISAR: Opciones de qué visitar en Florencia",
+        location: "Florencia, Italia",
+        description: "PENDIENTE REVISAR: Este es el único día completo en Florencia (llegan el 18 de noche, salen el 20 a las 10:30). Opciones principales: 1) Duomo y Cúpula de Brunelleschi (reservar anticipado, €30), 2) Galleria degli Uffizi (Botticelli, €25, reservar obligatorio), 3) Galleria dell'Accademia (David de Miguel Ángel, €16), 4) Ponte Vecchio y Oltrarno (gratis), 5) Piazzale Michelangelo al atardecer (gratis, mejor vista de Florencia), 6) Jardines de Boboli (€10). No se puede hacer todo en un día - elegir prioridades.",
+        ticketPrice: 0,
+        category: "nota",
+        icon: "📝",
+        coordinates: { lat: 43.7696, lng: 11.2558 },
+      },
       {
         id: 1900,
         time: "08:30",
@@ -2221,10 +2233,10 @@ export function getInitialData(): AppData {
       // Domingo 20: Tren Florencia → Roma (llegar aprox 15hs) - Check-in - Tarde Roma + Cena
       {
         id: 2000,
-        time: "10:30",
+        time: "08:30",
         title: "Desayuno y check-out de Florencia",
         location: "Via della Scala, 73, Florencia 50123, Italia",
-        description: "Última mañana en Florencia. Desayuno tranquilo en bar de Via della Scala o Piazza SMN. Check-out del alojamiento y preparar equipaje para Roma. La estación Santa Maria Novella está a solo 5 min caminando por la misma calle.",
+        description: "Última mañana en Florencia. Desayuno temprano en bar de Via della Scala o Piazza SMN. Check-out del alojamiento y preparar equipaje para Roma. La estación Santa Maria Novella está a solo 5 min caminando por la misma calle. Salir con tiempo para el tren de las 10:30.",
         ticketPrice: 0,
         category: "alojamiento",
         icon: "🧳",
@@ -2232,10 +2244,10 @@ export function getInitialData(): AppData {
       },
       {
         id: 2001,
-        time: "12:00",
+        time: "10:30",
         title: "Tren Florencia → Roma",
         location: "Santa Maria Novella, Florencia, Italia",
-        description: "Tren Frecciarossa Firenze SMN → Roma Termini. Duración: 1h 30min. Llegada a Roma a las 13:30-14:00. El tren más rápido entre las dos ciudades. Almuerzo rápido en el tren o en la estación de Florencia antes de partir.",
+        description: "Tren Frecciarossa Firenze SMN → Roma Termini. Duración: 1h 30min. Llegada a Roma aproximadamente a las 12:00. El tren más rápido entre las dos ciudades. Desayuno ligero antes de subir al tren.",
         ticketPrice: 45,
         ticketUrl: "https://www.trenitalia.com",
         category: "transporte",
@@ -2244,7 +2256,7 @@ export function getInitialData(): AppData {
       },
       {
         id: 2002,
-        time: "13:45",
+        time: "12:00",
         title: "Llegada a Roma Termini",
         location: "Roma Termini, Roma, Italia",
         description: "Llegada a Roma. El alojamiento está en Viale Manzoni 91 B 24 (zona San Giovanni). Desde Termini: Metro A dirección Anagnina → San Giovanni (3 paradas, 8 min) + 5 min caminando por Viale Manzoni. Alternativa: taxi ~€8 directo. La Ciudad Eterna nos espera.",
