@@ -41,7 +41,7 @@ export interface Couple {
 export interface DailyExpense {
   id: number
   date: string
-  category: "vuelo" | "alojamiento" | "alimentacion" | "transporte" | "museo" | "otro" | "otros"
+  category: "vuelo" | "alojamiento" | "alimentacion" | "transporte" | "museo" | "otro" | "otros" | "taxi"
   description: string
   amountPerPerson?: number
   amountPerCouple: number
