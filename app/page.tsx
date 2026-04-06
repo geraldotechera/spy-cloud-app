@@ -102,13 +102,39 @@ export default function Home() {
 
   // Fusiona datos guardados con los datos iniciales:
   // - Los EVENTOS de la agenda vienen de lib/events.ts PERO conservan ticketUrl y ticketFiles editados
-  // - El PRESUPUESTO conserva los valores editados por el usuario, pero agrega items nuevos
+  // - El PRESUPUESTO usa los valores del código como base, pero conserva ediciones del usuario si tienen valor > 0
   const mergeWithInitial = useCallback((saved: AppData): AppData => {
     const initial = getInitialData()
     
-    // Presupuesto: agregar items nuevos sin sobreescribir los editados
-    const savedIds = new Set(saved.budget.dailyExpenses.map((e: { id: number }) => e.id))
-    const missingExpenses = initial.budget.dailyExpenses.filter(e => !savedIds.has(e.id))
+    // Presupuesto: usar valores del código como base, pero conservar ediciones del usuario si tienen valor
+    const savedExpensesMap = new Map(saved.budget.dailyExpenses.map((e: { id: number }) => [e.id, e]))
+    
+    // Merge: para cada item del código, usar el valor guardado solo si el usuario lo editó (tiene valor > 0)
+    // Si el guardado tiene 0 pero el código tiene valor, usar el del código
+    const mergedExpenses = initial.budget.dailyExpenses.map(initialExp => {
+      const savedExp = savedExpensesMap.get(initialExp.id)
+      if (!savedExp) return initialExp
+      
+      // Si el guardado tiene amountPerPerson > 0, conservarlo (el usuario lo editó)
+      // Si el guardado tiene 0 pero el código tiene valor, usar el del código
+      const useInitialAmount = savedExp.amountPerPerson === 0 && initialExp.amountPerPerson > 0
+      
+      return {
+        ...savedExp,
+        // Usar monto del código si el guardado está en 0
+        amountPerPerson: useInitialAmount ? initialExp.amountPerPerson : savedExp.amountPerPerson,
+        amountPerCouple: useInitialAmount ? initialExp.amountPerCouple : savedExp.amountPerCouple,
+        totalAmount: useInitialAmount ? initialExp.totalAmount : savedExp.totalAmount,
+        // Conservar notas del código si están vacías en guardado
+        notes: savedExp.notes || initialExp.notes,
+      }
+    })
+    
+    // Agregar items que existen en guardado pero no en código (items agregados por el usuario)
+    const initialIds = new Set(initial.budget.dailyExpenses.map(e => e.id))
+    const userAddedExpenses = saved.budget.dailyExpenses.filter((e: { id: number }) => !initialIds.has(e.id))
+    
+    const missingExpenses = userAddedExpenses
     
     // EVENTOS: usar datos de lib/events.ts pero conservar ticketUrl y ticketFiles editados por el usuario
     const mergedEvents: Record<string, typeof initial.events[string]> = {}
@@ -134,7 +160,7 @@ export default function Home() {
       events: mergedEvents,
       budget: {
         ...saved.budget,
-        dailyExpenses: [...saved.budget.dailyExpenses, ...missingExpenses]
+        dailyExpenses: [...mergedExpenses, ...missingExpenses]
           .sort((a, b) => a.date.localeCompare(b.date) || a.id - b.id),
       },
     }
