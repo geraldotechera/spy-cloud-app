@@ -1,7 +1,7 @@
 "use client"
 
 import type { User } from "@/types"
-import { Calendar, Ticket, DollarSign, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train, Map, Users2 } from "lucide-react"
+import { Calendar, Ticket, DollarSign, Home, Wallet, Bike, Globe, RefreshCw, Printer, Train, Map, Users2, HardDriveDownload } from "lucide-react"
 
 interface MainMenuProps {
   currentUser: User
@@ -10,9 +10,10 @@ interface MainMenuProps {
   ) => void
   onRefresh: () => void
   onPrintItinerary?: () => void
+  onBackup?: () => void
 }
 
-export function MainMenu({ currentUser, onSelectSection, onRefresh, onPrintItinerary }: MainMenuProps) {
+export function MainMenu({ currentUser, onSelectSection, onRefresh, onPrintItinerary, onBackup }: MainMenuProps) {
   const menuItems = [
     { id: "agenda" as const, icon: Calendar, title: "Agenda", color: "from-blue-500 to-blue-600" },
     { id: "alojamiento" as const, icon: Home, title: "Alojamiento", color: "from-green-500 to-green-600" },
@@ -43,6 +44,17 @@ export function MainMenu({ currentUser, onSelectSection, onRefresh, onPrintItine
           )
         })}
       </div>
+
+      {onBackup && (
+        <button
+          onClick={onBackup}
+          className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 backdrop-blur-md rounded-xl py-3 px-4 text-center transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20 flex items-center justify-center gap-2"
+          title="Exportar e importar backup de todos los datos"
+        >
+          <HardDriveDownload className="w-5 h-5" />
+          <span className="text-sm font-bold">Backup / Restaurar</span>
+        </button>
+      )}
 
       {onPrintItinerary && (
         <button
