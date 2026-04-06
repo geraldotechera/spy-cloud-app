@@ -117,10 +117,10 @@ export function getInitialData(): AppData {
     }),
 
     // Lockers — precio por persona
-    { id: 44, date: "2026-09-09", category: "otros" as const, description: "Locker Barcelona Sants",   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 45, date: "2026-09-12", category: "otros" as const, description: "Locker Gare de Lyon Paris", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 46, date: "2026-09-14", category: "otros" as const, description: "RER C ida/vuelta Versalles", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 48, date: "2026-09-23", category: "otros" as const, description: "Locker Napoli Centrale",    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 44, date: "2026-09-09", category: "otros" as const, description: "Locker Barcelona Sants",   amountPerPerson: 4, amountPerCouple: 8, totalAmount: 16, notes: "Radical Storage o similar" },
+    { id: 45, date: "2026-09-12", category: "otros" as const, description: "Locker Gare de Lyon Paris", amountPerPerson: 6, amountPerCouple: 12, totalAmount: 24, notes: "Consigna SNCF" },
+    { id: 46, date: "2026-09-14", category: "otros" as const, description: "RER C ida/vuelta Versalles", amountPerPerson: 8, amountPerCouple: 16, totalAmount: 32, notes: "Ticket RER C zona 1-4" },
+    { id: 48, date: "2026-09-23", category: "otros" as const, description: "Locker Napoli Centrale",    amountPerPerson: 5, amountPerCouple: 10, totalAmount: 20, notes: "Ki-Point o similar" },
 
     // ============================================
     // CATEGORÍA 2: EVENTOS (Museos, Atracciones, Excursiones)
@@ -134,25 +134,25 @@ export function getInitialData(): AppData {
     { id: 520,  date: "2026-09-07", category: "museo" as const, description: "Museo Reina Sofia - GRATUITO 19-21h", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Entrada gratuita de lunes a sabado de 19:00 a 21:00. Llegar antes para hacer cola." },
 
     // Barcelona
-    { id: 53,   date: "2026-09-09", category: "museo" as const, description: "Sagrada Familia",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 54,   date: "2026-09-10", category: "museo" as const, description: "Park Guell",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 55,   date: "2026-09-10", category: "museo" as const, description: "Casa Batllo",                 amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 56,   date: "2026-09-10", category: "museo" as const, description: "Museo Picasso",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 57,   date: "2026-09-10", category: "museo" as const, description: "Castillo de Montjuic",        amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 53,   date: "2026-09-09", category: "museo" as const, description: "Sagrada Familia",             amountPerPerson: 36, amountPerCouple: 72, totalAmount: 144, notes: "Entrada con torres" },
+    { id: 54,   date: "2026-09-10", category: "museo" as const, description: "Park Guell",                  amountPerPerson: 17, amountPerCouple: 34, totalAmount: 68, notes: "parkguell.barcelona" },
+    { id: 55,   date: "2026-09-10", category: "museo" as const, description: "Casa Batllo",                 amountPerPerson: 39, amountPerCouple: 78, totalAmount: 156, notes: "casabatllo.es" },
+    { id: 56,   date: "2026-09-10", category: "museo" as const, description: "Museo Picasso",               amountPerPerson: 14, amountPerCouple: 28, totalAmount: 56, notes: "museupicasso.bcn.cat" },
+    { id: 57,   date: "2026-09-10", category: "museo" as const, description: "Castillo de Montjuic",        amountPerPerson: 9, amountPerCouple: 18, totalAmount: 36, notes: "ajuntament.barcelona.cat" },
 
-    { id: 572,  date: "2026-09-11", category: "museo" as const, description: "Catedral de Barcelona",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 572,  date: "2026-09-11", category: "museo" as const, description: "Catedral de Barcelona",       amountPerPerson: 9, amountPerCouple: 18, totalAmount: 36, notes: "Donativo sugerido" },
 
     // París (12-15 sep)
-    { id: 58,  date: "2026-09-12", category: "museo" as const, description: "Sainte-Chapelle",                   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 580, date: "2026-09-12", category: "museo" as const, description: "Crucero Sena con cena",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 59,  date: "2026-09-13", category: "museo" as const, description: "Museo del Louvre",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 590, date: "2026-09-13", category: "museo" as const, description: "Torre Eiffel",                      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 60,  date: "2026-09-13", category: "museo" as const, description: "Arco del Triunfo",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 600, date: "2026-09-13", category: "museo" as const, description: "Moulin Rouge",                      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 601, date: "2026-09-14", category: "museo" as const, description: "Versalles — Ticket Passport",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Incluye Palacio, Trianon y Jardines" },
-    { id: 61,  date: "2026-09-15", category: "museo" as const, description: "Centre Pompidou",                   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 62,  date: "2026-09-15", category: "museo" as const, description: "Musee d'Orsay",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 63,  date: "2026-09-15", category: "museo" as const, description: "Museo Rodin",                       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 58,  date: "2026-09-12", category: "museo" as const, description: "Sainte-Chapelle",                   amountPerPerson: 13, amountPerCouple: 26, totalAmount: 52, notes: "sainte-chapelle.fr" },
+    { id: 580, date: "2026-09-12", category: "museo" as const, description: "Crucero Sena con cena",             amountPerPerson: 79, amountPerCouple: 158, totalAmount: 316, notes: "Bateaux Parisiens o similar" },
+    { id: 59,  date: "2026-09-13", category: "museo" as const, description: "Museo del Louvre",                  amountPerPerson: 22, amountPerCouple: 44, totalAmount: 88, notes: "louvre.fr" },
+    { id: 590, date: "2026-09-13", category: "museo" as const, description: "Torre Eiffel",                      amountPerPerson: 37, amountPerCouple: 74, totalAmount: 148, notes: "Acceso a la cima. toureiffel.paris" },
+    { id: 60,  date: "2026-09-13", category: "museo" as const, description: "Arco del Triunfo",                  amountPerPerson: 16, amountPerCouple: 32, totalAmount: 64, notes: "paris-arc-de-triomphe.fr" },
+    { id: 600, date: "2026-09-13", category: "museo" as const, description: "Moulin Rouge",                      amountPerPerson: 95, amountPerCouple: 190, totalAmount: 380, notes: "Show + champagne. moulinrouge.fr" },
+    { id: 601, date: "2026-09-14", category: "museo" as const, description: "Versalles — Ticket Passport",       amountPerPerson: 35, amountPerCouple: 70, totalAmount: 140, notes: "Incluye Palacio, Trianon y Jardines. High season" },
+    { id: 61,  date: "2026-09-15", category: "museo" as const, description: "Centre Pompidou",                   amountPerPerson: 15, amountPerCouple: 30, totalAmount: 60, notes: "centrepompidou.fr" },
+    { id: 62,  date: "2026-09-15", category: "museo" as const, description: "Musee d'Orsay",                     amountPerPerson: 16, amountPerCouple: 32, totalAmount: 64, notes: "musee-orsay.fr" },
+    { id: 63,  date: "2026-09-15", category: "museo" as const, description: "Museo Rodin",                       amountPerPerson: 14, amountPerCouple: 28, totalAmount: 56, notes: "musee-rodin.fr" },
 
     // Milan
     { id: 64,  date: "2026-09-17", category: "museo" as const, description: "Duomo de Milan (interior + terrazas)", amountPerPerson: 15, amountPerCouple: 30, totalAmount: 60, notes: "duomomilano.it", ticketUrl: "https://www.duomomilano.it" },
@@ -160,23 +160,26 @@ export function getInitialData(): AppData {
     { id: 642, date: "2026-09-17", category: "museo" as const, description: "La Ultima Cena (Cenacolo)", amountPerPerson: 17, amountPerCouple: 34, totalAmount: 68, notes: "RESERVAR CON MESES DE ANTICIPACION. 15 euros + 2 euros reserva", ticketUrl: "https://www.vivaticket.com" },
 
     // Venecia
-    { id: 65,  date: "2026-09-17", category: "museo" as const, description: "Palacio Ducal Venecia",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 65,  date: "2026-09-17", category: "museo" as const, description: "Palacio Ducal Venecia",       amountPerPerson: 30, amountPerCouple: 60, totalAmount: 120, notes: "palazzoducale.visitmuve.it" },
 
     // Florencia
-    { id: 66,  date: "2026-09-18", category: "museo" as const, description: "Galleria dell'Accademia",     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 67,  date: "2026-09-18", category: "museo" as const, description: "Galleria degli Uffizi",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 66,  date: "2026-09-18", category: "museo" as const, description: "Galleria dell'Accademia",     amountPerPerson: 17, amountPerCouple: 34, totalAmount: 68, notes: "galleriaaccademiafirenze.it" },
+    { id: 67,  date: "2026-09-18", category: "museo" as const, description: "Galleria degli Uffizi",       amountPerPerson: 25, amountPerCouple: 50, totalAmount: 100, notes: "uffizi.it" },
 
     // Roma
-    { id: 69,  date: "2026-09-20", category: "museo" as const, description: "Coliseo",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "ticketing.colosseo.it" },
+    { id: 69,  date: "2026-09-20", category: "museo" as const, description: "Coliseo",                     amountPerPerson: 18, amountPerCouple: 36, totalAmount: 72, notes: "Incluye Foro y Palatino. ticketing.colosseo.it" },
     { id: 690, date: "2026-09-20", category: "museo" as const, description: "Foro Romano y Palatino",      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Incluido con ticket Coliseo" },
-    { id: 70,  date: "2026-09-21", category: "museo" as const, description: "Museos Vaticanos",            amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 70,  date: "2026-09-21", category: "museo" as const, description: "Museos Vaticanos",            amountPerPerson: 20, amountPerCouple: 40, totalAmount: 80, notes: "museivaticani.va" },
     { id: 700, date: "2026-09-21", category: "museo" as const, description: "Capilla Sixtina",             amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "Incluida con ticket Museos Vaticanos" },
-    { id: 71,  date: "2026-09-22", category: "museo" as const, description: "Galeria Borghese",            amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 72,  date: "2026-09-22", category: "museo" as const, description: "Termas de Caracalla",         amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 71,  date: "2026-09-22", category: "museo" as const, description: "Galeria Borghese",            amountPerPerson: 18, amountPerCouple: 36, totalAmount: 72, notes: "galleriaborghese.it - RESERVAR" },
+    { id: 72,  date: "2026-09-22", category: "museo" as const, description: "Termas de Caracalla",         amountPerPerson: 12, amountPerCouple: 24, totalAmount: 48, notes: "coopculture.it" },
 
     // Capri
-    { id: 73,  date: "2026-09-24", category: "museo" as const, description: "Villa San Michele (Anacapri)",amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
-    { id: 74,  date: "2026-09-24", category: "museo" as const, description: "Jardines de Augusto (Capri)", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, notes: "" },
+    { id: 73,  date: "2026-09-24", category: "museo" as const, description: "Villa San Michele (Anacapri)",amountPerPerson: 10, amountPerCouple: 20, totalAmount: 40, notes: "villasanmichele.eu" },
+    { id: 74,  date: "2026-09-24", category: "museo" as const, description: "Jardines de Augusto (Capri)", amountPerPerson: 1, amountPerCouple: 2, totalAmount: 4, notes: "capritourism.com" },
+
+    // Pompeya (26 sep)
+    { id: 750, date: "2026-09-26", category: "museo" as const, description: "Entrada Ruinas de Pompeya",   amountPerPerson: 22, amountPerCouple: 44, totalAmount: 88, notes: "ticketone.it - Pompeii+ incluye audioguia" },
 
     // ============================================
     // CATEGORÍA 3: TRANSPORTE (Vuelos, Trenes, Buses, Ferries)
@@ -195,32 +198,32 @@ export function getInitialData(): AppData {
     // 18 sep
     { id: 83, date: "2026-09-18", category: "transporte" as const, description: "Tren Milán → Venecia",                     amountPerPerson: 42.5, amountPerCouple: 85,  totalAmount: 170, paid: false, notes: "€42.50/persona" },
     // 19 sep
-    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 84, date: "2026-09-19", category: "transporte" as const, description: "Tren Venecia → Florencia",                 amountPerPerson: 35, amountPerCouple: 70, totalAmount: 140, paid: false, notes: "Trenitalia/Italo. 2h aprox" },
     // 20 sep
-    { id: 85, date: "2026-09-20", category: "transporte" as const, description: "Tren Florencia → Roma",                    amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 85, date: "2026-09-20", category: "transporte" as const, description: "Tren Florencia → Roma",                    amountPerPerson: 30, amountPerCouple: 60, totalAmount: 120, paid: false, notes: "Trenitalia/Italo. 1h 30min" },
     // 23 sep
-    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "" },
+    { id: 87, date: "2026-09-23", category: "transporte" as const, description: "Tren Roma → Nápoles (solo ida)",           amountPerPerson: 25, amountPerCouple: 50, totalAmount: 100, paid: false, notes: "Trenitalia/Italo. 1h 10min" },
     // 24 sep — Ferries y transporte marítimo Costa Amalfitana
     // 24 sep — Ferry Sorrento ↔ Capri
-    { id: 91,  date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento -> Capri (ida)",               amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 08:30. Companias: NLG, Caremar, SNAV" },
-    { id: 910, date: "2026-09-24", category: "transporte" as const, description: "Ferry Capri -> Sorrento (vuelta)",            amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Regreso 18:10" },
-    { id: 914, date: "2026-09-24", category: "transporte" as const, description: "Tren Sorrento -> Vico Equense (regreso)",     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Ultimo tren ~22:00. Circumvesuviana" },
+    { id: 91,  date: "2026-09-24", category: "transporte" as const, description: "Ferry Sorrento -> Capri (ida)",               amountPerPerson: 22, amountPerCouple: 44, totalAmount: 88, paid: false, notes: "Salida 08:30. NLG/SNAV high-speed" },
+    { id: 910, date: "2026-09-24", category: "transporte" as const, description: "Ferry Capri -> Sorrento (vuelta)",            amountPerPerson: 22, amountPerCouple: 44, totalAmount: 88, paid: false, notes: "Regreso 18:10" },
+    { id: 914, date: "2026-09-24", category: "transporte" as const, description: "Tren Sorrento -> Vico Equense (regreso)",     amountPerPerson: 3, amountPerCouple: 6, totalAmount: 12, paid: false, notes: "Circumvesuviana" },
     // 25 sep — Costa Amalfitana
-    { id: 88, date: "2026-09-25", category: "transporte" as const, description: "Tren/Bus Vico Equense → Sorrento",           amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 07:30. Circumvesuviana o bus local" },
-    { id: 89, date: "2026-09-25", category: "transporte" as const, description: "Ferry Sorrento → Positano",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida aprox 08:30" },
-    { id: 90, date: "2026-09-25", category: "transporte" as const, description: "Alquiler scooter Positano ↔ Amalfi",              amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Para dos personas, ida y vuelta" },
-    { id: 901, date: "2026-09-25", category: "transporte" as const, description: "Bus SITA Positano → Sorrento + tren Vico",         amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Bus ~22:30. Verificar ultimo tren en eavsrl.it" },
+    { id: 88, date: "2026-09-25", category: "transporte" as const, description: "Tren/Bus Vico Equense → Sorrento",           amountPerPerson: 3, amountPerCouple: 6, totalAmount: 12, paid: false, notes: "Circumvesuviana" },
+    { id: 89, date: "2026-09-25", category: "transporte" as const, description: "Ferry Sorrento → Positano",                  amountPerPerson: 18, amountPerCouple: 36, totalAmount: 72, paid: false, notes: "Salida aprox 08:30" },
+    { id: 90, date: "2026-09-25", category: "transporte" as const, description: "Alquiler scooter Positano ↔ Amalfi",              amountPerPerson: 35, amountPerCouple: 70, totalAmount: 140, paid: false, notes: "Scooter para 2. ~70 euros/dia" },
+    { id: 901, date: "2026-09-25", category: "transporte" as const, description: "Bus SITA Positano → Sorrento + tren Vico",         amountPerPerson: 6, amountPerCouple: 12, totalAmount: 24, paid: false, notes: "Bus 3 + tren 3" },
     // 26 sep — Vico Equense -> Pompeya -> Vesubio -> regreso Vico Equense
-    { id: 91, date: "2026-09-26", category: "transporte" as const, description: "Tren Vico Equense -> Pompeya (Circumvesuviana)",       amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 07:30. Bajar en Pompeii Scavi" },
-    { id: 911, date: "2026-09-26", category: "transporte" as const, description: "Shuttle bus Pompeya -> Vesubio (ida y vuelta)",        amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Aprox 12 euros/persona ida y vuelta" },
-    { id: 912, date: "2026-09-26", category: "transporte" as const, description: "Entrada Parque Nacional del Vesubio",                  amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Entrada obligatoria para subir al crater" },
-    { id: 913, date: "2026-09-26", category: "transporte" as const, description: "Tren Pompeya/Ercolano -> Vico Equense (regreso)",      amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Circumvesuviana direccion Sorrento" },
+    { id: 91, date: "2026-09-26", category: "transporte" as const, description: "Tren Vico Equense -> Pompeya (Circumvesuviana)",       amountPerPerson: 3, amountPerCouple: 6, totalAmount: 12, paid: false, notes: "Bajar en Pompeii Scavi" },
+    { id: 911, date: "2026-09-26", category: "transporte" as const, description: "Shuttle bus Pompeya -> Vesubio (ida y vuelta)",        amountPerPerson: 12, amountPerCouple: 24, totalAmount: 48, paid: false, notes: "EAV Bus" },
+    { id: 912, date: "2026-09-26", category: "transporte" as const, description: "Entrada Parque Nacional del Vesubio",                  amountPerPerson: 10, amountPerCouple: 20, totalAmount: 40, paid: false, notes: "parconazionaledelvesuvio.it" },
+    { id: 913, date: "2026-09-26", category: "transporte" as const, description: "Tren Pompeya/Ercolano -> Vico Equense (regreso)",      amountPerPerson: 3, amountPerCouple: 6, totalAmount: 12, paid: false, notes: "Circumvesuviana" },
     // 27 sep — Vico Equense -> Napoles Aeropuerto -> Vuelo Ryanair Madrid -> Vuelo Montevideo
-    { id: 93, date: "2026-09-27", category: "transporte" as const, description: "Tren Vico Equense -> Napoles (Circumvesuviana)", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 10:30. Duracion 45 min" },
-    { id: 94, date: "2026-09-27", category: "transporte" as const, description: "Bus Alibus Napoles -> Aeropuerto Capodichino",   amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "5 euros/persona. Sale cada 20 min" },
-    { id: 92, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Ryanair Napoles -> Madrid",                amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 16:35. Llegada 19:25 hora local. Si hay vuelo 14:00 seria mejor" },
-    { id: 95, date: "2026-09-27", category: "transporte" as const, description: "Metro Barajas -> Centro Madrid (ida y vuelta)", amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "5 euros suplemento aeropuerto" },
-    { id: 96, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Madrid -> Montevideo",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: false, notes: "Salida 23:55. Llegada 28 sep" },
+    { id: 93, date: "2026-09-27", category: "transporte" as const, description: "Tren Vico Equense -> Napoles (Circumvesuviana)", amountPerPerson: 4, amountPerCouple: 8, totalAmount: 16, paid: false, notes: "45 min" },
+    { id: 94, date: "2026-09-27", category: "transporte" as const, description: "Bus Alibus Napoles -> Aeropuerto Capodichino",   amountPerPerson: 5, amountPerCouple: 10, totalAmount: 20, paid: false, notes: "Sale cada 20 min" },
+    { id: 92, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Ryanair Napoles -> Madrid",                amountPerPerson: 45, amountPerCouple: 90, totalAmount: 180, paid: false, notes: "Salida 16:35. Llegada 19:25" },
+    { id: 95, date: "2026-09-27", category: "transporte" as const, description: "Metro Barajas -> Centro Madrid (ida y vuelta)", amountPerPerson: 6, amountPerCouple: 12, totalAmount: 24, paid: false, notes: "Suplemento aeropuerto incluido" },
+    { id: 96, date: "2026-09-27", category: "vuelo" as const,      description: "Vuelo Madrid -> Montevideo",                     amountPerPerson: 0, amountPerCouple: 0, totalAmount: 0, paid: true, notes: "Incluido en vuelo ida/vuelta" },
   ]
 
   const getPerPerson = (e: { amountPerPerson?: number; amountPerCouple?: number }) =>
