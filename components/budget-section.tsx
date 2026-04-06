@@ -113,7 +113,7 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   const totalAlimentacion = comidaExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalTaxi         = taxiExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalOtros        = otrosExpenses.reduce((s, e) => s + perPerson(e), 0)
-  const totalPerPerson    = totalEventos + totalTransporte + totalAlojamiento + totalAlimentacion + totalOtros
+  const totalPerPerson    = totalEventos + totalTransporte + totalAlojamiento + totalAlimentacion + totalTaxi + totalOtros
 
   // ── helpers ───────────────────────────────────────────────────────────────
 
