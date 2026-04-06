@@ -60,8 +60,16 @@ interface NewTransportState {
   category: "transporte" | "vuelo"
 }
 
+// Modal para agregar nuevo taxi/uber
+interface NewTaxiState {
+  description: string
+  date: string
+  amount: string
+  notes: string
+}
+
 export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, onUpdateBudget, onUpdateNotes }: BudgetSectionProps) {
-  const [activeTab, setActiveTab] = useState<"resumen" | "paseos" | "locomocion" | "alojamiento" | "comida" | "notas">("resumen")
+  const [activeTab, setActiveTab] = useState<"resumen" | "paseos" | "locomocion" | "taxi" | "alojamiento" | "comida" | "notas">("resumen")
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editingAmount, setEditingAmount] = useState<string>("")
   const [transportEdit, setTransportEdit] = useState<TransportEditState | null>(null)
@@ -69,6 +77,7 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
   const [notes, setNotes] = useState(budgetNotes)
   const [newPaseo, setNewPaseo] = useState<NewPaseoState | null>(null)
   const [newTransport, setNewTransport] = useState<NewTransportState | null>(null)
+  const [newTaxi, setNewTaxi] = useState<NewTaxiState | null>(null)
   const uniqueExpenses = budget.dailyExpenses.filter(
     (e, i, arr) => arr.findIndex((x) => x.id === e.id) === i
   )
@@ -92,12 +101,17 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
     .filter((e) => e.category === "alimentacion")
     .sort((a, b) => a.date.localeCompare(b.date))
 
+  const taxiExpenses = uniqueExpenses
+    .filter((e) => e.category === "taxi")
+    .sort((a, b) => a.date.localeCompare(b.date))
+
   const otrosExpenses = uniqueExpenses.filter((e) => e.category === "otros" || e.category === "otro")
 
   const totalEventos      = eventExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalTransporte   = transportExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalAlojamiento  = alojamientoExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalAlimentacion = comidaExpenses.reduce((s, e) => s + perPerson(e), 0)
+  const totalTaxi         = taxiExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalOtros        = otrosExpenses.reduce((s, e) => s + perPerson(e), 0)
   const totalPerPerson    = totalEventos + totalTransporte + totalAlojamiento + totalAlimentacion + totalOtros
 
@@ -235,6 +249,26 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
     }
     pushUpdate([...uniqueExpenses, newExpense])
     setNewTransport(null)
+  }
+
+  // Agregar nuevo taxi/uber
+  const addNewTaxi = () => {
+    if (!newTaxi || !newTaxi.description.trim() || !newTaxi.date) return
+    const val = parseFloat(newTaxi.amount) || 0
+    const maxId = Math.max(...uniqueExpenses.map((e) => e.id), 0)
+    const newExpense: DailyExpense = {
+      id: maxId + 1,
+      date: newTaxi.date,
+      category: "taxi",
+      description: newTaxi.description.trim(),
+      amountPerPerson: val,
+      amountPerCouple: val * 2,
+      totalAmount: val * 4,
+      notes: newTaxi.notes || undefined,
+      paid: false,
+    }
+    pushUpdate([...uniqueExpenses, newExpense])
+    setNewTaxi(null)
   }
 
   // Eliminar/Anular un gasto
@@ -450,12 +484,13 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
       <div className="grid grid-cols-3 gap-2">
         {(
           [
-            { id: "resumen",     label: "Resumen",    color: "bg-blue-500"   },
-            { id: "paseos",      label: "Paseos",     color: "bg-pink-500"   },
-            { id: "locomocion",  label: "Locomocion", color: "bg-yellow-500" },
-            { id: "alojamiento", label: "Alojamiento",color: "bg-green-500"  },
-            { id: "comida",      label: "Comida",     color: "bg-orange-500" },
-            { id: "notas",       label: "Notas",      color: "bg-purple-500" },
+{ id: "resumen",     label: "Resumen",    color: "bg-blue-500"   },
+  { id: "paseos",      label: "Paseos",     color: "bg-pink-500"   },
+  { id: "locomocion",  label: "Locomocion", color: "bg-yellow-500" },
+  { id: "taxi",        label: "Taxi/Uber",  color: "bg-cyan-500"   },
+  { id: "alojamiento", label: "Alojamiento",color: "bg-green-500"  },
+  { id: "comida",      label: "Comida",     color: "bg-orange-500" },
+  { id: "notas",       label: "Notas",      color: "bg-purple-500" },
           ] as const
         ).map((tab) => (
           <button
@@ -481,10 +516,11 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: "Paseos / Entradas", val: totalEventos,      color: "bg-pink-500/20   border-pink-400/30   text-pink-300"   },
-              { label: "Locomocion",        val: totalTransporte,   color: "bg-yellow-500/20 border-yellow-400/30 text-yellow-300" },
-              { label: "Alojamiento",       val: totalAlojamiento,  color: "bg-green-500/20  border-green-400/30  text-green-300"  },
-              { label: "Comida",            val: totalAlimentacion, color: "bg-orange-500/20 border-orange-400/30 text-orange-300" },
+{ label: "Paseos / Entradas", val: totalEventos,      color: "bg-pink-500/20   border-pink-400/30   text-pink-300"   },
+  { label: "Locomocion",        val: totalTransporte,   color: "bg-yellow-500/20 border-yellow-400/30 text-yellow-300" },
+  { label: "Taxi / Uber",       val: totalTaxi,         color: "bg-cyan-500/20   border-cyan-400/30   text-cyan-300"   },
+  { label: "Alojamiento",       val: totalAlojamiento,  color: "bg-green-500/20  border-green-400/30  text-green-300"  },
+  { label: "Comida",            val: totalAlimentacion, color: "bg-orange-500/20 border-orange-400/30 text-orange-300" },
             ].map(({ label, val, color }) => {
               const [bg, bdr, txt] = color.split(" ")
               return (
@@ -510,10 +546,11 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
           <div className="bg-blue-500/10 rounded-xl p-3 border border-blue-400/30 text-xs text-white/60 space-y-1.5">
             <div className="font-semibold text-white/80 mb-2 text-sm">Saldo pendiente por pareja:</div>
             {[
-              { label: "Paseos",      expenses: eventExpenses },
-              { label: "Locomocion",  expenses: transportExpenses },
-              { label: "Alojamiento", expenses: alojamientoExpenses },
-              { label: "Comida",      expenses: comidaExpenses },
+{ label: "Paseos",      expenses: eventExpenses },
+  { label: "Locomocion",  expenses: transportExpenses },
+  { label: "Taxi/Uber",   expenses: taxiExpenses },
+  { label: "Alojamiento", expenses: alojamientoExpenses },
+  { label: "Comida",      expenses: comidaExpenses },
             ].map(({ label, expenses }) => {
               const p = pendingTotal(expenses)
               return (
@@ -700,13 +737,92 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
           </div>
           <SaldoFooter expenses={transportExpenses} color="bg-yellow-500/10 border-yellow-400/20" />
         </div>
-      )}
+)}
+  
+  {/* ── TAXI / UBER ── */}
+  {activeTab === "taxi" && (
+  <div className="space-y-3">
+    <div className="bg-cyan-500/20 rounded-xl p-4 text-center border border-cyan-400/30">
+      <h3 className="text-sm mb-1 text-white/70">Taxi / Uber</h3>
+      <div className="text-3xl font-bold text-cyan-300">{fmt(Math.round(totalTaxi))}</div>
+      <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalTaxi * 2))} por pareja</div>
+    </div>
 
-      {/* ── ALOJAMIENTO ── */}
-      {activeTab === "alojamiento" && (
-        <div className="space-y-3">
-          <div className="bg-green-500/20 rounded-xl p-4 text-center border border-green-400/30">
-            <h3 className="text-sm mb-1 text-white/70">Alojamiento</h3>
+    {/* Boton para agregar nuevo taxi */}
+    <button
+      onClick={() => setNewTaxi({ description: "", date: "", amount: "", notes: "" })}
+      className="w-full bg-cyan-500/30 hover:bg-cyan-500/50 border border-cyan-400/40 rounded-xl p-3 flex items-center justify-center gap-2 transition-colors"
+    >
+      <span className="text-lg">+</span>
+      <span className="font-medium text-sm">Agregar taxi / uber</span>
+    </button>
+
+    <div className="space-y-2">
+      {taxiExpenses.map((expense, idx) => {
+        const isPaid = expense.paid === true
+        const pp = expense.amountPerPerson ?? 0
+        const d = new Date(expense.date + "T12:00:00")
+        const dateStr = d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })
+        return (
+          <div
+            key={`taxi-${expense.id}-${idx}`}
+            className={`rounded-xl p-3 border transition-opacity ${
+              isPaid ? "opacity-50 bg-white/5 border-white/10" : "bg-cyan-500/15 border-cyan-400/20"
+            }`}
+          >
+            <div className="flex items-start gap-2">
+              <span className="text-base flex-shrink-0 mt-0.5">🚕</span>
+              <div className="flex-1 min-w-0">
+                <div className={`font-semibold text-sm leading-tight ${isPaid ? "line-through text-white/40" : ""}`}>
+                  {expense.description}
+                </div>
+                <div className="text-xs text-white/50 mt-0.5">{dateStr}</div>
+                {expense.notes && !isPaid && (
+                  <div className="text-xs text-white/40 mt-0.5 leading-snug">{expense.notes}</div>
+                )}
+              </div>
+              <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                {isPaid ? (
+                  <span className="text-xs bg-green-500/30 text-green-300 px-2 py-0.5 rounded-full font-semibold">Pagado</span>
+                ) : (
+                  <div className="text-right">
+                    <div className="font-bold text-white">{pp > 0 ? fmt(pp) : "—"}</div>
+                    <div className="text-xs text-white/40">/ persona</div>
+                    {pp > 0 && <div className="text-xs text-white/30">{fmt(pp * 2)} / pareja</div>}
+                  </div>
+                )}
+                <button
+                  onClick={() => togglePaid(expense.id)}
+                  className={`text-xs px-2 py-0.5 rounded-full border transition-colors ${
+                    isPaid ? "border-white/20 text-white/40 hover:text-white/60" : "border-green-400/50 text-green-300 hover:bg-green-500/20"
+                  }`}
+                >
+                  {isPaid ? "Deshacer" : "Marcar pagado"}
+                </button>
+                {!isPaid && (
+                  <button
+                    onClick={() => deleteExpense(expense.id)}
+                    className="text-xs px-2 py-0.5 rounded-full border border-red-400/40 text-red-300 hover:bg-red-500/20 transition-colors"
+                    title="Eliminar permanentemente"
+                  >
+                    Anular
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+    <SaldoFooter expenses={taxiExpenses} color="bg-cyan-500/10 border-cyan-400/20" />
+  </div>
+  )}
+
+  {/* ── ALOJAMIENTO ── */}
+  {activeTab === "alojamiento" && (
+  <div className="space-y-3">
+  <div className="bg-green-500/20 rounded-xl p-4 text-center border border-green-400/30">
+  <h3 className="text-sm mb-1 text-white/70">Alojamiento</h3>
             <div className="text-3xl font-bold text-green-300">{fmt(Math.round(totalAlojamiento))}</div>
             <div className="text-xs text-white/60 mt-1">por persona · {fmt(Math.round(totalAlojamiento * 2))} por pareja · 21 noches</div>
           </div>
@@ -1121,6 +1237,79 @@ export function BudgetSection({ budget, budgetNotes = "", currentUser, onBack, o
                 onClick={addNewTransport}
                 disabled={!newTransport.description.trim() || !newTransport.date}
                 className="flex-1 bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/30 disabled:cursor-not-allowed py-2.5 rounded-xl text-sm font-semibold transition-colors text-black"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL AGREGAR NUEVO TAXI/UBER ── */}
+      {newTaxi && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center p-4">
+          <div className="bg-gray-900 border border-white/20 rounded-2xl w-full max-w-md p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-base">Agregar taxi / uber</h3>
+              <button onClick={() => setNewTaxi(null)} className="text-white/40 hover:text-white/70 text-xl leading-none">x</button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Trayecto / Descripcion *</label>
+                <input
+                  type="text"
+                  value={newTaxi.description}
+                  onChange={(e) => setNewTaxi({ ...newTaxi, description: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-cyan-400/60"
+                  placeholder="Ej: Aeropuerto → Hotel, Estacion → Alojamiento..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Fecha *</label>
+                <input
+                  type="date"
+                  value={newTaxi.date}
+                  onChange={(e) => setNewTaxi({ ...newTaxi, date: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-cyan-400/60"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Costo por persona (EUR)</label>
+                <input
+                  type="number" min="0" step="0.5"
+                  value={newTaxi.amount}
+                  onChange={(e) => setNewTaxi({ ...newTaxi, amount: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-cyan-400/60"
+                  placeholder="0"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Notas</label>
+                <textarea
+                  value={newTaxi.notes}
+                  onChange={(e) => setNewTaxi({ ...newTaxi, notes: e.target.value })}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-cyan-400/60 resize-none"
+                  placeholder="Observaciones, app usada, etc..."
+                  rows={2}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setNewTaxi(null)}
+                className="flex-1 bg-white/10 hover:bg-white/20 py-2.5 rounded-xl text-sm transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={addNewTaxi}
+                disabled={!newTaxi.description.trim() || !newTaxi.date}
+                className="flex-1 bg-cyan-500 hover:bg-cyan-600 disabled:bg-cyan-500/30 disabled:cursor-not-allowed py-2.5 rounded-xl text-sm font-semibold transition-colors text-white"
               >
                 Agregar
               </button>
