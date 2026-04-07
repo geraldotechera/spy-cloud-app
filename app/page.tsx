@@ -18,6 +18,7 @@ import { UserSelector } from "@/components/user-selector"
 import { UserSettings } from "@/components/user-settings"
 import { PDFExportSimple } from "@/components/pdf-export-simple"
 import { PrintItinerary } from "@/components/print-itinerary"
+import { BackupRestore } from "@/components/backup-restore"
 import { Moon, Sun } from "lucide-react"
 import { CountryMapModal } from "@/components/country-map-modal"
 import { EmergencyButton } from "@/components/emergency-button"
@@ -65,6 +66,7 @@ export default function Home() {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState("")
   const [isDark, setIsDark] = useState(false)
+  const [showBackup, setShowBackup] = useState(false)
   const [showPrintView, setShowPrintView] = useState(false)
   const [showCountryMap, setShowCountryMap] = useState<"spain" | "france" | "italy" | "switzerland" | null>(null)
 
@@ -465,7 +467,33 @@ export default function Home() {
               onSelectSection={setCurrentSection}
               onRefresh={handleRefresh}
               onPrintItinerary={() => setShowPrintView(true)}
+              onBackup={() => setShowBackup(true)}
             />
+          </div>
+        )}
+
+        {/* Panel Backup / Restaurar */}
+        {showBackup && (
+          <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 backdrop-blur-sm px-4 py-8 overflow-y-auto">
+            <div className="bg-gray-900 border border-white/20 rounded-2xl p-5 max-w-sm w-full shadow-2xl">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-white font-bold text-lg">Backup / Restaurar</h2>
+                <button
+                  onClick={() => setShowBackup(false)}
+                  className="text-white/50 hover:text-white text-2xl leading-none"
+                >
+                  ×
+                </button>
+              </div>
+              <BackupRestore
+                appData={appData}
+                onRestore={(restoredData) => {
+                  setAppData(restoredData)
+                  setShowBackup(false)
+                  showNotif("Backup restaurado correctamente")
+                }}
+              />
+            </div>
           </div>
         )}
 
